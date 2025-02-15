@@ -1,3 +1,20 @@
-PODFILE CHECKSUM: def93377705262b44f77cde5900a62fcf631237f
+PODS:
+  - SnapKit (5.7.1)
+  - SteviaLayout (5.1.2)
+
+DEPENDENCIES:
+  - SnapKit
+  - SteviaLayout
+
+SPEC REPOS:
+  trunk:
+    - SnapKit
+    - SteviaLayout
+
+SPEC CHECKSUMS:
+  SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
+  SteviaLayout: 05424e528d643657d39ce72c786e4adf13cfc5f2
+
+PODFILE CHECKSUM: 2176186b6505c25bf7d78cdfce6bd176a0178974
 
 COCOAPODS: 1.15.2
