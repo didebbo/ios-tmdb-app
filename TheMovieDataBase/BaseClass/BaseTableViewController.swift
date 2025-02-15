@@ -1,0 +1,16 @@
+//
+//  BaseTableViewController.swift
+//  TheMovieDataBase
+//
+//  Created by Gianluca Napoletano on 15/02/25.
+//
+
+import UIKit
+
+class BaseTableViewController: CoreTableViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
+}
