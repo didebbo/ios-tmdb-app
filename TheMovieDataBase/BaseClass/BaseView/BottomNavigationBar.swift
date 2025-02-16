@@ -30,6 +30,9 @@ class BottomNavigationBar: UIView {
         layout.itemSize = itemSize
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collection.contentInset = .zero
+        collection.backgroundColor = UIColor(resource: .primary)
+        
         collection.dataSource = self
         collection.delegate = self
         
@@ -53,16 +56,6 @@ class BottomNavigationBar: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension BottomNavigationBar: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        itemSize
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets.zero
     }
 }
 
@@ -116,7 +109,6 @@ extension BottomNavigationBar {
         
         override init(frame: CGRect) {
             super.init(frame: frame)
-            backgroundColor = UIColor(resource: .primary)
             
             contentView.subviews(iconView, labelText)
             contentView.layout {
