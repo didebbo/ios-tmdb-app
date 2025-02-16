@@ -22,7 +22,9 @@ class BottomNavigator: BaseNavigationController {
         
         navigationBar.prefersLargeTitles = true
         
-        setViewControllers(destinations.compactMap({ $0.viewController }), animated: false)
+        if let firstDestination = destinations.first {
+            setViewControllers([firstDestination.viewController], animated: false)
+        }
         handleBottomNavigationBar()
     }
     

@@ -10,6 +10,8 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    var mainNavigator: BottomNavigator?
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -19,12 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: scene)
-        let bottomNavigator = BottomNavigator()
-        bottomNavigator.destinations = [
-            BottomNavigationBar.Item.Destination(text: "Movie", icon: UIImage(systemName: "movieclapper"), viewController: Main()),
-            BottomNavigationBar.Item.Destination(text: "TV Show", icon: UIImage(systemName: "tv"), viewController: Main())
+        mainNavigator = BottomNavigator()
+        mainNavigator?.destinations = [
+            BottomNavigationBar.Item.Destination(text: "Movies", icon: UIImage(systemName: "movieclapper"), viewController: Movies()),
+            BottomNavigationBar.Item.Destination(text: "TV Shows", icon: UIImage(systemName: "tv"), viewController: TvShows())
         ]
-        window?.rootViewController = bottomNavigator
+        window?.rootViewController = mainNavigator
         window?.makeKeyAndVisible()
     }
 

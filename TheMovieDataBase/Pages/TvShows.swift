@@ -1,17 +1,17 @@
 //
-//  Main.swift
+//  TvShows.swift
 //  TheMovieDataBase
 //
-//  Created by Gianluca Napoletano on 15/02/25.
+//  Created by Gianluca Napoletano on 16/02/25.
 //
 
 import UIKit
 
-class Main: BaseTableViewController {
+class TvShows: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "TMDB"
+        title = "Tv Shows"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
         view.backgroundColor = UIColor.clear
     }
@@ -31,7 +31,7 @@ class Main: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = Main()
+        let vc = TvShows()
         navigationController?.pushViewController(vc, animated: true)
     }
     

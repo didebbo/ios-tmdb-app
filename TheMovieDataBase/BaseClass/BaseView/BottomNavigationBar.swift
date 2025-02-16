@@ -9,9 +9,10 @@ import Stevia
 
 class BottomNavigationBar: UIView {
     
-    private let destinations: [Item.Destination]
-    
     static let itemHeight: CGFloat = 80
+    
+    private let destinations: [Item.Destination]
+    private var currentIndex: Int = 0
     
     private lazy var itemSize: CGSize = {
         let count = self.destinations.count
@@ -68,13 +69,19 @@ extension BottomNavigationBar: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: Item.self), for: indexPath) as? Item
-        
-        item?.configure(destination: destinations[indexPath.row])
-        return item ?? UICollectionViewCell()
+        item?.configure(destination: destinations[indexPath.row], isSelected: currentIndex == indexPath.row)
+        return item!
     }
 }
 
-extension BottomNavigationBar: UICollectionViewDelegate {}
+extension BottomNavigationBar: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        currentIndex = indexPath.row
+        collectionView.reloadData()
+    }
+    
+}
 
 extension BottomNavigationBar {
     
@@ -96,14 +103,24 @@ extension BottomNavigationBar {
         
         private lazy var iconView: UIImageView = {
             let imageView = UIImageView()
+            imageView.tintColor = UIColor(resource: .secondary)
+            imageView.contentMode = .scaleAspectFit
             return imageView
         }()
         
-        func configure(destination: Destination) {
+        func configure(destination: Destination, isSelected: Bool) {
             labelText.text = destination.text
-            
             iconView.image = destination.icon
-            iconView.contentMode = .scaleAspectFit
+            
+            if isSelected {
+                labelText.textColor = UIColor.white
+                iconView.tintColor = UIColor.white
+            }
+        }
+        
+        override func prepareForReuse() {
+            super.prepareForReuse()
+            labelText.textColor = UIColor(resource: .secondary)
             iconView.tintColor = UIColor(resource: .secondary)
         }
         
