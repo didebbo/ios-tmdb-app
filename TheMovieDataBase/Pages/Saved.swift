@@ -9,6 +9,11 @@ import UIKit
 
 class Saved: BaseViewController {
     
+    private lazy var topNavigationBar: TopNavigationBar = {
+        let view = TopNavigationBar()
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Saved"
