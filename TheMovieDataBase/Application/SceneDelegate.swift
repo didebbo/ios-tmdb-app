@@ -10,9 +10,6 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    
-    var mainNavigator: BottomNavigator?
-
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -21,12 +18,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: scene)
-        mainNavigator = BottomNavigator()
-        mainNavigator?.destinations = [
+        let mainNavigator = BottomNavigator()
+        mainNavigator.destinations = [
             BottomNavigationBar.Item.Destination(text: "Movies", icon: UIImage(systemName: "movieclapper"), viewController: Movies()),
             BottomNavigationBar.Item.Destination(text: "TV Shows", icon: UIImage(systemName: "tv"), viewController: TvShows()),
             BottomNavigationBar.Item.Destination(text: "Saved", icon: UIImage(systemName: "popcorn"), viewController: Saved())
         ]
+        UIApplication.screenSize = window?.screen.bounds.size
         window?.rootViewController = mainNavigator
         window?.makeKeyAndVisible()
     }

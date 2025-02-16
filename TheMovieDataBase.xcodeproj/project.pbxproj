@@ -25,6 +25,8 @@
 		99B745D92D6237CD00CA9441 /* TvShows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B745D82D6237CD00CA9441 /* TvShows.swift */; };
 		99B745DB2D62563600CA9441 /* Saved.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B745DA2D62563600CA9441 /* Saved.swift */; };
 		99B745DD2D625B2100CA9441 /* TopNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B745DC2D625B2100CA9441 /* TopNavigationBar.swift */; };
+		99B745E02D62638500CA9441 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B745DF2D62638500CA9441 /* Item.swift */; };
+		99B745E22D62667C00CA9441 /* Application+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B745E12D62667C00CA9441 /* Application+Ext.swift */; };
 		E266BD075216550B0DAEE245 /* Pods_TheMovieDataBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F9247A5416D6FFB75EBA5D /* Pods_TheMovieDataBase.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +51,8 @@
 		99B745D82D6237CD00CA9441 /* TvShows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvShows.swift; sourceTree = "<group>"; };
 		99B745DA2D62563600CA9441 /* Saved.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saved.swift; sourceTree = "<group>"; };
 		99B745DC2D625B2100CA9441 /* TopNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationBar.swift; sourceTree = "<group>"; };
+		99B745DF2D62638500CA9441 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		99B745E12D62667C00CA9441 /* Application+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Application+Ext.swift"; sourceTree = "<group>"; };
 		A5F9247A5416D6FFB75EBA5D /* Pods_TheMovieDataBase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheMovieDataBase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBE0B83DCE3AE0542FE43EAE /* Pods-TheMovieDataBase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMovieDataBase.debug.xcconfig"; path = "Target Support Files/Pods-TheMovieDataBase/Pods-TheMovieDataBase.debug.xcconfig"; sourceTree = "<group>"; };
 		FE9199CA66400C03DF4A08CD /* Pods-TheMovieDataBase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMovieDataBase.release.xcconfig"; path = "Target Support Files/Pods-TheMovieDataBase/Pods-TheMovieDataBase.release.xcconfig"; sourceTree = "<group>"; };
@@ -87,6 +91,7 @@
 		99A2B1232D610A6C008BBA96 /* TheMovieDataBase */ = {
 			isa = PBXGroup;
 			children = (
+				99B745DE2D62635F00CA9441 /* Model */,
 				99A2B1412D611569008BBA96 /* Application */,
 				99A2B1382D611224008BBA96 /* CoreClass */,
 				99A2B1462D612C46008BBA96 /* BaseClass */,
@@ -114,6 +119,7 @@
 			children = (
 				99A2B1262D610A6C008BBA96 /* SceneDelegate.swift */,
 				99A2B1242D610A6C008BBA96 /* AppDelegate.swift */,
+				99B745E12D62667C00CA9441 /* Application+Ext.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -156,6 +162,14 @@
 				99B745DA2D62563600CA9441 /* Saved.swift */,
 			);
 			path = Pages;
+			sourceTree = "<group>";
+		};
+		99B745DE2D62635F00CA9441 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				99B745DF2D62638500CA9441 /* Item.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		AFC6CE7BC58788D54A8168DA /* Frameworks */ = {
@@ -294,11 +308,13 @@
 				99B745DB2D62563600CA9441 /* Saved.swift in Sources */,
 				99A2B13E2D611458008BBA96 /* CoreViewController.swift in Sources */,
 				99A2B1252D610A6C008BBA96 /* AppDelegate.swift in Sources */,
+				99B745E02D62638500CA9441 /* Item.swift in Sources */,
 				99B745D92D6237CD00CA9441 /* TvShows.swift in Sources */,
 				99A2B1402D6114CB008BBA96 /* CoreTableViewController.swift in Sources */,
 				99B745D32D61F1B200CA9441 /* BottomNavigationBar.swift in Sources */,
 				99B745DD2D625B2100CA9441 /* TopNavigationBar.swift in Sources */,
 				99B745D62D621DF800CA9441 /* Navigator.swift in Sources */,
+				99B745E22D62667C00CA9441 /* Application+Ext.swift in Sources */,
 				99A2B1482D612CCC008BBA96 /* BaseNavigationController.swift in Sources */,
 				99A2B13A2D611270008BBA96 /* CoreNavigationController.swift in Sources */,
 				99A2B14A2D612D63008BBA96 /* BaseTableViewController.swift in Sources */,

@@ -21,8 +21,8 @@ class BottomNavigationBar: UIView {
     private var currentIndex: Int = 0
     
     private lazy var itemSize: CGSize = {
-        let count = self.destinations.count
-        let width = UIScreen.main.bounds.width
+        let count = destinations.count
+        let width = UIApplication.screenSize?.width ?? 0
         let itemWidth = width / CGFloat(count)
         return CGSize(width: itemWidth, height: BottomNavigationBar.itemHeight)
     }()

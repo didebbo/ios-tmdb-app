@@ -5,7 +5,7 @@
 //  Created by Gianluca Napoletano on 16/02/25.
 //
 
-import UIKit
+import Stevia
 
 class Saved: BaseViewController {
     
@@ -17,5 +17,12 @@ class Saved: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Saved"
+        
+        view.subviews(topNavigationBar)
+        view.layout {
+            0
+            |-0--topNavigationBar--0-|
+        }
+        topNavigationBar.Height == TopNavigationBar.itemHeight
     }
 }
