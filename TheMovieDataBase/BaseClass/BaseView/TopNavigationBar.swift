@@ -24,7 +24,7 @@ class TopNavigationBar: UIView {
         layout.minimumInteritemSpacing = 0
         
         let count = destinations.count
-        let width = UIApplication.screenSize?.width ?? 0
+        let width = UIApplication.shared.size.width
         let itemWidth = width / CGFloat(count)
         layout.itemSize = CGSize(width: width, height: TopNavigationBar.itemHeight)
         

@@ -24,7 +24,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             BottomNavigationBar.Item.Destination(text: "TV Shows", icon: UIImage(systemName: "tv"), viewController: TvShows()),
             BottomNavigationBar.Item.Destination(text: "Saved", icon: UIImage(systemName: "popcorn"), viewController: Saved())
         ]
-        UIApplication.screenSize = window?.screen.bounds.size
         window?.rootViewController = mainNavigator
         window?.makeKeyAndVisible()
     }
