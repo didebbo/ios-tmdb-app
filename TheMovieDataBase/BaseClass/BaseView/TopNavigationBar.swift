@@ -75,7 +75,7 @@ extension TopNavigationBar {
         private lazy var labelText: UILabel = {
             let label = UILabel()
             label.textColor = UIColor(resource: .tertiary)
-            label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+            label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
             label.textAlignment = .center
             return label
         }()
