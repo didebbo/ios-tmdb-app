@@ -7,10 +7,4 @@
 
 import UIKit
 
-class BaseViewController: CoreViewController {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
-}
+class BaseViewController: CoreViewController {}

@@ -7,10 +7,4 @@
 
 import UIKit
 
-class BaseTableViewController: CoreTableViewController {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
-}
+class BaseTableViewController: CoreTableViewController {}

@@ -15,15 +15,15 @@ class BaseNavigationController: CoreNavigationController {
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor(resource: .primary)
         appearance.titleTextAttributes = [
-            .foregroundColor: UIColor.white
+            .foregroundColor: UIColor(resource: .tertiary)
         ]
         appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.white
+            .foregroundColor: UIColor(resource: .secondary)
         ]
         
         
         navigationBar.scrollEdgeAppearance = appearance
         navigationBar.standardAppearance = appearance
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor(resource: .primary)
     }
 }
