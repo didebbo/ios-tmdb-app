@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         let bottomNavigator = BottomNavigator()
         bottomNavigator.destinations = [
-            BottomNavigationBar.Destination(text: "Main", icon: UIImage(systemName: "plus"), viewController: Main())
+            BottomNavigationBar.Item.Destination(text: "Movie", icon: UIImage(systemName: "movieclapper"), viewController: Main())
         ]
         window?.rootViewController = bottomNavigator
         window?.makeKeyAndVisible()

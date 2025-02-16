@@ -9,7 +9,7 @@ import SnapKit
 
 class BottomNavigator: BaseNavigationController {
     
-    var destinations: [BottomNavigationBar.Destination] = []
+    var destinations: [BottomNavigationBar.Item.Destination] = []
     
     lazy var bottomNavigationBar: BottomNavigationBar = {
         let view = BottomNavigationBar(detstinations: destinations)
