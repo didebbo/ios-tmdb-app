@@ -15,10 +15,12 @@ class BaseNavigationController: CoreNavigationController {
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor(resource: .primary)
         appearance.titleTextAttributes = [
-            .foregroundColor: UIColor(resource: .tertiary)
+            .foregroundColor: UIColor(resource: .tertiary),
+            .font: UIFont.systemFont(ofSize: 24, weight: .bold)
         ]
         appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor(resource: .secondary)
+            .foregroundColor: UIColor(resource: .secondary),
+            .font: UIFont.systemFont(ofSize: 32, weight: .bold)
         ]
         
         

@@ -7,4 +7,9 @@
 
 import UIKit
 
-class BaseTableViewController: CoreTableViewController {}
+class BaseTableViewController: CoreTableViewController {
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.selectionStyle = .none
+    }
+}
