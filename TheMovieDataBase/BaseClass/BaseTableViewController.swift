@@ -9,6 +9,13 @@ import UIKit
 
 class BaseTableViewController: CoreTableViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         handleBottomNavigator()

@@ -7,9 +7,15 @@
 
 import Stevia
 
+protocol BottomNavigationBarDelegate: AnyObject {
+    func didSelectItemAt(currentIndex: Int, destinationIndex: Int)
+}
+
 class BottomNavigationBar: UIView {
     
     static let itemHeight: CGFloat = 80
+    
+    weak var delegate: BottomNavigationBarDelegate?
     
     private let destinations: [Item.Destination]
     private var currentIndex: Int = 0
@@ -77,7 +83,9 @@ extension BottomNavigationBar: UICollectionViewDataSource {
 extension BottomNavigationBar: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        currentIndex = indexPath.row
+        let destinationIndex = indexPath.row
+        delegate?.didSelectItemAt(currentIndex: currentIndex, destinationIndex: destinationIndex)
+        currentIndex = destinationIndex
         collectionView.reloadData()
     }
     
