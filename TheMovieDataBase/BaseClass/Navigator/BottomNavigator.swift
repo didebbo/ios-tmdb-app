@@ -50,22 +50,56 @@ extension BottomNavigator: BottomNavigationBarDelegate {
         
         let startDestinationVCTranslationX: CGFloat = currentIndex < destinationIndex ? view.bounds.width : -view.bounds.width
         destinationVC.view.transform = CGAffineTransform(translationX: startDestinationVCTranslationX, y: 0)
-        destinationVC.view.alpha = 0
         
-        UIView.animate(withDuration: 0.6) { [weak self] in guard let self else { return }
-            let currentVCTranslationX: CGFloat = currentIndex < destinationIndex ? -view.bounds.width : view.bounds.width
-            currentVC.view.transform = CGAffineTransform(translationX: currentVCTranslationX, y: 0)
-        }
-        UIView.animate(withDuration: 0.3) {
-            currentVC.view.alpha = 0
+        handleComplexAnimation(currentItem: (index: currentIndex, vc: currentVC), destinationItem: (index: destinationIndex, vc: destinationVC))
+    }
+    
+    private func handleSimpleAnimation(currentItem: (index: Int, vc: UIViewController), destinationItem: (index: Int, vc: UIViewController)) {
+        UIView.animate(withDuration: 0.3) { [weak self] in guard let self else { return }
+            let currentVCTranslationX: CGFloat = currentItem.index < destinationItem.index ? -view.bounds.width : view.bounds.width
+            currentItem.vc.view.transform = CGAffineTransform(translationX: currentVCTranslationX, y: 0)
         } completion: { [weak self] _ in guard let self else { return }
-            setViewControllers([destinationVC], animated: false)
+            setViewControllers([destinationItem.vc], animated: false)
             
             UIView.animate(withDuration: 0.3) {
-                destinationVC.view.transform = .identity
+                destinationItem.vc.view.transform = .identity
             }
-            UIView.animate(withDuration: 0.6) { [weak self] in guard let self else { return }
-                destinationVC.view.alpha = 1
+        }
+    }
+    
+    private func handleMediumAnimation(currentItem: (index: Int, vc: UIViewController), destinationItem: (index: Int, vc: UIViewController)) {
+        destinationItem.vc.view.alpha = 0
+        UIView.animate(withDuration: 0.3) { [weak self] in guard let self else { return }
+            let currentVCTranslationX: CGFloat = currentItem.index < destinationItem.index ? -view.bounds.width : view.bounds.width
+            currentItem.vc.view.transform = CGAffineTransform(translationX: currentVCTranslationX, y: 0)
+            currentItem.vc.view.alpha = 0
+        } completion: { [weak self] _ in guard let self else { return }
+            setViewControllers([destinationItem.vc], animated: false)
+            
+            UIView.animate(withDuration: 0.3) {
+                destinationItem.vc.view.transform = .identity
+                destinationItem.vc.view.alpha = 1
+            }
+        }
+    }
+    
+    private func handleComplexAnimation(currentItem: (index: Int, vc: UIViewController), destinationItem: (index: Int, vc: UIViewController)) {
+        destinationItem.vc.view.alpha = 0
+        
+        UIView.animate(withDuration: 0.6) { [weak self] in guard let self else { return }
+            let currentVCTranslationX: CGFloat = currentItem.index < destinationItem.index ? -view.bounds.width : view.bounds.width
+            currentItem.vc.view.transform = CGAffineTransform(translationX: currentVCTranslationX, y: 0)
+        }
+        UIView.animate(withDuration: 0.3) {
+            currentItem.vc.view.alpha = 0
+        } completion: { [weak self] _ in guard let self else { return }
+            setViewControllers([destinationItem.vc], animated: false)
+            
+            UIView.animate(withDuration: 0.3) {
+                destinationItem.vc.view.transform = .identity
+            }
+            UIView.animate(withDuration: 0.6) {
+                destinationItem.vc.view.alpha = 1
             }
         }
     }
