@@ -12,7 +12,6 @@ class Navigator: BaseNavigationController {
     lazy var bottomNavigationBar: BottomNavigationBar = {
         let view = BottomNavigationBar(detstinations: [Main(),UIViewController()])
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.red
         return view
     }()
     
@@ -21,8 +20,8 @@ class Navigator: BaseNavigationController {
         
         navigationBar.prefersLargeTitles = true
         
-        handleBottomNavigationBar()
         setViewControllers([Main()], animated: true)
+        handleBottomNavigationBar()
     }
     
     private func handleBottomNavigationBar() {

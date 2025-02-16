@@ -11,7 +11,7 @@ class BottomNavigationBar: UIView {
     
     private let detstinations: [UIViewController]
     
-    static let itemHeight: CGFloat = 200
+    static let itemHeight: CGFloat = 80
     
     private lazy var itemSize: CGSize = {
         let count = self.detstinations.count
@@ -37,6 +37,7 @@ class BottomNavigationBar: UIView {
     init(detstinations: [UIViewController]) {
         self.detstinations = detstinations
         super.init(frame: .zero)
+        backgroundColor = UIColor(resource: .primary)
         let _ = itemSize
     }
     

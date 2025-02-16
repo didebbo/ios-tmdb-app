@@ -23,9 +23,16 @@ class BaseNavigationController: CoreNavigationController {
             .font: UIFont.systemFont(ofSize: 32, weight: .bold)
         ]
         
+        let backButtonAppearance = UIBarButtonItemAppearance()
+        backButtonAppearance.normal.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 16, weight: .bold)
+        ]
+        
+        appearance.backButtonAppearance = backButtonAppearance
         
         navigationBar.scrollEdgeAppearance = appearance
         navigationBar.standardAppearance = appearance
-        view.backgroundColor = UIColor(resource: .primary)
+        navigationBar.tintColor = UIColor.white
+        view.backgroundColor = UIColor.white
     }
 }
