@@ -16,7 +16,7 @@
 		99A2B13E2D611458008BBA96 /* CoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B13D2D611458008BBA96 /* CoreViewController.swift */; };
 		99A2B1402D6114CB008BBA96 /* CoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B13F2D6114CB008BBA96 /* CoreTableViewController.swift */; };
 		99A2B1432D611676008BBA96 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1422D611676008BBA96 /* Main.swift */; };
-		99A2B1452D6117C7008BBA96 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1442D6117C7008BBA96 /* Navigator.swift */; };
+		99A2B1452D6117C7008BBA96 /* BottomNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1442D6117C7008BBA96 /* BottomNavigator.swift */; };
 		99A2B1482D612CCC008BBA96 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1472D612CCC008BBA96 /* BaseNavigationController.swift */; };
 		99A2B14A2D612D63008BBA96 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1492D612D63008BBA96 /* BaseTableViewController.swift */; };
 		99A2B14C2D612FB2008BBA96 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B14B2D612FB2008BBA96 /* BaseViewController.swift */; };
@@ -36,7 +36,7 @@
 		99A2B13D2D611458008BBA96 /* CoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreViewController.swift; sourceTree = "<group>"; };
 		99A2B13F2D6114CB008BBA96 /* CoreTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTableViewController.swift; sourceTree = "<group>"; };
 		99A2B1422D611676008BBA96 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
-		99A2B1442D6117C7008BBA96 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		99A2B1442D6117C7008BBA96 /* BottomNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigator.swift; sourceTree = "<group>"; };
 		99A2B1472D612CCC008BBA96 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		99A2B1492D612D63008BBA96 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		99A2B14B2D612FB2008BBA96 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 				99A2B1382D611224008BBA96 /* CoreClass */,
 				99A2B1462D612C46008BBA96 /* BaseClass */,
 				99B745D12D61F19500CA9441 /* Component */,
-				99A2B1442D6117C7008BBA96 /* Navigator.swift */,
+				99A2B1442D6117C7008BBA96 /* BottomNavigator.swift */,
 				99A2B1422D611676008BBA96 /* Main.swift */,
 				99A2B12A2D610A6C008BBA96 /* Main.storyboard */,
 				99A2B12D2D610A6D008BBA96 /* Assets.xcassets */,
@@ -270,7 +270,7 @@
 				99A2B1482D612CCC008BBA96 /* BaseNavigationController.swift in Sources */,
 				99A2B13A2D611270008BBA96 /* CoreNavigationController.swift in Sources */,
 				99A2B14A2D612D63008BBA96 /* BaseTableViewController.swift in Sources */,
-				99A2B1452D6117C7008BBA96 /* Navigator.swift in Sources */,
+				99A2B1452D6117C7008BBA96 /* BottomNavigator.swift in Sources */,
 				99A2B1432D611676008BBA96 /* Main.swift in Sources */,
 				99A2B1272D610A6C008BBA96 /* SceneDelegate.swift in Sources */,
 			);

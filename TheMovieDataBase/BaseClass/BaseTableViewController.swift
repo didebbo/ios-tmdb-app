@@ -12,7 +12,7 @@ class BaseTableViewController: CoreTableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        guard let navigator: Navigator = navigationController as? Navigator else { return }
+        guard let navigator: BottomNavigator = navigationController as? BottomNavigator else { return }
         let viewSize = navigator.view.bounds.size
         let bottomNavigationBarSize = navigator.bottomNavigationBar.bounds.size
         

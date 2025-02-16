@@ -1,5 +1,5 @@
 //
-//  Navigator.swift
+//  BottomNavigator.swift
 //  TheMovieDataBase
 //
 //  Created by Gianluca Napoletano on 15/02/25.
@@ -7,10 +7,12 @@
 
 import SnapKit
 
-class Navigator: BaseNavigationController {
+class BottomNavigator: BaseNavigationController {
+    
+    var destinations: [UIViewController] = []
     
     lazy var bottomNavigationBar: BottomNavigationBar = {
-        let view = BottomNavigationBar(detstinations: [Main(),UIViewController()])
+        let view = BottomNavigationBar(detstinations: destinations)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -20,7 +22,7 @@ class Navigator: BaseNavigationController {
         
         navigationBar.prefersLargeTitles = true
         
-        setViewControllers([Main()], animated: true)
+        setViewControllers(destinations, animated: false)
         handleBottomNavigationBar()
     }
     
