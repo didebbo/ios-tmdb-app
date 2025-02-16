@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             BottomNavigationBar.Item.Destination(text: "TV Shows", icon: UIImage(systemName: "tv"), viewController: TvShows()),
             BottomNavigationBar.Item.Destination(text: "Library", icon: UIImage(systemName: "popcorn"), viewController: Saved(destinations: [
                 TopNavigationBar.Item.Destination(title: "Movies", dataSource: []),
-                TopNavigationBar.Item.Destination(title: "Tv Shows", dataSource: [])
+                TopNavigationBar.Item.Destination(title: "TV Shows", dataSource: [])
             ]))
         ]
         window?.rootViewController = mainNavigator

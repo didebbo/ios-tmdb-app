@@ -11,7 +11,7 @@ class TvShows: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Tv Shows"
+        title = "TV Shows"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
         view.backgroundColor = UIColor.clear
     }
@@ -32,7 +32,7 @@ class TvShows: BaseTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = BaseViewController()
-        vc.title = "Tv Show"
+        vc.title = "TV Show"
         navigationController?.pushViewController(vc, animated: true)
     }
     
