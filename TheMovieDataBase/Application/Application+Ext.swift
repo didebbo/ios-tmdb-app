@@ -8,5 +8,5 @@
 import UIKit
 
 extension UIApplication {
-    var size: CGSize { (connectedScenes.first as? UIWindowScene)?.screen.bounds.size ?? .zero }
+    var screenSize: CGSize { (connectedScenes.first as? UIWindowScene)?.screen.bounds.size ?? .zero }
 }

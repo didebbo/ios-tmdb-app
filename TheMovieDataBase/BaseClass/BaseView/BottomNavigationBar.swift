@@ -22,7 +22,7 @@ class BottomNavigationBar: UIView {
     
     private lazy var itemSize: CGSize = {
         let count = destinations.count
-        let width = UIApplication.shared.size.width
+        let width = UIApplication.shared.screenSize.width
         let itemWidth = width / CGFloat(count)
         return CGSize(width: itemWidth, height: BottomNavigationBar.itemHeight)
     }()

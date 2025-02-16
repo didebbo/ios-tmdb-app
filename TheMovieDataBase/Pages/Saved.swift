@@ -5,24 +5,28 @@
 //  Created by Gianluca Napoletano on 16/02/25.
 //
 
-import Stevia
+import SnapKit
 
 class Saved: BaseViewController {
     
     private lazy var topNavigationBar: TopNavigationBar = {
-        let view = TopNavigationBar()
+        let view = TopNavigationBar(destinations: [
+            TopNavigationBar.Destination(title: "Movies", dataSource: []),
+            TopNavigationBar.Destination(title: "Tv Shows", dataSource: [])
+        ])
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Saved"
+        title = "Library"
         
-        view.subviews(topNavigationBar)
-        view.layout {
-            0
-            |-0--topNavigationBar--0-|
+        view.addSubview(topNavigationBar)
+        topNavigationBar.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(TopNavigationBar.itemHeight)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
         }
-        topNavigationBar.Height == TopNavigationBar.itemHeight
     }
 }
