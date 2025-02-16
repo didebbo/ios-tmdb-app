@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		996919412D628ECF003EE6C3 /* ViewPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996919402D628ECF003EE6C3 /* ViewPager.swift */; };
 		99A2B1252D610A6C008BBA96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1242D610A6C008BBA96 /* AppDelegate.swift */; };
 		99A2B1272D610A6C008BBA96 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1262D610A6C008BBA96 /* SceneDelegate.swift */; };
 		99A2B12C2D610A6C008BBA96 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 99A2B12B2D610A6C008BBA96 /* Base */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		996919402D628ECF003EE6C3 /* ViewPager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPager.swift; sourceTree = "<group>"; };
 		99A2B1212D610A6C008BBA96 /* TheMovieDataBase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMovieDataBase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99A2B1242D610A6C008BBA96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99A2B1262D610A6C008BBA96 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			children = (
 				99B745D22D61F1B200CA9441 /* BottomNavigationBar.swift */,
 				99B745DC2D625B2100CA9441 /* TopNavigationBar.swift */,
+				996919402D628ECF003EE6C3 /* ViewPager.swift */,
 			);
 			path = BaseView;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				99A2B1482D612CCC008BBA96 /* BaseNavigationController.swift in Sources */,
 				99A2B13A2D611270008BBA96 /* CoreNavigationController.swift in Sources */,
 				99A2B14A2D612D63008BBA96 /* BaseTableViewController.swift in Sources */,
+				996919412D628ECF003EE6C3 /* ViewPager.swift in Sources */,
 				99A2B1452D6117C7008BBA96 /* BottomNavigator.swift in Sources */,
 				99A2B1432D611676008BBA96 /* Movies.swift in Sources */,
 				99A2B1272D610A6C008BBA96 /* SceneDelegate.swift in Sources */,

@@ -9,12 +9,12 @@ import SnapKit
 
 class Saved: BaseViewController {
     
+    private var destinations: [TopNavigationBar.Item.Destination]
+    
     private lazy var topNavigationBar: TopNavigationBar = {
-        let view = TopNavigationBar(destinations: [
-            TopNavigationBar.Item.Destination(title: "Movies", dataSource: []),
-            TopNavigationBar.Item.Destination(title: "Tv Shows", dataSource: [])
-        ])
+        let view = TopNavigationBar(destinations: destinations)
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.delegate = self
         return view
     }()
     
@@ -28,5 +28,21 @@ class Saved: BaseViewController {
             make.height.equalTo(TopNavigationBar.itemHeight)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
         }
+    }
+    
+    init(destinations: [TopNavigationBar.Item.Destination]) {
+        self.destinations = destinations
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension Saved: TopNavigationBarDelegate {
+    
+    func didSelectItemAt(currentIndex: Int, destinationIndex: Int) {
+        guard currentIndex != destinationIndex else { return }
     }
 }

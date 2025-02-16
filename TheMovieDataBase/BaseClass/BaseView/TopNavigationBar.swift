@@ -7,9 +7,15 @@
 
 import Stevia
 
+protocol TopNavigationBarDelegate: AnyObject {
+    func didSelectItemAt(currentIndex: Int, destinationIndex: Int)
+}
+
 class TopNavigationBar: UIView {
     
     static let itemHeight: CGFloat = 40
+    
+    weak var delegate: TopNavigationBarDelegate?
     
     private var destinations: [Item.Destination]
     private var currentIndex: Int = 0
@@ -34,7 +40,7 @@ class TopNavigationBar: UIView {
         collection.register(Item.self, forCellWithReuseIdentifier: String(describing: Item.self))
         
         collection.dataSource = self
-        // collection.delegate = self
+        collection.delegate = self
         
         return collection
     }()
@@ -119,5 +125,15 @@ extension TopNavigationBar: UICollectionViewDataSource {
         let item = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: Item.self), for: indexPath) as? Item
         item?.configure(destination: destinations[indexPath.row], isSelected: currentIndex == indexPath.row)
         return item!
+    }
+}
+
+extension TopNavigationBar: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let destinationIndex = indexPath.row
+        delegate?.didSelectItemAt(currentIndex: currentIndex, destinationIndex: destinationIndex)
+        currentIndex = destinationIndex
+        collectionView.reloadData()
     }
 }
