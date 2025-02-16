@@ -9,7 +9,13 @@ import Stevia
 
 class BottomNavigationBar: UIView {
     
-    private let detstinations: [UIViewController]
+    struct Destination {
+        let text: String
+        let icon: UIImage?
+        let viewController: UIViewController
+    }
+    
+    private let detstinations: [Destination]
     
     static let itemHeight: CGFloat = 80
     
@@ -34,7 +40,7 @@ class BottomNavigationBar: UIView {
         return collection
     }()
     
-    init(detstinations: [UIViewController]) {
+    init(detstinations: [BottomNavigationBar.Destination]) {
         self.detstinations = detstinations
         super.init(frame: .zero)
         backgroundColor = UIColor(resource: .primary)

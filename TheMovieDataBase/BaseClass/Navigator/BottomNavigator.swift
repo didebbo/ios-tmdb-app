@@ -9,7 +9,7 @@ import SnapKit
 
 class BottomNavigator: BaseNavigationController {
     
-    var destinations: [UIViewController] = []
+    var destinations: [BottomNavigationBar.Destination] = []
     
     lazy var bottomNavigationBar: BottomNavigationBar = {
         let view = BottomNavigationBar(detstinations: destinations)
@@ -22,7 +22,7 @@ class BottomNavigator: BaseNavigationController {
         
         navigationBar.prefersLargeTitles = true
         
-        setViewControllers(destinations, animated: false)
+        setViewControllers(destinations.compactMap({ $0.viewController }), animated: false)
         handleBottomNavigationBar()
     }
     
