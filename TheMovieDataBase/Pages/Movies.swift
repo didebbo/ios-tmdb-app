@@ -31,7 +31,8 @@ class Movies: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = Movies()
+        let vc = BaseViewController()
+        vc.title = "Movie"
         navigationController?.pushViewController(vc, animated: true)
     }
     

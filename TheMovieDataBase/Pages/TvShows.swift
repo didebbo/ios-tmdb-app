@@ -31,7 +31,8 @@ class TvShows: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = TvShows()
+        let vc = BaseViewController()
+        vc.title = "Tv Show"
         navigationController?.pushViewController(vc, animated: true)
     }
     
