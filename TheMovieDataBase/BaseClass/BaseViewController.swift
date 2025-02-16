@@ -11,14 +11,17 @@ class BaseViewController: CoreViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        guard let navigator: BottomNavigator = navigationController as? BottomNavigator else { return }
-        let viewSize = navigator.view.bounds.size
-        let bottomNavigationBarSize = navigator.bottomNavigationBar.bounds.size
+        handleBottomNavigator()
+    }
+    
+    private func handleBottomNavigator() {
+        guard let nc: BottomNavigator = navigationController as? BottomNavigator else { return }
+        let vs = nc.view.bounds.size
+        let bbs = nc.bottomNavigationBar.bounds.size
         
         view.snp.makeConstraints { make in
-            make.height.equalTo(viewSize.height - bottomNavigationBarSize.height)
-            make.width.equalTo(viewSize.width)
+            make.height.equalTo(vs.height - bbs.height)
+            make.width.equalTo(vs.width)
         }
     }
 }
