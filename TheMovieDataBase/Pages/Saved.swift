@@ -11,8 +11,8 @@ class Saved: BaseViewController {
     
     private lazy var topNavigationBar: TopNavigationBar = {
         let view = TopNavigationBar(destinations: [
-            TopNavigationBar.Destination(title: "Movies", dataSource: []),
-            TopNavigationBar.Destination(title: "Tv Shows", dataSource: [])
+            TopNavigationBar.Item.Destination(title: "Movies", dataSource: []),
+            TopNavigationBar.Item.Destination(title: "Tv Shows", dataSource: [])
         ])
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
