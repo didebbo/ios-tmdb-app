@@ -65,6 +65,27 @@ struct TMDB {
         return request
     }
     
+    func getImageData(from url: URL, completion: @escaping (_ response: SafeResult<Data>) -> Void) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error {
+                completion(.failure(.genericError(error.localizedDescription)))
+                return
+            }
+            
+            if let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode != 200 {
+                completion(.failure(.invalidStatusCode(code: statusCode)))
+                return
+            }
+            
+            if let data {
+                completion(.success(data))
+                return
+            }
+            
+            completion(.failure(.nullData))
+        }.resume()
+    }
+    
     func getResponse(from request: URLRequest, completion: @escaping (_ response: SafeResult<Data>) -> Void) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             

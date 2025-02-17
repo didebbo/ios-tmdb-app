@@ -46,6 +46,17 @@ struct DataProvider {
             }
         }
     }
+    
+    func getImageData(from url: URL, completion: @escaping (_ item: SafeResult<Data>) -> Void) {
+        tmdb.getImageData(from: url) { response in
+            response.hasError { error in
+                completion(.failure(error))
+            }
+            response.hasData { data in
+                completion(.success(data))
+            }
+        }
+    }
 }
 
 extension DataProvider {

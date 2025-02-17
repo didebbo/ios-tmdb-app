@@ -20,7 +20,8 @@ class Movies: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Movies"
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
+        tableView.register(ItemTableCell.self, forCellReuseIdentifier: String(describing: ItemTableCell.self))
+        
         DataProvider.shared.getMovies { item in
             item.hasData { [weak self] data in guard let self else { return }
                 movies = data
@@ -43,9 +44,10 @@ class Movies: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        cell.textLabel?.text = movies[indexPath.row].title
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ItemTableCell.self), for: indexPath) as? ItemTableCell
+        let item = movies[indexPath.row]
+        cell?.configure(with: item)
+        return cell!
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -55,6 +57,6 @@ class Movies: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
+        100
     }
 }
