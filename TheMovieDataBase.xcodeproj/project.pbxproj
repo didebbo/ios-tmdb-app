@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9910D93D2D634BF800FF4D14 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910D93C2D634BF800FF4D14 /* DataProvider.swift */; };
+		9910D9402D634CE600FF4D14 /* Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910D93F2D634CE600FF4D14 /* Env.swift */; };
 		996919412D628ECF003EE6C3 /* ViewPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996919402D628ECF003EE6C3 /* ViewPager.swift */; };
 		99A2B1252D610A6C008BBA96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1242D610A6C008BBA96 /* AppDelegate.swift */; };
 		99A2B1272D610A6C008BBA96 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1262D610A6C008BBA96 /* SceneDelegate.swift */; };
@@ -32,6 +34,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9910D93C2D634BF800FF4D14 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
+		9910D93F2D634CE600FF4D14 /* Env.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Env.swift; sourceTree = "<group>"; };
 		996919402D628ECF003EE6C3 /* ViewPager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPager.swift; sourceTree = "<group>"; };
 		99A2B1212D610A6C008BBA96 /* TheMovieDataBase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMovieDataBase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99A2B1242D610A6C008BBA96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +76,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9910D93E2D634CD600FF4D14 /* Env */ = {
+			isa = PBXGroup;
+			children = (
+				9910D93F2D634CE600FF4D14 /* Env.swift */,
+			);
+			path = Env;
+			sourceTree = "<group>";
+		};
 		99A2B1182D610A6C008BBA96 = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +124,7 @@
 				99A2B1392D611270008BBA96 /* CoreNavigationController.swift */,
 				99A2B13D2D611458008BBA96 /* CoreViewController.swift */,
 				99A2B13F2D6114CB008BBA96 /* CoreTableViewController.swift */,
+				9910D93C2D634BF800FF4D14 /* DataProvider.swift */,
 			);
 			path = CoreClass;
 			sourceTree = "<group>";
@@ -119,6 +132,7 @@
 		99A2B1412D611569008BBA96 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				9910D93E2D634CD600FF4D14 /* Env */,
 				99A2B1262D610A6C008BBA96 /* SceneDelegate.swift */,
 				99A2B1242D610A6C008BBA96 /* AppDelegate.swift */,
 				99B745E12D62667C00CA9441 /* Application+Ext.swift */,
@@ -312,8 +326,10 @@
 				99A2B13E2D611458008BBA96 /* CoreViewController.swift in Sources */,
 				99A2B1252D610A6C008BBA96 /* AppDelegate.swift in Sources */,
 				99B745E02D62638500CA9441 /* Item.swift in Sources */,
+				9910D9402D634CE600FF4D14 /* Env.swift in Sources */,
 				99B745D92D6237CD00CA9441 /* TvShows.swift in Sources */,
 				99A2B1402D6114CB008BBA96 /* CoreTableViewController.swift in Sources */,
+				9910D93D2D634BF800FF4D14 /* DataProvider.swift in Sources */,
 				99B745D32D61F1B200CA9441 /* BottomNavigationBar.swift in Sources */,
 				99B745DD2D625B2100CA9441 /* TopNavigationBar.swift in Sources */,
 				99B745D62D621DF800CA9441 /* Navigator.swift in Sources */,
