@@ -8,5 +8,5 @@
 import Foundation
 
 struct Env {
-    static var TMDB_API_Read_Access_Token: String = ""
+    static let TMDB_ACCESS_TOKEN: String = "YOUR_TMDB_ACCESS_TOKEN"
 }
