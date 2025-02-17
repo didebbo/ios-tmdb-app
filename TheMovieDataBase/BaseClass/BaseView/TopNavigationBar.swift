@@ -61,6 +61,11 @@ class TopNavigationBar: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func updateCurrentIndex(with index: Int) {
+        currentIndex = index
+        collectionView.reloadData()
+    }
 }
 
 extension TopNavigationBar {

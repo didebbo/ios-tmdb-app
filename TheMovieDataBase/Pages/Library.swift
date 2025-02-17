@@ -30,6 +30,7 @@ class Library: BaseViewController {
         view.showsVerticalScrollIndicator = false
         view.showsHorizontalScrollIndicator = false
         view.dataSource = self
+        view.delegate = self
         
         view.register(LibraryCollectionCell.self, forCellWithReuseIdentifier: String(describing: LibraryCollectionCell.self))
         
@@ -91,7 +92,12 @@ extension Library: TopNavigationBarDelegate {
     func didSelectItemAt(currentIndex: Int, destinationIndex: Int) {
         guard currentIndex != destinationIndex else { return }
         
-        
+        UIView.animate(withDuration: 0.3) { [weak self] in guard let self else { return }
+            collectionView.isPagingEnabled = false
+            collectionView.scrollToItem(at: IndexPath(row: destinationIndex, section: 0), at: .centeredHorizontally, animated: true)
+        } completion: { [weak self] _ in guard let self else { return }
+            collectionView.isPagingEnabled = true
+        }
     }
 }
 
@@ -110,5 +116,19 @@ extension Library: UICollectionViewDataSource {
         let colors: [UIColor] = [.red, .green, .blue]
         cell?.configure(color: colors.randomElement() ?? .clear)
         return cell!
+    }
+}
+
+extension Library: UICollectionViewDelegate {
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let cellWidth = layout.itemSize.width
+        
+        let index = Int((scrollView.contentOffset.x + (0.5 * cellWidth)) / cellWidth)
+        
+        if index >= 0 && index < destinations.count { // Sostituisci con il tuo datasource
+            topNavigationBar.updateCurrentIndex(with: index)
+        }
     }
 }
