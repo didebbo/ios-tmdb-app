@@ -14,20 +14,34 @@ struct DataProvider {
     private let tmdb: TMDB = TMDB(ACCESS_TOKEN: Env.TMDB_ACCESS_TOKEN)
     
     func getMovies(completion: @escaping (_ item: SafeResult<[Item]>) -> Void) {
-        if let url = tmdb.getUrl(from: .discoverMovie) {
-            let request = tmdb.getRequest(from: url)
-            tmdb.getResponse(from: request) { response in
-                let result = getDecodedJson(from: response.jsonData, to: MovieResponse.self)
-                result.hasError { error in
+        let url = tmdb.getUrl(from: .discoverMovie)
+        url.hasError { error in
+            completion(.failure(error))
+        }
+        url.hasData { data in
+            let request = tmdb.getRequest(from: data)
+            tmdb.getResponse(from: request) { data in
+                data.hasError { error in
                     completion(.failure(error))
                 }
-                result.hasData { r in
-                    let items: [Item] = r.results.map { movie in
-                        let imageurl = tmdb.getImageUrl(from: movie.poster_path)
-                        let detailImage = tmdb.getImageUrl(from: movie.backdrop_path)
-                        return Item(id: movie.id, title: movie.title, description: movie.overview, posterUrl: imageurl, coverUrl: detailImage)
+                data.hasData { data in
+                    let result = getDecodedJson(from: data, to: MovieResponse.self)
+                    result.hasError { error in
+                        completion(.failure(error))
                     }
-                    completion(.success(items))
+                    result.hasData { r in
+                        let items: [Item] = r.results.map { movie in
+                            var item = Item(id: movie.id, title: movie.title, description: movie.overview)
+                            tmdb.getImageUrl(from: movie.poster_path).hasData { data in
+                                item.posterUrl = data
+                            }
+                            tmdb.getImageUrl(from: movie.backdrop_path).hasData { data in
+                                item.coverUrl = data
+                            }
+                            return item
+                        }
+                        completion(.success(items))
+                    }
                 }
             }
         }
@@ -36,13 +50,12 @@ struct DataProvider {
 
 extension DataProvider {
     
-    private func getDecodedJson<M: Codable>(from jsonData: Data?, to model: M.Type) -> SafeResult<M> {
-        guard let jsonData else { return SafeResult.failure(TMDB.TMDB_Error.nullData) }
+    private func getDecodedJson<M: Codable>(from data: Data, to model: M.Type) -> SafeResult<M> {
         do {
-            let decodedJson = try JSONDecoder().decode(model, from: jsonData)
+            let decodedJson = try JSONDecoder().decode(model, from: data)
             return SafeResult.success(decodedJson)
         } catch {
-            return SafeResult.failure(error)
+            return .failure(.genericError(error.localizedDescription))
         }
     }
     

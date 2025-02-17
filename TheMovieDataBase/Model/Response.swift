@@ -9,9 +9,9 @@ import Foundation
 
 enum SafeResult<R> {
     case success(R)
-    case failure(Error)
+    case failure(TMDB.TMDB_Error)
     
-    func hasError(completion: @escaping (_ error: Error) -> Void) {
+    func hasError(completion: @escaping (_ error: TMDB.TMDB_Error) -> Void) {
         switch self {
         case .failure(let error): completion(error)
         default: break
@@ -24,12 +24,6 @@ enum SafeResult<R> {
         default: break
         }
     }
-}
-
-struct Response {
-    var statusCode: Int?
-    var error: Error?
-    var jsonData: Data?
 }
 
 struct MovieResponse: Codable {

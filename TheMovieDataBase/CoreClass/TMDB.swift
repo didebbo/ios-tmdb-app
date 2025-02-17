@@ -13,23 +13,29 @@ struct TMDB {
     private let host: String = "https://api.themoviedb.org/3/"
     private let imageHost: String = "https://image.tmdb.org/t/p/w500"
     
-    enum EndPoint {
-        case discoverMovie
+    enum EndPoint: String {
+        case discoverMovie = "discover/movie"
         
         func urlString(host: String) -> String {
             switch self {
             case .discoverMovie:
-                "\(host)discover/movie"
+                "\(host)\(self.rawValue)"
             }
         }
     }
     
     enum TMDB_Error: Error {
+        case invalidUrl(urlString: String)
+        case invalidStatusCode(code: Int)
         case nullData
         case genericError(String)
         
         var description: String {
             switch self {
+            case .invalidUrl(let urlString):
+                "Invalid URL: \(urlString)"
+            case .invalidStatusCode(let code):
+                "Invalid statusCode: \(code)"
             case .nullData:
                 "Data is NULL"
             case .genericError(let str):
@@ -40,12 +46,16 @@ struct TMDB {
     
     init(ACCESS_TOKEN: String) { self.ACCESS_TOKEN = ACCESS_TOKEN }
     
-    func getUrl(from endpoint: EndPoint) -> URL? {
-        URL(string: endpoint.urlString(host: host))
+    func getUrl(from endpoint: EndPoint) -> SafeResult<URL> {
+        let url = URL(string: endpoint.urlString(host: host))
+        if let url { return .success(url) }
+        return .failure(.invalidUrl(urlString: endpoint.urlString(host: host)))
     }
     
-    func getImageUrl(from path: String) -> URL? {
-        URL(string: "\(imageHost)\(path)")
+    func getImageUrl(from path: String) -> SafeResult<URL> {
+        let url = URL(string: "\(imageHost)\(path)")
+        if let url { return .success(url) }
+        return .failure(.invalidUrl(urlString: "\(host)\(path)"))
     }
     
     func getRequest(from url: URL) -> URLRequest {
@@ -55,25 +65,32 @@ struct TMDB {
         return request
     }
     
-    func getResponse(from request: URLRequest, completion: @escaping (_ response: Response) -> Void) {
-        URLSession.shared.dataTask(with: request) { d, r, e in
-            var response = Response()
+    func getResponse(from request: URLRequest, completion: @escaping (_ response: SafeResult<Data>) -> Void) {
+        URLSession.shared.dataTask(with: request) { data, response, error in
             
-            response.statusCode = (r as? HTTPURLResponse)?.statusCode
-            response.error = e
-            do {
-                guard let d else { throw TMDB_Error.nullData }
-                let jsonObject = try JSONSerialization.jsonObject(with: d, options: [])
-                response.jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
-            } catch {
-                response.error = error
+            if let error {
+                completion(.failure(.genericError(error.localizedDescription)))
+                return
             }
             
-            if response.statusCode != 200 {
-                response.error = response.error ?? TMDB_Error.genericError(String(describing: response.statusCode))
+            if let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode != 200 {
+                completion(.failure(.invalidStatusCode(code: statusCode)))
+                return
             }
             
-            completion(response)
+            if let data {
+                do {
+                    let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+                    let jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
+                    completion(.success(jsonData))
+                    return
+                } catch {
+                    completion(.failure(.genericError(error.localizedDescription)))
+                    return
+                }
+            }
+            
+            completion(.failure(.nullData))
         }.resume()
     }
 }

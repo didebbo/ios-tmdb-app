@@ -9,16 +9,27 @@ import UIKit
 
 class Movies: BaseTableViewController {
     
+    private var movies: [Item] = [] {
+        didSet {
+            DispatchQueue.main.async { [weak self] in guard let self else { return }
+                tableView.reloadData()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Movies"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
         DataProvider.shared.getMovies { item in
-            item.hasData { data in
-                print(data)
+            item.hasData { [weak self] data in guard let self else { return }
+                movies = data
             }
-            item.hasError { error in
-                print(error)
+            item.hasError { [weak self] error in guard let self else { return }
+                DispatchSerialQueue.main.async {
+                    let alert = UIAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
+                    self.present(alert, animated: true)
+                }
             }
         }
     }
@@ -28,12 +39,12 @@ class Movies: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        20
+        movies.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        cell.textLabel?.text = "Lorem Ipsum"
+        cell.textLabel?.text = movies[indexPath.row].title
         return cell
     }
     
@@ -44,6 +55,6 @@ class Movies: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        60
+        UITableView.automaticDimension
     }
 }

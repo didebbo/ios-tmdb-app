@@ -11,6 +11,6 @@ struct Item: Codable {
     let id: Int
     let title: String
     let description: String
-    let posterUrl: URL?
-    let coverUrl: URL?
+    var posterUrl: URL?
+    var coverUrl: URL?
 }
