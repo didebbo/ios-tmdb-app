@@ -26,9 +26,12 @@ class Library: BaseViewController {
         layout.itemSize = view.bounds.size
         
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        view.isPagingEnabled = true
         view.showsVerticalScrollIndicator = false
         view.showsHorizontalScrollIndicator = false
-        view.backgroundColor = UIColor.green
+        view.dataSource = self
+        
+        view.register(LibraryCollectionCell.self, forCellWithReuseIdentifier: String(describing: LibraryCollectionCell.self))
         
         
         return view
@@ -68,11 +71,44 @@ class Library: BaseViewController {
     }
 }
 
+extension Library {
+    
+    class LibraryCollectionCell: UICollectionViewCell {
+        
+        func configure(color: UIColor) {
+            backgroundColor = color
+        }
+        
+        override func prepareForReuse() {
+            super.prepareForReuse()
+            backgroundColor = UIColor.clear
+        }
+    }
+}
+
 extension Library: TopNavigationBarDelegate {
     
     func didSelectItemAt(currentIndex: Int, destinationIndex: Int) {
         guard currentIndex != destinationIndex else { return }
         
         
+    }
+}
+
+extension Library: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        destinations.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: LibraryCollectionCell.self), for: indexPath) as? LibraryCollectionCell
+        let colors: [UIColor] = [.red, .green, .blue]
+        cell?.configure(color: colors.randomElement() ?? .clear)
+        return cell!
     }
 }
