@@ -13,7 +13,14 @@ class Movies: BaseTableViewController {
         super.viewDidLoad()
         title = "Movies"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
-        DataProvider.shared.getMovies()
+        DataProvider.shared.getMovies { item in
+            item.hasData { data in
+                print(data)
+            }
+            item.hasError { error in
+                print(error)
+            }
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

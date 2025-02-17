@@ -11,6 +11,7 @@ struct TMDB {
     
     private let ACCESS_TOKEN: String
     private let host: String = "https://api.themoviedb.org/3/"
+    private let imageHost: String = "https://image.tmdb.org/t/p/w500"
     
     enum EndPoint {
         case discoverMovie
@@ -18,7 +19,7 @@ struct TMDB {
         func urlString(host: String) -> String {
             switch self {
             case .discoverMovie:
-                return "\(host)discover/movie"
+                "\(host)discover/movie"
             }
         }
     }
@@ -41,6 +42,10 @@ struct TMDB {
     
     func getUrl(from endpoint: EndPoint) -> URL? {
         URL(string: endpoint.urlString(host: host))
+    }
+    
+    func getImageUrl(from path: String) -> URL? {
+        URL(string: "\(imageHost)\(path)")
     }
     
     func getRequest(from url: URL) -> URLRequest {

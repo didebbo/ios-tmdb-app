@@ -8,9 +8,9 @@
 import Foundation
 
 struct Item: Codable {
-    let id: String
+    let id: Int
     let title: String
     let description: String
-    let imageURL: URL
-    let detailImage: URL
+    let posterUrl: URL?
+    let coverUrl: URL?
 }

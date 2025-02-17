@@ -13,12 +13,22 @@ struct DataProvider {
     
     private let tmdb: TMDB = TMDB(ACCESS_TOKEN: Env.TMDB_ACCESS_TOKEN)
     
-    func getMovies() {
+    func getMovies(completion: @escaping (_ item: SafeResult<[Item]>) -> Void) {
         if let url = tmdb.getUrl(from: .discoverMovie) {
             let request = tmdb.getRequest(from: url)
             tmdb.getResponse(from: request) { response in
                 let result = getDecodedJson(from: response.jsonData, to: MovieResponse.self)
-                print(result)
+                result.hasError { error in
+                    completion(.failure(error))
+                }
+                result.hasData { r in
+                    let items: [Item] = r.results.map { movie in
+                        let imageurl = tmdb.getImageUrl(from: movie.poster_path)
+                        let detailImage = tmdb.getImageUrl(from: movie.backdrop_path)
+                        return Item(id: movie.id, title: movie.title, description: movie.overview, posterUrl: imageurl, coverUrl: detailImage)
+                    }
+                    completion(.success(items))
+                }
             }
         }
     }
