@@ -13,7 +13,6 @@ class Movies: BaseTableViewController {
         super.viewDidLoad()
         title = "Movies"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
-        view.backgroundColor = UIColor.clear
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

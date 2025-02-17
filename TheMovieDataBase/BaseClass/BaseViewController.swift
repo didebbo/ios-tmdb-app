@@ -16,11 +16,13 @@ class BaseViewController: CoreViewController {
     
     private func handleBottomNavigator() {
         guard let nc: BottomNavigator = navigationController as? BottomNavigator else { return }
+        
         let vs = nc.view.bounds.size
         let bbs = nc.bottomNavigationBar.bounds.size
+        let safeHeight = vs.height - bbs.height
         
         view.snp.makeConstraints { make in
-            make.height.equalTo(vs.height - bbs.height)
+            make.height.equalTo(safeHeight)
             make.width.equalTo(vs.width)
         }
     }
