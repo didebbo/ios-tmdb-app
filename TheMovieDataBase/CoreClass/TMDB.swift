@@ -18,18 +18,18 @@ struct TMDB {
         func urlString(host: String) -> String {
             switch self {
             case .discoverMovie:
-                return "\(host)discover/moviee"
+                return "\(host)discover/movie"
             }
         }
     }
     
     enum TMDB_Error: Error {
-        case nulData
+        case nullData
         case genericError(String)
         
         var description: String {
             switch self {
-            case .nulData:
+            case .nullData:
                 "Data is NULL"
             case .genericError(let str):
                 "Generic Error: \(str)"
@@ -57,8 +57,9 @@ struct TMDB {
             response.statusCode = (r as? HTTPURLResponse)?.statusCode
             response.error = e
             do {
-                guard let d else { throw TMDB_Error.nulData }
-                response.jsonData = try JSONSerialization.jsonObject(with: d, options: [])
+                guard let d else { throw TMDB_Error.nullData }
+                let jsonObject = try JSONSerialization.jsonObject(with: d, options: [])
+                response.jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
             } catch {
                 response.error = error
             }
