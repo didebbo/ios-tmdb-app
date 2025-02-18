@@ -18,3 +18,14 @@ struct MovieResponse: Codable {
         let poster_path: String
     }
 }
+
+struct TVShowsResponse: Codable {
+    let results: [TVShow]
+    
+    struct TVShow: Codable {
+        let title: String
+        let overview: String
+        let posterPath: String
+        let backdropPath: String
+    }
+}

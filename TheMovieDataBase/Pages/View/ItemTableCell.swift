@@ -50,17 +50,13 @@ class ItemTableCell: UITableViewCell {
         titleLabel.text = item.title
         descriptionLabel.text = item.description
         
-        
-        if let posterUrl = item.posterUrl {
-            RemoteDataProvider.fetchData(from: URLRequest(url: posterUrl)) { response in
-                response.hasData { data in
-                    DispatchQueue.main.async { [weak self] in guard let self else { return }
-                        posterView.image = UIImage(data: data)
-                    }
+        DataProvider.shared.getImageDataFrom(imagePath: item.posterPath) { item in
+            item.hasData { data in
+                DispatchQueue.main.async { [weak self] in guard let self else { return }
+                    posterView.image = UIImage(data: data)
                 }
             }
         }
-        
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

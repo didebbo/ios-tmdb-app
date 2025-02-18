@@ -93,16 +93,13 @@ class Detail: BaseViewController {
     private func configureData() {
         titleLabel.text = item.title
         descriptionLabel.text = item.description
-        
-        if let coverUrl = item.coverUrl {
-            RemoteDataProvider.fetchData(from: URLRequest(url: coverUrl)) { response in
-                response.hasData { data in
-                    DispatchQueue.main.async { [weak self] in guard let self else { return }
-                        coverImageView.image = UIImage(data: data)
-                        
-                        UIView.animate(withDuration: 0.5) { [weak self] in guard let self else { return }
-                            coverImageView.alpha = 1
-                        }
+        DataProvider.shared.getImageDataFrom(imagePath: item.coverPath) { item in
+            item.hasData { data in
+                DispatchQueue.main.async { [weak self] in guard let self else { return }
+                    coverImageView.image = UIImage(data: data)
+                    
+                    UIView.animate(withDuration: 0.5) { [weak self] in guard let self else { return }
+                        coverImageView.alpha = 1
                     }
                 }
             }

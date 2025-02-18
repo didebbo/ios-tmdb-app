@@ -11,6 +11,6 @@ struct Item {
     let id: Int
     let title: String
     let description: String
-    var posterUrl: URL?
-    var coverUrl: URL?
+    var posterPath: String
+    var coverPath: String
 }

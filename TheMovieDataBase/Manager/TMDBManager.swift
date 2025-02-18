@@ -13,18 +13,19 @@ struct TMDBManager {
     private let host: String = "https://api.themoviedb.org/3/"
     private let imageHost: String = "https://image.tmdb.org/t/p/w500"
     
-    static let shared: TMDBManager = TMDBManager(ACCESS_TOKEN: Env.TMDB_ACCESS_TOKEN)
+    // static let shared: TMDBManager = TMDBManager(ACCESS_TOKEN: Env.TMDB_ACCESS_TOKEN)
     
     enum EndPoint: String {
         case discoverMovie = "discover/movie"
+        case discoverTv = "discover/tv"
     }
     
     func getUrlString(from endpoint: EndPoint) -> String {
         "\(host)\(endpoint.rawValue)"
     }
     
-    func getImageUrlString(from endPoint: String) -> String {
-        "\(imageHost)\(endPoint)"
+    func getImageUrlStringFrom(imagePath: String) -> String {
+        "\(imageHost)\(imagePath)"
     }
     
     func getRequest(from url: URL) -> URLRequest {
