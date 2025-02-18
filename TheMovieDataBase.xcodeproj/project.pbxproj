@@ -144,6 +144,7 @@
 				99A2B1412D611569008BBA96 /* Application */,
 				99A2B1382D611224008BBA96 /* CoreClass */,
 				99A2B1462D612C46008BBA96 /* BaseClass */,
+				99B745D42D621D9D00CA9441 /* Navigator */,
 				99B745D72D62377400CA9441 /* Pages */,
 				99A2B12A2D610A6C008BBA96 /* Main.storyboard */,
 				99A2B12D2D610A6D008BBA96 /* Assets.xcassets */,
@@ -177,7 +178,6 @@
 		99A2B1462D612C46008BBA96 /* BaseClass */ = {
 			isa = PBXGroup;
 			children = (
-				99B745D42D621D9D00CA9441 /* Navigator */,
 				99B745D12D61F19500CA9441 /* BaseView */,
 				99A2B1472D612CCC008BBA96 /* BaseNavigationController.swift */,
 				99A2B1492D612D63008BBA96 /* BaseTableViewController.swift */,
