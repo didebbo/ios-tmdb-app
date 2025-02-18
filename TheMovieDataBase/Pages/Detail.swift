@@ -82,8 +82,8 @@ class Detail: BaseViewController {
         descriptionLabel.text = item.description
         
         if let coverUrl = item.coverUrl {
-            DataProvider.shared.getImageData(from: coverUrl) { item in
-                item.hasData { data in
+            RemoteDataProvider.fetchData(from: URLRequest(url: coverUrl)) { response in
+                response.hasData { data in
                     DispatchQueue.main.async { [weak self] in guard let self else { return }
                         coverImageView.image = UIImage(data: data)
                     }

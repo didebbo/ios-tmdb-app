@@ -28,7 +28,7 @@ class Movies: BaseTableViewController {
             }
             item.hasError { [weak self] error in guard let self else { return }
                 DispatchSerialQueue.main.async {
-                    let alert = UIAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Attenzione", message: error.description(), preferredStyle: .alert)
                     self.present(alert, animated: true)
                 }
             }

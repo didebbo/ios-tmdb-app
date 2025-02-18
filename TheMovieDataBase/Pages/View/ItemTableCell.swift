@@ -52,8 +52,8 @@ class ItemTableCell: UITableViewCell {
         
         
         if let posterUrl = item.posterUrl {
-            DataProvider.shared.getImageData(from: posterUrl) { item in
-                item.hasData { [weak self] data in guard let self else { return }
+            RemoteDataProvider.fetchData(from: URLRequest(url: posterUrl)) { response in
+                response.hasData { data in
                     DispatchQueue.main.async { [weak self] in guard let self else { return }
                         posterView.image = UIImage(data: data)
                     }
