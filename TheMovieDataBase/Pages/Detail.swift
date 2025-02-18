@@ -15,22 +15,35 @@ class Detail: BaseViewController {
     private lazy var safeViewContainer: UIView = {
         let view = UIView()
         
-        view.subviews(coverImageView, descriptionView)
+        view.subviews(coverView, descriptionView)
         view.layout {
             0
-            |-0--coverImageView--0-|
+            |-0--coverView--0-|
             0
             |-0--descriptionView--0-|
             0
         }
-        coverImageView.Height == view.Height / 2
+        coverView.Height == view.Height / 2
         
+        return view
+    }()
+    
+    private lazy var coverView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.lightGray
+        view.subviews(coverImageView)
+        view.layout {
+            0
+            |-0--coverImageView--0-|
+            0
+        }
         return view
     }()
     
     private lazy var coverImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
+        view.alpha = 0
         return view
     }()
     
@@ -86,6 +99,10 @@ class Detail: BaseViewController {
                 response.hasData { data in
                     DispatchQueue.main.async { [weak self] in guard let self else { return }
                         coverImageView.image = UIImage(data: data)
+                        
+                        UIView.animate(withDuration: 0.5) { [weak self] in guard let self else { return }
+                            coverImageView.alpha = 1
+                        }
                     }
                 }
             }
