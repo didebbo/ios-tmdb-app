@@ -21,7 +21,8 @@ class BaseViewController: CoreViewController {
         let bbs = nc.bottomNavigationBar.bounds.size
         let safeHeight = vs.height - bbs.height
         
-        view.snp.makeConstraints { make in
+        view.snp.remakeConstraints { make in
+            make.top.equalToSuperview()
             make.height.equalTo(safeHeight)
             make.width.equalTo(vs.width)
         }

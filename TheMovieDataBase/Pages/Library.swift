@@ -47,6 +47,7 @@ class Library: BaseViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         topNavigationBar.snp.remakeConstraints { make in
             make.leading.trailing.equalToSuperview()

@@ -98,10 +98,6 @@ class Detail: BaseViewController {
         configureData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     init(of item: Item) {
         self.item = item
         super.init(nibName: nil, bundle: nil)
