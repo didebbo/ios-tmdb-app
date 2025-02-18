@@ -45,7 +45,7 @@ extension BottomNavigator: BottomNavigationBarDelegate {
     func didSelectItemAt(currentIndex: Int, destinationIndex: Int) {
         guard currentIndex != destinationIndex else { return }
         
-        guard let currentVC = viewControllers.first else { return }
+        guard let currentVC = topViewController else { return }
         let destinationVC = destinations[destinationIndex].viewController
         
         let startDestinationVCTranslationX: CGFloat = currentIndex < destinationIndex ? view.bounds.width : -view.bounds.width
