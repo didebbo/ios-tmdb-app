@@ -11,7 +11,7 @@ class ItemTableCell: UITableViewCell {
     
     private lazy var posterView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFit
+        view.contentMode = .scaleAspectFill
         view.backgroundColor = .lightGray
         return view
     }()

@@ -11,7 +11,6 @@ class BaseNavigationController: CoreNavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor(resource: .primary)
         appearance.titleTextAttributes = [
