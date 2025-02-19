@@ -8,5 +8,11 @@
 import Foundation
 
 protocol ApplicationError: Error {
-    func description() -> String
+    var prefix: String { get }
+    var message: String { get }
+    var description: String { get }
+}
+
+extension ApplicationError {
+    var description: String { "\(prefix)\n\(message)" }
 }

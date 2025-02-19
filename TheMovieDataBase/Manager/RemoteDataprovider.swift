@@ -10,16 +10,17 @@ import Foundation
 struct RemoteDataProvider {
     
     private enum RemoteDataProviderError: ApplicationError {
+        
         case invalidUrl(url: String)
         case responseError(url: String, error: Error, data: String)
         case invalidStatusCode(url: String, code: Int, data: String)
         case invalidJsonType(type: Codable.Type, error: Error)
         case dataIsNull
         
-        var prefix: String { "[RemoteDataProvider]\n" }
+        var prefix: String { get { "[RemoteDataProvider]" } }
         
-        func description() -> String {
-            var str: String {
+        var message: String {
+            get {
                 switch self {
                 case .invalidUrl(let url):
                     "Invalid URL: \(url)"
@@ -33,7 +34,6 @@ struct RemoteDataProvider {
                     "Data is null"
                 }
             }
-            return "\(prefix)\(str)"
         }
     }
     

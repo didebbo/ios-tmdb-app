@@ -32,7 +32,7 @@ class TvShows: BaseTableViewController {
             }
             item.hasError { [weak self] error in guard let self else { return }
                 DispatchSerialQueue.main.async {
-                    let alert = CoreAlertController(title: "Attenzione", message: error.description(), preferredStyle: .alert)
+                    let alert = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
                     self.present(alert, animated: true)
                 }
             }
