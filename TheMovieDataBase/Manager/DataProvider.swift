@@ -13,6 +13,7 @@ struct DataProvider {
     
     private let remoteDataProvider: RemoteDataProvider = RemoteDataProvider()
     private let tmdbManager: TMDBManager = TMDBManager(ACCESS_TOKEN: Env.TMDB_ACCESS_TOKEN)
+    private let localDataManager: LocalDataManager = LocalDataManager()
     
     func getMovies(completion: @escaping (_ movies: UnWrappedResult<[Item]>) -> Void) {
         

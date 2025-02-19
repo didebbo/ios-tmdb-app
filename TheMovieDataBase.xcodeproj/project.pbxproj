@@ -17,6 +17,7 @@
 		996A899B2D64B7B700D0D260 /* RemoteDataprovider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A899A2D64B7B700D0D260 /* RemoteDataprovider.swift */; };
 		996A899E2D64BC5700D0D260 /* ResultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A899D2D64BC5700D0D260 /* ResultManager.swift */; };
 		996A89A02D64BC7E00D0D260 /* ApplicationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A899F2D64BC7E00D0D260 /* ApplicationError.swift */; };
+		997D03552D66678300AFAED8 /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997D03542D66678300AFAED8 /* LocalDataManager.swift */; };
 		99A2B1252D610A6C008BBA96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1242D610A6C008BBA96 /* AppDelegate.swift */; };
 		99A2B1272D610A6C008BBA96 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1262D610A6C008BBA96 /* SceneDelegate.swift */; };
 		99A2B12C2D610A6C008BBA96 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 99A2B12B2D610A6C008BBA96 /* Base */; };
@@ -54,6 +55,7 @@
 		996A899A2D64B7B700D0D260 /* RemoteDataprovider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataprovider.swift; sourceTree = "<group>"; };
 		996A899D2D64BC5700D0D260 /* ResultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultManager.swift; sourceTree = "<group>"; };
 		996A899F2D64BC7E00D0D260 /* ApplicationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationError.swift; sourceTree = "<group>"; };
+		997D03542D66678300AFAED8 /* LocalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
 		99A2B1212D610A6C008BBA96 /* TheMovieDataBase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMovieDataBase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99A2B1242D610A6C008BBA96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99A2B1262D610A6C008BBA96 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			children = (
 				996A899A2D64B7B700D0D260 /* RemoteDataprovider.swift */,
 				9910D93C2D634BF800FF4D14 /* DataProvider.swift */,
+				997D03542D66678300AFAED8 /* LocalDataManager.swift */,
 				9910D9412D63507E00FF4D14 /* TMDBManager.swift */,
 				996A899D2D64BC5700D0D260 /* ResultManager.swift */,
 				996A899F2D64BC7E00D0D260 /* ApplicationError.swift */,
@@ -379,6 +382,7 @@
 				996A89A02D64BC7E00D0D260 /* ApplicationError.swift in Sources */,
 				99B745D92D6237CD00CA9441 /* TvShows.swift in Sources */,
 				99A2B1402D6114CB008BBA96 /* CoreTableViewController.swift in Sources */,
+				997D03552D66678300AFAED8 /* LocalDataManager.swift in Sources */,
 				9910D93D2D634BF800FF4D14 /* DataProvider.swift in Sources */,
 				99B745D32D61F1B200CA9441 /* BottomNavigationBar.swift in Sources */,
 				9910D9422D63507E00FF4D14 /* TMDBManager.swift in Sources */,
