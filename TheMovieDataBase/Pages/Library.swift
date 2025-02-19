@@ -46,6 +46,7 @@ class Library: BaseViewController {
         
         destinations.forEach { destination in
             addChild(destination.viewController)
+            destination.viewController.didMove(toParent: self)
         }
     }
     
@@ -79,8 +80,6 @@ class Library: BaseViewController {
 extension Library {
     
     class LibraryCollectionCell: UICollectionViewCell {
-        
-        // private lazy var mainView: UIView = UIView()
         
         func configure(with destination: TopNavigationBar.Item.Destination) {
             guard let view = destination.viewController.view else { return }
@@ -143,7 +142,7 @@ extension Library: UICollectionViewDelegateFlowLayout {
         
         let index = Int((scrollView.contentOffset.x + (0.5 * cellWidth)) / cellWidth)
         
-        if index >= 0 && index < destinations.count { // Sostituisci con il tuo datasource
+        if index >= 0 && index < destinations.count {
             topNavigationBar.updateCurrentIndex(with: index)
         }
     }
