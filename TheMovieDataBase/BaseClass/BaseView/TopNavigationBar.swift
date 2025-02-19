@@ -74,7 +74,7 @@ extension TopNavigationBar {
         
         struct Destination {
             let title: String
-            let dataSource: [Item]
+            let viewController: UIViewController
         }
         
         private lazy var labelText: UILabel = {

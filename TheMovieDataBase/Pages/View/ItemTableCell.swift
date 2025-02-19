@@ -42,7 +42,6 @@ class ItemTableCell: UITableViewCell {
             0
         }
         
-        
         return view
     }()
     

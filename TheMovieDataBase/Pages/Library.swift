@@ -44,6 +44,10 @@ class Library: BaseViewController {
         
         view.addSubview(topNavigationBar)
         view.addSubview(collectionView)
+        
+        destinations.forEach { destination in
+            addChild(destination.viewController)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -77,13 +81,21 @@ extension Library {
     
     class LibraryCollectionCell: UICollectionViewCell {
         
-        func configure(color: UIColor) {
-            backgroundColor = color
+        // private lazy var mainView: UIView = UIView()
+        
+        func configure(with destination: TopNavigationBar.Item.Destination) {
+            guard let view = destination.viewController.view else { return }
+            contentView.addSubview(view)
+            view.snp.remakeConstraints({ make in
+                make.top.leading.bottom.trailing.equalToSuperview()
+            })
         }
         
         override func prepareForReuse() {
             super.prepareForReuse()
-            backgroundColor = UIColor.clear
+            contentView.subviews.forEach { view in
+                view.removeFromSuperview()
+            }
         }
     }
 }
@@ -114,8 +126,8 @@ extension Library: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: LibraryCollectionCell.self), for: indexPath) as? LibraryCollectionCell
-        let colors: [UIColor] = [.red, .green, .blue]
-        cell?.configure(color: colors.randomElement() ?? .clear)
+        let destination = destinations[indexPath.row]
+        cell?.configure(with: destination)
         return cell!
     }
 }
