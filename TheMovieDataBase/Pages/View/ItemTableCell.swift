@@ -48,8 +48,8 @@ class ItemTableCell: UITableViewCell {
     func configure(with item: Item) {
         titleLabel.text = item.title
         descriptionLabel.text = item.description
-        
-        DataProvider.shared.getImageDataFrom(imagePath: item.posterPath) { item in
+        guard let posterPath = item.posterPath else { return }
+        DataProvider.shared.getImageDataFrom(imagePath: posterPath) { item in
             item.hasData { data in
                 DispatchQueue.main.async { [weak self] in guard let self else { return }
                     posterView.image = UIImage(data: data)

@@ -8,9 +8,9 @@
 import Foundation
 
 struct Item {
-    let id: Int
-    let title: String
-    let description: String
-    var posterPath: String
-    var coverPath: String
+    let id: Int?
+    let title: String?
+    let description: String?
+    var posterPath: String?
+    var coverPath: String?
 }
