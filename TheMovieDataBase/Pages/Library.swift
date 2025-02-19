@@ -23,7 +23,6 @@ class Library: BaseViewController {
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
-        layout.itemSize = view.bounds.size
         
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.isPagingEnabled = true
@@ -132,7 +131,11 @@ extension Library: UICollectionViewDataSource {
     }
 }
 
-extension Library: UICollectionViewDelegate {
+extension Library: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        collectionView.bounds.size
+    }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout

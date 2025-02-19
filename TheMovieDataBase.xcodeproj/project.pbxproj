@@ -31,6 +31,8 @@
 		99A2B14A2D612D63008BBA96 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1492D612D63008BBA96 /* BaseTableViewController.swift */; };
 		99A2B14C2D612FB2008BBA96 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B14B2D612FB2008BBA96 /* BaseViewController.swift */; };
 		99A7013F2D65DD81001BFE89 /* CoreAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A7013E2D65DD81001BFE89 /* CoreAlertController.swift */; };
+		99A701412D65FC43001BFE89 /* SavedMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A701402D65FC43001BFE89 /* SavedMovies.swift */; };
+		99A701432D65FC71001BFE89 /* SavedTvShows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A701422D65FC71001BFE89 /* SavedTvShows.swift */; };
 		99B745D32D61F1B200CA9441 /* BottomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B745D22D61F1B200CA9441 /* BottomNavigationBar.swift */; };
 		99B745D62D621DF800CA9441 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B745D52D621DF800CA9441 /* Navigator.swift */; };
 		99B745D92D6237CD00CA9441 /* TvShows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B745D82D6237CD00CA9441 /* TvShows.swift */; };
@@ -68,6 +70,8 @@
 		99A2B1492D612D63008BBA96 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		99A2B14B2D612FB2008BBA96 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		99A7013E2D65DD81001BFE89 /* CoreAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAlertController.swift; sourceTree = "<group>"; };
+		99A701402D65FC43001BFE89 /* SavedMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedMovies.swift; sourceTree = "<group>"; };
+		99A701422D65FC71001BFE89 /* SavedTvShows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedTvShows.swift; sourceTree = "<group>"; };
 		99B745D22D61F1B200CA9441 /* BottomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigationBar.swift; sourceTree = "<group>"; };
 		99B745D52D621DF800CA9441 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		99B745D82D6237CD00CA9441 /* TvShows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvShows.swift; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 				99B745D82D6237CD00CA9441 /* TvShows.swift */,
 				99B745DA2D62563600CA9441 /* Library.swift */,
 				996A89982D647A9300D0D260 /* Detail.swift */,
+				99A701402D65FC43001BFE89 /* SavedMovies.swift */,
+				99A701422D65FC71001BFE89 /* SavedTvShows.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -376,6 +382,7 @@
 				9910D93D2D634BF800FF4D14 /* DataProvider.swift in Sources */,
 				99B745D32D61F1B200CA9441 /* BottomNavigationBar.swift in Sources */,
 				9910D9422D63507E00FF4D14 /* TMDBManager.swift in Sources */,
+				99A701412D65FC43001BFE89 /* SavedMovies.swift in Sources */,
 				99B745DD2D625B2100CA9441 /* TopNavigationBar.swift in Sources */,
 				99B745D62D621DF800CA9441 /* Navigator.swift in Sources */,
 				99B745E22D62667C00CA9441 /* Application+Ext.swift in Sources */,
@@ -384,6 +391,7 @@
 				99A2B14A2D612D63008BBA96 /* BaseTableViewController.swift in Sources */,
 				996919412D628ECF003EE6C3 /* ViewPager.swift in Sources */,
 				9910D9442D636F3000FF4D14 /* Response.swift in Sources */,
+				99A701432D65FC71001BFE89 /* SavedTvShows.swift in Sources */,
 				99A2B1452D6117C7008BBA96 /* BottomNavigator.swift in Sources */,
 				99A2B1432D611676008BBA96 /* Movies.swift in Sources */,
 				99A2B1272D610A6C008BBA96 /* SceneDelegate.swift in Sources */,

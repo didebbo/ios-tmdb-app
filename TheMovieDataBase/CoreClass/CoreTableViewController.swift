@@ -18,6 +18,7 @@ class CoreTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.addSubview(animationLayer)
+        view.alpha = 1
         animationLayer.alpha = 1
         animationLayer.layer.zPosition = 999
     }
@@ -36,10 +37,5 @@ class CoreTableViewController: UITableViewController {
         UIView.animate(withDuration: 0.3) { [weak self] in guard let self else { return }
             view.alpha = 0
         }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        view.alpha = 1
     }
 }
