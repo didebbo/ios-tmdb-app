@@ -37,7 +37,7 @@ class ItemTableCell: UITableViewCell {
         view.layout {
             0
             |-0--titleLabel--0-|
-            5
+            (>=5)
             |-0--descriptionLabel--0-|
             0
         }
