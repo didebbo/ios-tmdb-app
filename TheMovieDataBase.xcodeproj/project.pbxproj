@@ -30,6 +30,7 @@
 		99A2B1482D612CCC008BBA96 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1472D612CCC008BBA96 /* BaseNavigationController.swift */; };
 		99A2B14A2D612D63008BBA96 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1492D612D63008BBA96 /* BaseTableViewController.swift */; };
 		99A2B14C2D612FB2008BBA96 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B14B2D612FB2008BBA96 /* BaseViewController.swift */; };
+		99A7013F2D65DD81001BFE89 /* CoreAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A7013E2D65DD81001BFE89 /* CoreAlertController.swift */; };
 		99B745D32D61F1B200CA9441 /* BottomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B745D22D61F1B200CA9441 /* BottomNavigationBar.swift */; };
 		99B745D62D621DF800CA9441 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B745D52D621DF800CA9441 /* Navigator.swift */; };
 		99B745D92D6237CD00CA9441 /* TvShows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B745D82D6237CD00CA9441 /* TvShows.swift */; };
@@ -66,6 +67,7 @@
 		99A2B1472D612CCC008BBA96 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		99A2B1492D612D63008BBA96 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		99A2B14B2D612FB2008BBA96 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		99A7013E2D65DD81001BFE89 /* CoreAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAlertController.swift; sourceTree = "<group>"; };
 		99B745D22D61F1B200CA9441 /* BottomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigationBar.swift; sourceTree = "<group>"; };
 		99B745D52D621DF800CA9441 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		99B745D82D6237CD00CA9441 /* TvShows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvShows.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				99A2B1392D611270008BBA96 /* CoreNavigationController.swift */,
 				99A2B13D2D611458008BBA96 /* CoreViewController.swift */,
 				99A2B13F2D6114CB008BBA96 /* CoreTableViewController.swift */,
+				99A7013E2D65DD81001BFE89 /* CoreAlertController.swift */,
 			);
 			path = CoreClass;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 			files = (
 				99A2B14C2D612FB2008BBA96 /* BaseViewController.swift in Sources */,
 				99B745DB2D62563600CA9441 /* Library.swift in Sources */,
+				99A7013F2D65DD81001BFE89 /* CoreAlertController.swift in Sources */,
 				996A89992D647A9300D0D260 /* Detail.swift in Sources */,
 				99A2B13E2D611458008BBA96 /* CoreViewController.swift in Sources */,
 				996A899B2D64B7B700D0D260 /* RemoteDataprovider.swift in Sources */,

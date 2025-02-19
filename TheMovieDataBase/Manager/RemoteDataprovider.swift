@@ -13,7 +13,7 @@ struct RemoteDataProvider {
         case invalidUrl(url: String)
         case responseError(url: String, error: Error, data: String)
         case invalidStatusCode(url: String, code: Int, data: String)
-        case invalidJsonType(type: Codable.Type)
+        case invalidJsonType(type: Codable.Type, error: Error)
         case dataIsNull
         
         var prefix: String { "[RemoteDataProvider]\n" }
@@ -27,8 +27,8 @@ struct RemoteDataProvider {
                     "From URL: \(url)\nResponse Error: \(error.localizedDescription)\nData: \(data)"
                 case .invalidStatusCode(let url, let code, let data):
                     "From URL: \(url)\nInvalid Status Code: \(code)\nData: \(data)"
-                case .invalidJsonType(let type):
-                    "Invalid Json \(String(describing: type.self))"
+                case .invalidJsonType(let type, let error):
+                    "Invalid Json \(String(describing: type.self))\nError: \(error.localizedDescription)"
                 case .dataIsNull:
                     "Data is null"
                 }
@@ -80,7 +80,7 @@ struct RemoteDataProvider {
             let decodedJson = try JSONDecoder().decode(model, from: data)
             return .success(decodedJson)
         } catch {
-            return .failure(RemoteDataProviderError.invalidJsonType(type: model))
+            return .failure(RemoteDataProviderError.invalidJsonType(type: model, error: error))
         }
     }
 }

@@ -23,9 +23,10 @@ struct TVShowsResponse: Codable {
     let results: [TVShow]
     
     struct TVShow: Codable {
-        let title: String
+        let id: Int
+        let name: String
         let overview: String
-        let posterPath: String
-        let backdropPath: String
+        let backdrop_path: String
+        let poster_path: String
     }
 }
