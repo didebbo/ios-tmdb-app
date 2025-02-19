@@ -8,7 +8,7 @@
 import Stevia
 
 protocol ItemTableCellDelegate: AnyObject {
-    func didTapSaveIcon(itemId: Int)
+    func didTapSaveIcon(item: Item)
 }
 
 class ItemTableCell: UITableViewCell {
@@ -17,7 +17,7 @@ class ItemTableCell: UITableViewCell {
     
     static let heightForRowAt: CGFloat = 160
     
-    private var itemId: Int?
+    private var item: Item?
     
     private lazy var posterView: UIImageView = {
         let view = UIImageView()
@@ -66,7 +66,7 @@ class ItemTableCell: UITableViewCell {
     }()
     
     func configure(with item: Item) {
-        itemId = item.id
+        self.item = item
         titleLabel.text = item.title
         descriptionLabel.text = item.description
         
@@ -87,8 +87,8 @@ class ItemTableCell: UITableViewCell {
     }
     
     @objc private func tapOnSaveIcon() {
-        guard let itemId else { return }
-        delegate?.didTapSaveIcon(itemId: itemId)
+        guard let item else { return }
+        delegate?.didTapSaveIcon(item: item)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -114,7 +114,7 @@ class ItemTableCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        itemId = nil
+        item = nil
         posterView.image = nil
         titleLabel.text = nil
         descriptionLabel.text = nil

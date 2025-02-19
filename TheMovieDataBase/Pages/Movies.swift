@@ -17,15 +17,7 @@ class Movies: BaseTableViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "Movies"
-        tableView.register(ItemTableCell.self, forCellReuseIdentifier: String(describing: ItemTableCell.self))
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
+    private func fetchData() {
         DataProvider.shared.getMovies { item in
             item.hasData { [weak self] data in guard let self else { return }
                 items = data
@@ -37,6 +29,17 @@ class Movies: BaseTableViewController {
                 }
             }
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Movies"
+        tableView.register(ItemTableCell.self, forCellReuseIdentifier: String(describing: ItemTableCell.self))
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        fetchData()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -69,7 +72,14 @@ class Movies: BaseTableViewController {
 
 extension Movies: ItemTableCellDelegate {
     
-    func didTapSaveIcon(itemId: Int) {
-        print("[gn] did tap saveIcon itemId: \(itemId)")
+    func didTapSaveIcon(item: Item) {
+        let result = DataProvider.shared.saveMovie(item)
+        result.hasError { [weak self] error in guard let self else { return }
+            let vc = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
+            present(vc, animated: true)
+        }
+        result .hasData { [weak self] _ in guard let self else { return }
+            fetchData()
+        }
     }
 }

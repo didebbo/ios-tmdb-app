@@ -50,7 +50,6 @@ struct LocalDataManager {
     func saveMovie(_ movie: Item) -> UnWrappedResult<Item> {
         let savedMoviesResult = getSavedMovies()
         var unWrappedResult: UnWrappedResult<Item> = .failure(LocalDataManagerError.genericError(str: "Unhandled error on saveMovie"))
-        
         savedMoviesResult.hasError { error in
             unWrappedResult = .failure(error)
         }
