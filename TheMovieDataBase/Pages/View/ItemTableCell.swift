@@ -9,10 +9,13 @@ import Stevia
 
 class ItemTableCell: UITableViewCell {
     
+    static let heightForRowAt: CGFloat = 160
+    
     private lazy var posterView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFill
         view.backgroundColor = .lightGray
+        view.contentMode = .scaleToFill
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -26,7 +29,7 @@ class ItemTableCell: UITableViewCell {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.numberOfLines = 0
+        label.numberOfLines = 3
         return label
     }()
     
@@ -37,12 +40,19 @@ class ItemTableCell: UITableViewCell {
         view.layout {
             0
             |-0--titleLabel--0-|
-            (>=5)
+            5
             |-0--descriptionLabel--0-|
             0
         }
         
         return view
+    }()
+    
+    private lazy var saveIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = UIColor(resource: .primary)
+        imageView.backgroundColor = UIColor.lightGray
+        return imageView
     }()
     
     func configure(with item: Item) {
@@ -61,18 +71,22 @@ class ItemTableCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.subviews(posterView, descriptionContainer)
+        contentView.subviews(posterView, descriptionContainer, saveIcon)
         
-        posterView.Top == contentView.Top + 10
+        posterView.Width == 80
+        posterView.Height == contentView.Height - 20
         posterView.Leading == contentView.Leading + 10
-        posterView.Bottom == contentView.Bottom - 10
-        posterView.Width == 50
+        posterView.centerVertically()
         
         descriptionContainer.Top == contentView.Top + 10
         descriptionContainer.Leading == posterView.Trailing + 10
-        descriptionContainer.Bottom == contentView.Bottom - 10
         descriptionContainer.Trailing == contentView.Trailing - 10
         
+        saveIcon.Top >= descriptionContainer.Bottom + 10
+        saveIcon.Leading == posterView.Trailing + 10
+        saveIcon.Bottom == contentView.Bottom - 10
+        saveIcon.Width == 40
+        saveIcon.heightEqualsWidth()
     }
     
     override func prepareForReuse() {
@@ -80,6 +94,7 @@ class ItemTableCell: UITableViewCell {
         posterView.image = nil
         titleLabel.text = nil
         descriptionLabel.text = nil
+        saveIcon.image = nil
     }
     
     required init?(coder: NSCoder) {
