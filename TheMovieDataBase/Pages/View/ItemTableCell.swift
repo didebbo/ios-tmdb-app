@@ -51,13 +51,18 @@ class ItemTableCell: UITableViewCell {
     private lazy var saveIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = UIColor(resource: .primary)
-        imageView.backgroundColor = UIColor.lightGray
         return imageView
     }()
     
     func configure(with item: Item) {
         titleLabel.text = item.title
         descriptionLabel.text = item.description
+        
+        if let saved = item.saved  {
+            let iconName = saved ? "heart.fill" : "heart"
+            saveIcon.image = UIImage(systemName: iconName)
+        }
+        
         guard let posterPath = item.posterPath else { return }
         DataProvider.shared.getImageDataFrom(imagePath: posterPath) { item in
             item.hasData { data in
@@ -73,7 +78,7 @@ class ItemTableCell: UITableViewCell {
         
         contentView.subviews(posterView, descriptionContainer, saveIcon)
         
-        posterView.Width == 80
+        posterView.Width == 100
         posterView.Height == contentView.Height - 20
         posterView.Leading == contentView.Leading + 10
         posterView.centerVertically()
@@ -85,7 +90,7 @@ class ItemTableCell: UITableViewCell {
         saveIcon.Top >= descriptionContainer.Bottom + 10
         saveIcon.Leading == posterView.Trailing + 10
         saveIcon.Bottom == contentView.Bottom - 10
-        saveIcon.Width == 40
+        saveIcon.Width == 35
         saveIcon.heightEqualsWidth()
     }
     

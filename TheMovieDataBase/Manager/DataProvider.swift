@@ -35,7 +35,7 @@ struct DataProvider {
                     }
                     decodedJson.hasData { data in
                         let items: [Item] = data.results.map { item in
-                            Item(id: item.id, title: item.title, description: item.overview, posterPath: item.poster_path, coverPath: item.backdrop_path)
+                            Item(id: item.id, title: item.title, description: item.overview, posterPath: item.poster_path, coverPath: item.backdrop_path, saved: hasSavedMovie(item.id))
                         }
                         completion(.success(items))
                     }
@@ -81,5 +81,14 @@ struct DataProvider {
                 }
             }
         }
+    }
+    
+    func hasSavedMovie(_ id: Int?) -> Bool {
+        var result = false
+        guard let id else { return result }
+        localDataManager.getSavedMovies().hasData { data in
+            result = data.contains(where: { $0.id == id })
+        }
+        return result
     }
 }

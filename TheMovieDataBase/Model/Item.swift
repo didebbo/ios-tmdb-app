@@ -13,4 +13,5 @@ struct Item: Codable {
     let description: String?
     var posterPath: String?
     var coverPath: String?
+    var saved: Bool?
 }
