@@ -47,16 +47,16 @@ struct LocalDataManager {
         }
     }
     
-    func saveMovie(_ movie: Item) -> UnWrappedResult<[Item]> {
+    func saveMovie(_ movie: Item) -> UnWrappedResult<Item> {
         let savedMoviesResult = getSavedMovies()
-        var unWrappedResult: UnWrappedResult<[Item]> = .failure(LocalDataManagerError.genericError(str: "Unhandled error on saveMovie"))
+        var unWrappedResult: UnWrappedResult<Item> = .failure(LocalDataManagerError.genericError(str: "Unhandled error on saveMovie"))
         
         savedMoviesResult.hasError { error in
             unWrappedResult = .failure(error)
         }
         savedMoviesResult.hasData { data in
             guard !data.contains(where: { $0.id == movie.id }) else {
-                unWrappedResult = .success(data)
+                unWrappedResult = .failure(LocalDataManagerError.genericError(str: "Movie Already Exist!"))
                 return
             }
             var newData = data
@@ -65,7 +65,7 @@ struct LocalDataManager {
             do {
                 let encodedData = try JSONEncoder().encode(newData)
                 userDefaults.setValue(encodedData, forKey: Key.movies.rawValue)
-                unWrappedResult = .success(newData)
+                unWrappedResult = .success(movie)
             } catch {
                 unWrappedResult = .failure(LocalDataManagerError.errorJsonEncode(type: [Item].self, error: error))
             }

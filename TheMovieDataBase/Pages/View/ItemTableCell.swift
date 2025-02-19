@@ -7,9 +7,17 @@
 
 import Stevia
 
+protocol ItemTableCellDelegate: AnyObject {
+    func didTapSaveIcon(itemId: Int)
+}
+
 class ItemTableCell: UITableViewCell {
     
+    weak var delegate: ItemTableCellDelegate?
+    
     static let heightForRowAt: CGFloat = 160
+    
+    private var itemId: Int?
     
     private lazy var posterView: UIImageView = {
         let view = UIImageView()
@@ -48,19 +56,24 @@ class ItemTableCell: UITableViewCell {
         return view
     }()
     
+    private lazy var saveIconTapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnSaveIcon))
+    
     private lazy var saveIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = UIColor(resource: .primary)
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
     func configure(with item: Item) {
+        itemId = item.id
         titleLabel.text = item.title
         descriptionLabel.text = item.description
         
         if let saved = item.saved  {
             let iconName = saved ? "heart.fill" : "heart"
             saveIcon.image = UIImage(systemName: iconName)
+            saveIcon.addGestureRecognizer(saveIconTapGesture)
         }
         
         guard let posterPath = item.posterPath else { return }
@@ -71,6 +84,11 @@ class ItemTableCell: UITableViewCell {
                 }
             }
         }
+    }
+    
+    @objc private func tapOnSaveIcon() {
+        guard let itemId else { return }
+        delegate?.didTapSaveIcon(itemId: itemId)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -96,10 +114,12 @@ class ItemTableCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        itemId = nil
         posterView.image = nil
         titleLabel.text = nil
         descriptionLabel.text = nil
         saveIcon.image = nil
+        saveIcon.removeGestureRecognizer(saveIconTapGesture)
     }
     
     required init?(coder: NSCoder) {

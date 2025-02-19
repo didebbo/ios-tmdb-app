@@ -51,6 +51,7 @@ class Movies: BaseTableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ItemTableCell.self), for: indexPath) as? ItemTableCell
         let item = items[indexPath.row]
         cell?.configure(with: item)
+        cell?.delegate = self
         return cell!
     }
     
@@ -63,5 +64,12 @@ class Movies: BaseTableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         ItemTableCell.heightForRowAt
+    }
+}
+
+extension Movies: ItemTableCellDelegate {
+    
+    func didTapSaveIcon(itemId: Int) {
+        print("[gn] did tap saveIcon itemId: \(itemId)")
     }
 }

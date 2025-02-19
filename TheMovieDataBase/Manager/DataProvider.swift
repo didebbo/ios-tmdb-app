@@ -83,6 +83,10 @@ struct DataProvider {
         }
     }
     
+    func saveMovie(_ movie: Item) -> UnWrappedResult<Item>  {
+        localDataManager.saveMovie(movie)
+    }
+    
     func hasSavedMovie(_ id: Int?) -> Bool {
         var result = false
         guard let id else { return result }
