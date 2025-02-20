@@ -18,22 +18,23 @@ struct DataProvider {
     func getMovies(completion: @escaping (_ movies: UnWrappedResult<[Item]>) -> Void) {
         
         let urlString = tmdbManager.getUrlString(from: .discoverMovie)
-        let url = remoteDataProvider.getUrl(from: urlString)
-        url.hasError { error in
+        let urlResult = remoteDataProvider.getUrl(from: urlString).result
+        if let error = urlResult.error {
             completion(.failure(error))
         }
-        url.hasData { url in
-            let request = tmdbManager.getRequest(from: url)
+        if let data = urlResult.data {
+            let request = tmdbManager.getRequest(from: data)
             remoteDataProvider.fetchData(from: request) { response in
-                response.hasError { error in
+                let responseResult = response.result
+                if let error = responseResult.error {
                     completion(.failure(error))
                 }
-                response.hasData { data in
-                    let decodedJson = remoteDataProvider.getDecodedJson(from: data, to: MovieResponse.self)
-                    decodedJson.hasError { error in
+                if let data = responseResult.data {
+                    let decodedJsonResult = remoteDataProvider.getDecodedJson(from: data, to: MovieResponse.self).result
+                    if let error = decodedJsonResult.error {
                         completion(.failure(error))
                     }
-                    decodedJson.hasData { data in
+                    if let data = decodedJsonResult.data {
                         let items: [Item] = data.results.map { item in
                             Item(id: item.id, title: item.title, description: item.overview, posterPath: item.poster_path, coverPath: item.backdrop_path, saved: hasSavedMovie(item.id))
                         }
