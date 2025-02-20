@@ -46,22 +46,23 @@ struct DataProvider {
     }
     
     func getTVShows(completion: @escaping (_ tvShows: UnWrappedResult<[Item]>) -> Void) {
-        let url = remoteDataProvider.getUrl(from: tmdbManager.getUrlString(from: .discoverTv))
-        url.hasError { error in
+        let urlResult = remoteDataProvider.getUrl(from: tmdbManager.getUrlString(from: .discoverTv)).result
+        if let error = urlResult.error {
             completion(.failure(error))
-        } 
-        url.hasData { url in
-            let request = tmdbManager.getRequest(from: url)
+        }
+        if let data = urlResult.data {
+            let request = tmdbManager.getRequest(from: data)
             remoteDataProvider.fetchData(from: request) { response in
-                response.hasError { error in
+                let responseResult = response.result
+                if let error = responseResult.error {
                     completion(.failure(error))
                 }
-                response.hasData { data in
-                    let decodedJson = remoteDataProvider.getDecodedJson(from: data, to: TVShowsResponse.self)
-                    decodedJson.hasError { error in
+                if let data = responseResult.data {
+                    let decodedJsonResult = remoteDataProvider.getDecodedJson(from: data, to: TVShowsResponse.self).result
+                    if let error = decodedJsonResult.error {
                         completion(.failure(error))
                     }
-                    decodedJson.hasData { data in
+                    if let data = decodedJsonResult.data {
                         let items = data.results.map { item in
                             Item(id: item.id, title: item.name, description: item.overview, posterPath: item.poster_path, coverPath: item.backdrop_path)
                         }
