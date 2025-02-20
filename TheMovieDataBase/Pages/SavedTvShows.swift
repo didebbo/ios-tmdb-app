@@ -26,7 +26,7 @@ class SavedTvShows: BaseTableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        DataProvider.shared.getTVShows { [weak self] item in guard let self else { return }
+        DataProvider.shared.getTvShows { [weak self] item in guard let self else { return }
             let itemResult = item.result
             if let error = itemResult.error {
                 DispatchSerialQueue.main.async { [weak self] in guard let self else { return }
