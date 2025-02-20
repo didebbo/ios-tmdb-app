@@ -24,4 +24,13 @@ enum UnWrappedResult<Data> {
         default: break
         }
     }
+    
+    var result: (data: Data?, error: ApplicationError?) {
+        switch self {
+        case .success(let data):
+            (data,nil)
+        case .failure(let error):
+            (nil,error)
+        }
+    }
 }

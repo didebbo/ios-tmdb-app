@@ -47,28 +47,57 @@ struct LocalDataManager {
         }
     }
     
-    func saveMovie(_ movie: Item) -> UnWrappedResult<Item> {
-        let savedMoviesResult = getSavedMovies()
-        var unWrappedResult: UnWrappedResult<Item> = .failure(LocalDataManagerError.genericError(str: "Unhandled error on saveMovie"))
-        savedMoviesResult.hasError { error in
-            unWrappedResult = .failure(error)
+    func saveMovies(_ movies: [Item]) -> UnWrappedResult<[Item]> {
+        do {
+            let encodedData = try JSONEncoder().encode(movies)
+            userDefaults.setValue(encodedData, forKey: Key.movies.rawValue)
+            return .success(movies)
+        } catch {
+            return .failure(LocalDataManagerError.errorJsonEncode(type: [Item].self, error: error))
         }
-        savedMoviesResult.hasData { data in
+    }
+    
+    func saveMovie(_ movie: Item) -> UnWrappedResult<Item> {
+        let savedMoviesResult = getSavedMovies().result
+        if let error = savedMoviesResult.error {
+            return .failure(error)
+        }
+        if let data = savedMoviesResult.data {
             guard !data.contains(where: { $0.id == movie.id }) else {
-                unWrappedResult = .failure(LocalDataManagerError.genericError(str: "Movie Already Exist!"))
-                return
+                return .failure(LocalDataManagerError.genericError(str: "Movie Already Exist!"))
             }
             var newData = data
             newData.append(movie)
-            
-            do {
-                let encodedData = try JSONEncoder().encode(newData)
-                userDefaults.setValue(encodedData, forKey: Key.movies.rawValue)
-                unWrappedResult = .success(movie)
-            } catch {
-                unWrappedResult = .failure(LocalDataManagerError.errorJsonEncode(type: [Item].self, error: error))
+            let saveMoviesResult = saveMovies(newData).result
+            if let error = saveMoviesResult.error {
+                return .failure(error)
+            }
+            if let data = saveMoviesResult.data {
+                return .success(movie)
             }
         }
-        return unWrappedResult
+        return .failure(LocalDataManagerError.genericError(str: "Unhandled error on saveMovie"))
+    }
+    
+    func unSaveMovie(_ movie: Item) -> UnWrappedResult<Item> {
+        let savedMoviesResult = getSavedMovies().result
+        if let error = savedMoviesResult.error {
+            return .failure(error)
+        }
+        if let data = savedMoviesResult.data {
+            guard data.contains(where: {$0.id == movie.id }) else {
+                return .failure(LocalDataManagerError.genericError(str: "Movie doesn't exists in library"))
+            }
+            var newData = data
+            newData.removeAll(where: {$0.id == movie.id })
+            let saveMoviesResult = saveMovies(newData).result
+            if let error = saveMoviesResult.error {
+                return .failure(error)
+            }
+            if let data = saveMoviesResult.data {
+                return .success(movie)
+            }
+        }
+        return .failure(LocalDataManagerError.genericError(str: "Unhandled error on unSaveMovie"))
     }
 }
