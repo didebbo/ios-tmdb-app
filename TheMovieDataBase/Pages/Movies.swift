@@ -74,13 +74,19 @@ class Movies: BaseTableViewController {
 extension Movies: ItemTableCellDelegate {
     
     func didTapSaveIcon(item: Item) {
-        let saveMovieResult = DataProvider.shared.saveMovie(item).result
-        if let error = saveMovieResult.error {
-            let vc = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
-            present(vc, animated: true)
+        
+        let hasSavedMovieResult = DataProvider.shared.hasSavedMovie(item.id).result
+        if let error = hasSavedMovieResult.error {
+            present(CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert), animated: true)
         }
-        if let data = saveMovieResult.data {
-            fetchData()
+        if let hasSavedMovie = hasSavedMovieResult.data {
+            let operationResult = hasSavedMovie ? DataProvider.shared.unSaveMovie(item).result : DataProvider.shared.saveMovie(item).result
+            if let error = operationResult.error {
+                present(CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert), animated: true)
+            }
+            if let _ = operationResult.data {
+                fetchData()
+            }
         }
     }
 }

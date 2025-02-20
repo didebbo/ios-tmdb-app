@@ -49,7 +49,7 @@ struct DataProvider {
                     }
                     if let data = decodedJsonResult.data {
                         let items: [Item] = data.results.map { item in
-                            Item(id: item.id, title: item.title, description: item.overview, posterPath: item.poster_path, coverPath: item.backdrop_path, saved: hasSavedMovie(item.id).result.data)
+                            return Item(id: item.id, title: item.title, description: item.overview, posterPath: item.poster_path, coverPath: item.backdrop_path, saved: hasSavedMovie(item.id).result.data)
                         }
                         completion(.success(items))
                     }
@@ -100,11 +100,16 @@ struct DataProvider {
     }
     
     func saveMovie(_ movie: Item) -> UnWrappedResult<Item>  {
-        localDataManager.saveMovie(movie)
+        guard let _ = movie.id else { return .failure(DataProviderError.genericError(str: "On saveMovie, movie id is null")) }
+        return localDataManager.saveMovie(movie)
+    }
+    
+    func unSaveMovie(_ movie: Item) -> UnWrappedResult<Item> {
+        localDataManager.unSaveMovie(movie)
     }
     
     func hasSavedMovie(_ id: Int?) -> UnWrappedResult<Bool> {
-        guard let id else { return .failure(DataProviderError.genericError(str: "On hasSavedMovie, id is null")) }
+        guard let id else { return .failure(DataProviderError.genericError(str: "On hasSavedMovie, movie id is null")) }
         let savedMovieResult = localDataManager.getSavedMovies().result
         if let error = savedMovieResult.error {
             return .failure(error)

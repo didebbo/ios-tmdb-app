@@ -72,7 +72,7 @@ struct LocalDataManager {
             if let error = saveMoviesResult.error {
                 return .failure(error)
             }
-            if let data = saveMoviesResult.data {
+            if let _ = saveMoviesResult.data {
                 return .success(movie)
             }
         }
@@ -94,7 +94,7 @@ struct LocalDataManager {
             if let error = saveMoviesResult.error {
                 return .failure(error)
             }
-            if let data = saveMoviesResult.data {
+            if let _ = saveMoviesResult.data {
                 return .success(movie)
             }
         }
