@@ -122,7 +122,7 @@ extension DataProvider {
                     }
                     if let data = decodedJsonResult.data {
                         let items: [Item] = data.results.map { item in
-                            return Item(id: item.id, title: item.name, description: item.overview, posterPath: item.poster_path, coverPath: item.backdrop_path, saved: hasSavedMovie(item.id).result.data)
+                            return Item(id: item.id, title: item.name, description: item.overview, posterPath: item.poster_path, coverPath: item.backdrop_path, saved: hasSavedTvShow(item.id).result.data)
                         }
                         completion(.success(items))
                     }
