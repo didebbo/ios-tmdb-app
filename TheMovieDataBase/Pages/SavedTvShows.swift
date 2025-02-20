@@ -17,6 +17,16 @@ class SavedTvShows: BaseTableViewController {
         }
     }
     
+    private func fetchData() {
+        let savedTvShowsResult = DataProvider.shared.getSavedTvShows().result
+        if let error = savedTvShowsResult.error {
+            present(CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert), animated: true)
+        }
+        if let data = savedTvShowsResult.data {
+            items = data
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "TV Shows"
@@ -26,18 +36,7 @@ class SavedTvShows: BaseTableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        DataProvider.shared.getTvShows { [weak self] item in guard let self else { return }
-            let itemResult = item.result
-            if let error = itemResult.error {
-                DispatchSerialQueue.main.async { [weak self] in guard let self else { return }
-                    let alert = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
-                    present(alert, animated: true)
-                }
-            }
-            if let data = itemResult.data {
-                items = data
-            }
-        }
+        fetchData()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -52,6 +51,7 @@ class SavedTvShows: BaseTableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ItemTableCell.self), for: indexPath) as? ItemTableCell
         let item = items[indexPath.row]
         cell?.configure(with: item)
+        cell?.delegate = self
         return cell!
     }
     
@@ -67,3 +67,21 @@ class SavedTvShows: BaseTableViewController {
     }
 }
 
+extension SavedTvShows: ItemTableCellDelegate {
+    
+    func didTapSaveIcon(item: Item) {
+        let hasSavedTvShowResult = DataProvider.shared.hasSavedTvShow(item.id).result
+        if let error = hasSavedTvShowResult.error {
+            present(CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert), animated: true)
+        }
+        if let hasSavedTvShow = hasSavedTvShowResult.data {
+            let operationResult = hasSavedTvShow ? DataProvider.shared.unSaveTvShow(item).result : DataProvider.shared.saveTvShow(item).result
+            if let error = operationResult.error {
+                present(CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert), animated: true)
+            }
+            if let _ = operationResult.data {
+                fetchData()
+            }
+        }
+    }
+}
