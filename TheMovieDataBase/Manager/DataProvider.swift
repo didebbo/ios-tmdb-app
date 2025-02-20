@@ -9,6 +9,19 @@ import Foundation
 
 struct DataProvider {
     
+    enum DataProviderError: ApplicationError {
+        case genericError(str: String)
+        
+        var prefix: String { "[DataProvider]" }
+        
+        var message: String {
+            switch self {
+            case .genericError(let str):
+                str
+            }
+        }
+    }
+    
     static let shared: DataProvider = DataProvider()
     
     private let remoteDataProvider: RemoteDataProvider = RemoteDataProvider()
@@ -36,7 +49,7 @@ struct DataProvider {
                     }
                     if let data = decodedJsonResult.data {
                         let items: [Item] = data.results.map { item in
-                            Item(id: item.id, title: item.title, description: item.overview, posterPath: item.poster_path, coverPath: item.backdrop_path, saved: hasSavedMovie(item.id))
+                            Item(id: item.id, title: item.title, description: item.overview, posterPath: item.poster_path, coverPath: item.backdrop_path, saved: hasSavedMovie(item.id).result.data)
                         }
                         completion(.success(items))
                     }
@@ -90,12 +103,15 @@ struct DataProvider {
         localDataManager.saveMovie(movie)
     }
     
-    func hasSavedMovie(_ id: Int?) -> Bool {
-        var result = false
-        guard let id else { return result }
-        localDataManager.getSavedMovies().hasData { data in
-            result = data.contains(where: { $0.id == id })
+    func hasSavedMovie(_ id: Int?) -> UnWrappedResult<Bool> {
+        guard let id else { return .failure(DataProviderError.genericError(str: "On hasSavedMovie, id is null")) }
+        let savedMovieResult = localDataManager.getSavedMovies().result
+        if let error = savedMovieResult.error {
+            return .failure(error)
         }
-        return result
+        if let data = savedMovieResult.data {
+            return .success(data.contains(where: { $0.id == id }))
+        }
+        return .failure(DataProviderError.genericError(str: "Unhandled error on hasSavedMovie"))
     }
 }
