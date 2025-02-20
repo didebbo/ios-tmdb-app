@@ -17,6 +17,19 @@ class SavedMovies: BaseTableViewController {
         }
     }
     
+    private func fetchData() {
+        let savedMoviesResult = DataProvider.shared.getSavedMovies().result
+        if let error = savedMoviesResult.error {
+            DispatchSerialQueue.main.async { [weak self] in guard let self else { return }
+                let alert = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
+                present(alert, animated: true)
+            }
+        }
+        if let data = savedMoviesResult.data {
+            items = data
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Movies"
@@ -26,18 +39,7 @@ class SavedMovies: BaseTableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        DataProvider.shared.getMovies { [weak self] item in guard let self else { return }
-            let itemResult = item.result
-            if let error = itemResult.error {
-                DispatchSerialQueue.main.async { [weak self] in guard let self else { return }
-                    let alert = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
-                    present(alert, animated: true)
-                }
-            }
-            if let data = itemResult.data {
-                items = data
-            }
-        }
+        fetchData()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -52,6 +54,7 @@ class SavedMovies: BaseTableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ItemTableCell.self), for: indexPath) as? ItemTableCell
         let item = items[indexPath.row]
         cell?.configure(with: item)
+        cell?.delegate = self
         return cell!
     }
     
@@ -64,5 +67,24 @@ class SavedMovies: BaseTableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         ItemTableCell.heightForRowAt
+    }
+}
+
+extension SavedMovies: ItemTableCellDelegate {
+    
+    func didTapSaveIcon(item: Item) {
+        let hasSavedMovieResult = DataProvider.shared.hasSavedMovie(item.id).result
+        if let error = hasSavedMovieResult.error {
+            present(CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert), animated: true)
+        }
+        if let hasSavedMovie = hasSavedMovieResult.data {
+            let operationResult = hasSavedMovie ? DataProvider.shared.unSaveMovie(item).result : DataProvider.shared.saveMovie(item).result
+            if let error = operationResult.error {
+                present(CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert), animated: true)
+            }
+            if let _ = operationResult.data {
+                fetchData()
+            }
+        }
     }
 }

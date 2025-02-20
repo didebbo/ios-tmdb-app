@@ -76,6 +76,10 @@ extension DataProvider {
         }
     }
     
+    func getSavedMovies() -> UnWrappedResult<[Item]> {
+        localDataManager.getSavedMovies()
+    }
+    
     func saveMovie(_ movie: Item) -> UnWrappedResult<Item>  {
         guard let _ = movie.id else { return .failure(DataProviderError.genericError(str: "On saveMovie, movie id is null")) }
         return localDataManager.saveMovie(movie)
@@ -87,7 +91,7 @@ extension DataProvider {
     
     func hasSavedMovie(_ id: Int?) -> UnWrappedResult<Bool> {
         guard let id else { return .failure(DataProviderError.genericError(str: "On hasSavedMovie, movie id is null")) }
-        let savedMovieResult = localDataManager.getSavedMovies().result
+        let savedMovieResult = getSavedMovies().result
         if let error = savedMovieResult.error {
             return .failure(error)
         }
@@ -131,6 +135,10 @@ extension DataProvider {
         }
     }
     
+    func getSavedTvShows() -> UnWrappedResult<[Item]> {
+        localDataManager.getSavedTvShows()
+    }
+    
     func saveTvShow(_ tvShow: Item) -> UnWrappedResult<Item>  {
         guard let _ = tvShow.id else { return .failure(DataProviderError.genericError(str: "On saveTvShow, tvShow id is null")) }
         return localDataManager.saveTvShow(tvShow)
@@ -142,7 +150,7 @@ extension DataProvider {
     
     func hasSavedTvShow(_ id: Int?) -> UnWrappedResult<Bool> {
         guard let id else { return .failure(DataProviderError.genericError(str: "On hasSavedTvShow, tvShow id is null")) }
-        let savedTvShowsResult = localDataManager.getSavedTvShows().result
+        let savedTvShowsResult = getSavedTvShows().result
         if let error = savedTvShowsResult.error {
             return .failure(error)
         }

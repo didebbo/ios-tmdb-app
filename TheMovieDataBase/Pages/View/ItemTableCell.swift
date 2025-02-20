@@ -88,7 +88,8 @@ class ItemTableCell: UITableViewCell {
     }
     
     @objc private func tapOnSaveIcon() {
-        guard let item else { return }
+        guard var item, let saved = item.saved else { return }
+        item.saved = !saved
         delegate?.didTapSaveIcon(item: item)
     }
     
