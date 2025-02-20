@@ -75,10 +75,11 @@ struct DataProvider {
     
     func getImageDataFrom(imagePath: String, completion: @escaping (_ item: UnWrappedResult<Data>) -> Void) {
         let imageUrlString = tmdbManager.getImageUrlStringFrom(imagePath: imagePath)
-        let url = remoteDataProvider.getUrl(from: imageUrlString)
-        url.hasData { url in
-            remoteDataProvider.fetchData(from: URLRequest(url: url)) { response in
-                response.hasData { data in
+        let urlResult = remoteDataProvider.getUrl(from: imageUrlString).result
+        if let data = urlResult.data {
+            remoteDataProvider.fetchData(from: URLRequest(url: data)) { response in
+                let responseResult = response.result
+                if let data = responseResult.data {
                     completion(.success(data))
                 }
             }
