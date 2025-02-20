@@ -7,7 +7,10 @@
 
 import Foundation
 
+// MARK: BASE STRUCT
 struct LocalDataManager {
+    
+    private let userDefaults: UserDefaults = UserDefaults.standard
     
     enum Key: String {
         case movies = "savedMovies"
@@ -35,17 +38,10 @@ struct LocalDataManager {
         
     }
     
-    private let userDefaults: UserDefaults = UserDefaults.standard
-    
-    func getSavedMovies() -> UnWrappedResult<[Item]> {
-        guard let encodedData = userDefaults.data(forKey: Key.movies.rawValue) else { return .success([]) }
-        do {
-            let decodedData = try JSONDecoder().decode([Item].self, from: encodedData)
-            return .success(decodedData)
-        } catch {
-            return .failure(LocalDataManagerError.errorJsonDecode(type: [Item].self, error: error))
-        }
-    }
+}
+
+// MARK: MOVIES
+extension LocalDataManager {
     
     func saveMovies(_ movies: [Item]) -> UnWrappedResult<[Item]> {
         do {
@@ -57,6 +53,16 @@ struct LocalDataManager {
         }
     }
     
+    func getSavedMovies() -> UnWrappedResult<[Item]> {
+        guard let encodedData = userDefaults.data(forKey: Key.movies.rawValue) else { return .success([]) }
+        do {
+            let decodedData = try JSONDecoder().decode([Item].self, from: encodedData)
+            return .success(decodedData)
+        } catch {
+            return .failure(LocalDataManagerError.errorJsonDecode(type: [Item].self, error: error))
+        }
+    }
+    
     func saveMovie(_ movie: Item) -> UnWrappedResult<Item> {
         let savedMoviesResult = getSavedMovies().result
         if let error = savedMoviesResult.error {
@@ -64,7 +70,7 @@ struct LocalDataManager {
         }
         if let data = savedMoviesResult.data {
             guard !data.contains(where: { $0.id == movie.id }) else {
-                return .failure(LocalDataManagerError.genericError(str: "Movie Already Exist!"))
+                return .failure(LocalDataManagerError.genericError(str: "Movie already exist!"))
             }
             var newData = data
             newData.append(movie)
@@ -99,5 +105,73 @@ struct LocalDataManager {
             }
         }
         return .failure(LocalDataManagerError.genericError(str: "Unhandled error on unSaveMovie"))
+    }
+}
+
+// MARK: TVSHOWS
+extension LocalDataManager {
+    
+    func saveTvShows(_ tvShows: [Item]) -> UnWrappedResult<[Item]> {
+        do {
+            let encodedData = try JSONEncoder().encode(tvShows)
+            userDefaults.setValue(encodedData, forKey: Key.tvShows.rawValue)
+            return .success(tvShows)
+        } catch {
+            return .failure(LocalDataManagerError.errorJsonEncode(type: [Item].self, error: error))
+        }
+    }
+    
+    func getSavedTvShows() -> UnWrappedResult<[Item]> {
+        guard let encodedData = userDefaults.data(forKey: Key.tvShows.rawValue) else { return .success([]) }
+        do {
+            let decodedData = try JSONDecoder().decode([Item].self, from: encodedData)
+            return .success(decodedData)
+        } catch {
+            return .failure(LocalDataManagerError.errorJsonDecode(type: [Item].self, error: error))
+        }
+    }
+    
+    func saveTvShow(_ tvShow: Item) -> UnWrappedResult<Item> {
+        let savedTvShowsResult = getSavedTvShows().result
+        if let error = savedTvShowsResult.error {
+            return .failure(error)
+        }
+        if let data = savedTvShowsResult.data {
+            guard !data.contains(where: { $0.id == tvShow.id }) else {
+                return .failure(LocalDataManagerError.genericError(str: "TV Show already exist!"))
+            }
+            var newData = data
+            newData.append(tvShow)
+            let saveTvShowsResult = saveTvShows(newData).result
+            if let error = saveTvShowsResult.error {
+                return .failure(error)
+            }
+            if let _ = saveTvShowsResult.data {
+                return .success(tvShow)
+            }
+        }
+        return .failure(LocalDataManagerError.genericError(str: "Unhandled error on saveTvShow"))
+    }
+    
+    func unSaveTvShow(_ tvShow: Item) -> UnWrappedResult<Item> {
+        let savedTvShowsResult = getSavedTvShows().result
+        if let error = savedTvShowsResult.error {
+            return .failure(error)
+        }
+        if let data = savedTvShowsResult.data {
+            guard data.contains(where: {$0.id == tvShow.id }) else {
+                return .failure(LocalDataManagerError.genericError(str: "Tv Show doesn't exists in library"))
+            }
+            var newData = data
+            newData.removeAll(where: {$0.id == tvShow.id })
+            let saveTvShowsResult = saveTvShows(newData).result
+            if let error = saveTvShowsResult.error {
+                return .failure(error)
+            }
+            if let _ = saveTvShowsResult.data {
+                return .success(tvShow)
+            }
+        }
+        return .failure(LocalDataManagerError.genericError(str: "Unhandled error on unSaveTvShow"))
     }
 }
