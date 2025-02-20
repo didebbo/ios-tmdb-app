@@ -18,15 +18,16 @@ class Movies: BaseTableViewController {
     }
     
     private func fetchData() {
-        DataProvider.shared.getMovies { item in
-            item.hasData { [weak self] data in guard let self else { return }
-                items = data
-            }
-            item.hasError { [weak self] error in guard let self else { return }
-                DispatchSerialQueue.main.async {
+        DataProvider.shared.getMovies { [weak self] item in guard let self else { return }
+            let itemResult = item.result
+            if let error = itemResult.error {
+                DispatchSerialQueue.main.async { [weak self] in guard let self else { return }
                     let alert = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
-                    self.present(alert, animated: true)
+                    present(alert, animated: true)
                 }
+            }
+            if let data = itemResult.data {
+                items = data
             }
         }
     }
@@ -73,12 +74,12 @@ class Movies: BaseTableViewController {
 extension Movies: ItemTableCellDelegate {
     
     func didTapSaveIcon(item: Item) {
-        let result = DataProvider.shared.saveMovie(item)
-        result.hasError { [weak self] error in guard let self else { return }
+        let saveMovieResult = DataProvider.shared.saveMovie(item).result
+        if let error = saveMovieResult.error {
             let vc = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
             present(vc, animated: true)
         }
-        result .hasData { [weak self] _ in guard let self else { return }
+        if let data = saveMovieResult.data {
             fetchData()
         }
     }

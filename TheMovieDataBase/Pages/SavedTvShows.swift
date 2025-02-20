@@ -26,15 +26,16 @@ class SavedTvShows: BaseTableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        DataProvider.shared.getTVShows { item in
-            item.hasData { [weak self] data in guard let self else { return }
-                items = data
-            }
-            item.hasError { [weak self] error in guard let self else { return }
-                DispatchSerialQueue.main.async {
+        DataProvider.shared.getTVShows { [weak self] item in guard let self else { return }
+            let itemResult = item.result
+            if let error = itemResult.error {
+                DispatchSerialQueue.main.async { [weak self] in guard let self else { return }
                     let alert = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
-                    self.present(alert, animated: true)
+                    present(alert, animated: true)
                 }
+            }
+            if let data = itemResult.data {
+                items = data
             }
         }
     }

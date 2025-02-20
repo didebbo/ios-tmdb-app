@@ -94,8 +94,9 @@ class Detail: BaseViewController {
         titleLabel.text = item.title
         descriptionLabel.text = item.description
         guard let coverPath = item.coverPath else { return }
-        DataProvider.shared.getImageDataFrom(imagePath: coverPath) { item in
-            item.hasData { data in
+        DataProvider.shared.getImageDataFrom(imagePath: coverPath) { [weak self] item in guard let self else { return }
+            let itemResult = item.result
+            if let data = itemResult.data {
                 DispatchQueue.main.async { [weak self] in guard let self else { return }
                     coverImageView.image = UIImage(data: data)
                     

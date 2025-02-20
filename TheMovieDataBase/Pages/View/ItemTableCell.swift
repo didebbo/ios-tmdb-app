@@ -77,8 +77,9 @@ class ItemTableCell: UITableViewCell {
         }
         
         guard let posterPath = item.posterPath else { return }
-        DataProvider.shared.getImageDataFrom(imagePath: posterPath) { item in
-            item.hasData { data in
+        DataProvider.shared.getImageDataFrom(imagePath: posterPath) { [weak self] item in guard let self else { return }
+            let itemResult = item.result
+            if let data = itemResult.data {
                 DispatchQueue.main.async { [weak self] in guard let self else { return }
                     posterView.image = UIImage(data: data)
                 }
