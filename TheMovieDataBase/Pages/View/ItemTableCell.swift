@@ -56,13 +56,13 @@ class ItemTableCell: UITableViewCell {
         return view
     }()
     
-    private lazy var saveIconTapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnSaveIcon))
-    
-    private lazy var saveIcon: UIImageView = {
-        let imageView = UIImageView()
-        imageView.tintColor = UIColor(resource: .primary)
-        imageView.isUserInteractionEnabled = true
-        return imageView
+    private lazy var saveButton: UIButton = {
+        let button = UIButton(configuration: UIButton.Configuration.plain())
+        button.backgroundColor = UIColor(resource: .primary)
+        button.addTarget(self, action: #selector(tapOnSaveIcon), for: .touchUpInside)
+        button.layer.cornerRadius = 2.5
+        button.isHidden = true
+        return button
     }()
     
     func configure(with item: Item) {
@@ -71,9 +71,12 @@ class ItemTableCell: UITableViewCell {
         descriptionLabel.text = item.description
         
         if let saved = item.saved  {
-            let iconName = saved ? "heart.fill" : "heart"
-            saveIcon.image = UIImage(systemName: iconName)
-            saveIcon.addGestureRecognizer(saveIconTapGesture)
+            let saveButtonAttributedString = NSAttributedString(string: saved ? "DELETE" : "SAVE", attributes: [
+                .font: UIFont.systemFont(ofSize: 17, weight: .bold),
+                .foregroundColor: UIColor(resource: .tertiary)
+            ])
+            saveButton.isHidden = false
+            saveButton.setAttributedTitle(saveButtonAttributedString, for: .normal)
         }
         
         guard let posterPath = item.posterPath else { return }
@@ -96,7 +99,7 @@ class ItemTableCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.subviews(posterView, descriptionContainer, saveIcon)
+        contentView.subviews(posterView, descriptionContainer, saveButton)
         
         posterView.Width == 100
         posterView.Height == contentView.Height - 20
@@ -107,11 +110,10 @@ class ItemTableCell: UITableViewCell {
         descriptionContainer.Leading == posterView.Trailing + 10
         descriptionContainer.Trailing == contentView.Trailing - 10
         
-        saveIcon.Top >= descriptionContainer.Bottom + 10
-        saveIcon.Leading == posterView.Trailing + 10
-        saveIcon.Bottom == contentView.Bottom - 10
-        saveIcon.Width == 35
-        saveIcon.heightEqualsWidth()
+        saveButton.Top >= descriptionContainer.Bottom + 10
+        saveButton.Leading == posterView.Trailing + 10
+        saveButton.Trailing <= contentView.Trailing - 10
+        saveButton.Bottom == contentView.Bottom - 10
     }
     
     override func prepareForReuse() {
@@ -120,8 +122,7 @@ class ItemTableCell: UITableViewCell {
         posterView.image = nil
         titleLabel.text = nil
         descriptionLabel.text = nil
-        saveIcon.image = nil
-        saveIcon.removeGestureRecognizer(saveIconTapGesture)
+        saveButton.isHidden = true
     }
     
     required init?(coder: NSCoder) {
