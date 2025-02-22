@@ -117,7 +117,7 @@ class Detail: BaseViewController {
             coverImageView.alpha = 1
         }
         
-        if let itemDataInfo = DataProvider.shared.getItemDataInfo(from: item.id, where: item.type).result.data {
+        if let itemDataInfo = DataProvider.shared.getItemDataInfo(from: item).result.data {
             let saveButtonAttributedString = NSAttributedString(string: itemDataInfo.saved ? "DELETE" : "SAVE", attributes: [
                 .font: UIFont.systemFont(ofSize: 17, weight: .bold),
                 .foregroundColor: UIColor(resource: .tertiary)

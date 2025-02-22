@@ -200,14 +200,16 @@ extension LocalDataManager {
         }
     }
     
-    func getItemDataInfo(from id: Int, where type: ItemDataInfo.Tpe) -> UnWrappedResult<ItemDataInfo> {
+    func getItemDataInfo(from item: Item) -> UnWrappedResult<ItemDataInfo> {
+        guard let itemId = item.id else { return .failure(LocalDataManagerError.genericError(str: "On getItemDataInfo item id is null"))}
+        
         let itemsDataInfoResult = getItemsDataInfo().result
         if let error = itemsDataInfoResult.error {
             return .failure(error)
         }
         if let data = itemsDataInfoResult.data {
-            let filteredItems = data.filter({ $0.type == type })
-            let itemDataInfo = filteredItems.first(where: { $0.id == id }) ?? ItemDataInfo(id: id, type: type)
+            let filteredItems = data.filter({ $0.type == item.type })
+            let itemDataInfo = filteredItems.first(where: { $0.id == itemId }) ?? ItemDataInfo(id: itemId, type: item.type)
             return .success(itemDataInfo)
         }
         return .failure(LocalDataManagerError.genericError(str: "Unhandled error on getItemDataInfo"))

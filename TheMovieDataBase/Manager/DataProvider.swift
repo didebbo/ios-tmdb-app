@@ -225,8 +225,11 @@ extension DataProvider {
 // MARK: ITEM DATA INFO
 extension DataProvider {
     
-    func getItemDataInfo(from id: Int?, where type: ItemDataInfo.Tpe) -> UnWrappedResult<ItemDataInfo> {
-        guard let id = id else { return .failure(DataProviderError.genericError(str: "On getItemDataInfo id is null"))}
-        return localDataManager.getItemDataInfo(from: id, where: type)
+    func getItemDataInfo(from item: Item) -> UnWrappedResult<ItemDataInfo> {
+        localDataManager.getItemDataInfo(from: item)
+    }
+    
+    func saveItemDataInfo(_ itemDataInfo: ItemDataInfo) -> UnWrappedResult<ItemDataInfo> {
+        localDataManager.saveItemDataInfo(itemDataInfo)
     }
 }
