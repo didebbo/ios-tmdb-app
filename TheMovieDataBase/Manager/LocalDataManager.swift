@@ -15,12 +15,13 @@ struct LocalDataManager {
     enum Key: String {
         case movies = "savedMovies"
         case tvShows = "savedTvShows"
+        case itemDataInfo = "itemDataInfo"
     }
     
     enum LocalDataManagerError: ApplicationError {
         case genericError(str: String)
-        case errorJsonDecode(type: Codable.Type, error: Error)
-        case errorJsonEncode(type: Codable.Type, error: Error)
+        case errorDecodeData(type: Codable.Type, error: Error)
+        case errorEncodeData(type: Codable.Type, error: Error)
         
         var prefix: String { get { "[LocalDataManager]" } }
         
@@ -28,9 +29,9 @@ struct LocalDataManager {
             get {
                 switch self {
                 case.genericError(let str): str
-                case .errorJsonDecode(let type, let error):
+                case .errorDecodeData(let type, let error):
                     "Error while decoding \(String(describing: type.self)).\n\(error.localizedDescription)"
-                case .errorJsonEncode(let type, let error):
+                case .errorEncodeData(let type, let error):
                     "Error while encoding \(String(describing: type.self)).\n\(error.localizedDescription)"
                 }
             }
@@ -49,7 +50,7 @@ extension LocalDataManager {
             userDefaults.setValue(encodedData, forKey: Key.movies.rawValue)
             return .success(movies)
         } catch {
-            return .failure(LocalDataManagerError.errorJsonEncode(type: [Item].self, error: error))
+            return .failure(LocalDataManagerError.errorEncodeData(type: [Item].self, error: error))
         }
     }
     
@@ -59,7 +60,7 @@ extension LocalDataManager {
             let decodedData = try JSONDecoder().decode([Item].self, from: encodedData)
             return .success(decodedData)
         } catch {
-            return .failure(LocalDataManagerError.errorJsonDecode(type: [Item].self, error: error))
+            return .failure(LocalDataManagerError.errorDecodeData(type: [Item].self, error: error))
         }
     }
     
@@ -117,7 +118,7 @@ extension LocalDataManager {
             userDefaults.setValue(encodedData, forKey: Key.tvShows.rawValue)
             return .success(tvShows)
         } catch {
-            return .failure(LocalDataManagerError.errorJsonEncode(type: [Item].self, error: error))
+            return .failure(LocalDataManagerError.errorEncodeData(type: [Item].self, error: error))
         }
     }
     
@@ -127,7 +128,7 @@ extension LocalDataManager {
             let decodedData = try JSONDecoder().decode([Item].self, from: encodedData)
             return .success(decodedData)
         } catch {
-            return .failure(LocalDataManagerError.errorJsonDecode(type: [Item].self, error: error))
+            return .failure(LocalDataManagerError.errorDecodeData(type: [Item].self, error: error))
         }
     }
     
@@ -173,5 +174,77 @@ extension LocalDataManager {
             }
         }
         return .failure(LocalDataManagerError.genericError(str: "Unhandled error on unSaveTvShow"))
+    }
+}
+
+// MARK: ITEM DATA INFO
+extension LocalDataManager {
+    
+    func saveItemsDataInfo(_ itemsDataInfo: [ItemDataInfo]) -> UnWrappedResult<[ItemDataInfo]> {
+        do {
+            let encodedData = try JSONEncoder().encode(itemsDataInfo)
+            userDefaults.setValue(encodedData, forKey: Key.itemDataInfo.rawValue)
+            return .success(itemsDataInfo)
+        } catch {
+            return .failure(LocalDataManagerError.errorEncodeData(type: [ItemDataInfo].self, error: error))
+        }
+    }
+    
+    func getItemsDataInfo() -> UnWrappedResult<[ItemDataInfo]> {
+        guard let encodedData = userDefaults.data(forKey: Key.itemDataInfo.rawValue) else { return .success([]) }
+        do {
+            let decodedData = try JSONDecoder().decode([ItemDataInfo].self, from: encodedData)
+            return .success(decodedData)
+        } catch {
+            return .failure(LocalDataManagerError.errorDecodeData(type: [ItemDataInfo].self, error: error))
+        }
+    }
+    
+    func getItemDataInfo(from id: Int, where type: ItemDataInfo.Tpe) -> UnWrappedResult<ItemDataInfo?> {
+        let itemsDataInfoResult = getItemsDataInfo().result
+        if let error = itemsDataInfoResult.error {
+            return .failure(error)
+        }
+        if let data = itemsDataInfoResult.data {
+            let filteredItems = data.filter({ $0.type == type })
+            return .success(filteredItems.first(where: { $0.id == id }))
+        }
+        return .failure(LocalDataManagerError.genericError(str: "Unhandled error on getItemDataInfo"))
+    }
+    
+    func saveItemDataInfo(_ itemDataInfo: ItemDataInfo) -> UnWrappedResult<ItemDataInfo> {
+        let deleteItemDataInfoResult = deleteItemDataInfo(itemDataInfo).result
+        if let error = deleteItemDataInfoResult.error {
+            return .failure(error)
+        }
+        if var data = deleteItemDataInfoResult.data {
+            data.append(itemDataInfo)
+            let saveItemsDataInfoResult = saveItemsDataInfo(data).result
+            if let error = saveItemsDataInfoResult.error {
+                return .failure(error)
+            }
+            if let data = saveItemsDataInfoResult.data {
+                return .success(itemDataInfo)
+            }
+        }
+        return .failure(LocalDataManagerError.genericError(str: "Unhandled error on saveItemDataInfo"))
+    }
+    
+    func deleteItemDataInfo(_ itemDataInfo: ItemDataInfo) -> UnWrappedResult<[ItemDataInfo]> {
+        let itemsDataInfoResult = getItemsDataInfo().result
+        if let error = itemsDataInfoResult.error {
+            return .failure(error)
+        }
+        if var data = itemsDataInfoResult.data {
+            data.removeAll(where: { $0.id == itemDataInfo.id && $0.type == itemDataInfo.type })
+            let saveItemsDataInfoResult = saveItemsDataInfo(data).result
+            if let error = saveItemsDataInfoResult.error {
+                return .failure(error)
+            }
+            if let data = saveItemsDataInfoResult.data {
+                return .success(data)
+            }
+        }
+        return .failure(LocalDataManagerError.genericError(str: "Unhandled error on deleteItemDataInfo"))
     }
 }

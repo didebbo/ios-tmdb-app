@@ -92,7 +92,7 @@ extension DataProvider {
                             }
                             
                             localGroup.notify(queue: .main) {
-                                items.append(Item(id: item.id, title: item.title, description: item.overview, posterImageData: posterImageData, coverImageData: coverImageData, dataInfo: Item.DataInfo(saved: hasSavedMovie(item.id).result.data)))
+                                items.append(Item(id: item.id, title: item.title, description: item.overview, posterImageData: posterImageData, coverImageData: coverImageData, type: .movie))
                                 globalGroup.leave()
                             }
                         }
@@ -131,7 +131,7 @@ extension DataProvider {
     }
 }
 
-// MARK TV SHOWS
+// MARK: TV SHOWS
 extension DataProvider {
     
     func getTvShows(completion: @escaping (_ shows: UnWrappedResult<[Item]>) -> Void) {
@@ -182,7 +182,7 @@ extension DataProvider {
                             }
                             
                             localGroup.notify(queue: .main) {
-                                items.append(Item(id: item.id, title: item.name, description: item.overview, posterImageData: posterImageData, coverImageData: coverImageData, dataInfo: Item.DataInfo(saved: hasSavedTvShow(item.id).result.data)))
+                                items.append(Item(id: item.id, title: item.name, description: item.overview, posterImageData: posterImageData, coverImageData: coverImageData, type: .tvShow))
                                 globalGroup.leave()
                             }
                         }
@@ -219,5 +219,14 @@ extension DataProvider {
             return .success(data.contains(where: { $0.id == id }))
         }
         return .failure(DataProviderError.genericError(str: "Unhandled error on hasSavedTvShow"))
+    }
+}
+
+// MARK: ITEM DATA INFO
+extension DataProvider {
+    
+    func getItemDataInfo(from id: Int?, where type: ItemDataInfo.Tpe) -> UnWrappedResult<ItemDataInfo?> {
+        guard let id = id else { return .failure(DataProviderError.genericError(str: "On getItemDataInfo id is null"))}
+        return localDataManager.getItemDataInfo(from: id, where: type)
     }
 }

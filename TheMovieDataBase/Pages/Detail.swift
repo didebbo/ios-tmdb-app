@@ -117,19 +117,19 @@ class Detail: BaseViewController {
             coverImageView.alpha = 1
         }
         
-        if let saved = item.dataInfo.saved  {
-            let saveButtonAttributedString = NSAttributedString(string: saved ? "DELETE" : "SAVE", attributes: [
-                .font: UIFont.systemFont(ofSize: 17, weight: .bold),
-                .foregroundColor: UIColor(resource: .tertiary)
-            ])
-            saveButton.isHidden = false
-            saveButton.setAttributedTitle(saveButtonAttributedString, for: .normal)
+        if let itemDataInfo = DataProvider.shared.getItemDataInfo(from: item.id, where: item.type).result.data {
+            if let saved = itemDataInfo?.saved {
+                let saveButtonAttributedString = NSAttributedString(string: saved ? "DELETE" : "SAVE", attributes: [
+                    .font: UIFont.systemFont(ofSize: 17, weight: .bold),
+                    .foregroundColor: UIColor(resource: .tertiary)
+                ])
+                saveButton.isHidden = false
+                saveButton.setAttributedTitle(saveButtonAttributedString, for: .normal)
+            }
         }
     }
     
     @objc private func tapOnSave() {
-        guard let saved = item.dataInfo.saved else { return }
-        item.dataInfo.saved = !saved
         configureData()
         delegate?.didTapSave(itemDetail: item)
     }
