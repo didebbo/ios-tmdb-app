@@ -87,7 +87,7 @@ class ItemTableCell: UITableViewCell {
         itemDataInfoView.Top >= descriptionContainer.Bottom + 10
         itemDataInfoView.Leading == posterView.Trailing + 10
         itemDataInfoView.Bottom == posterView.Bottom - 10
-        itemDataInfoView.Trailing <= contentView.Trailing - 10
+        itemDataInfoView.Trailing == contentView.Trailing - 20
     }
     
     override func prepareForReuse() {
