@@ -9,8 +9,6 @@ import Stevia
 
 class ItemDataInfoView: UIView {
     
-    private let itemSize = 10
-    
     struct Data {
         let saved: Bool
         let watchTime: Int
@@ -22,20 +20,20 @@ class ItemDataInfoView: UIView {
     private var data: Data?
     
     private lazy var heartIcon: UIImageView = {
-        let heartIcon = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: itemSize, height: itemSize)))
+        let heartIcon = UIImageView()
         heartIcon.tintColor = UIColor.systemRed
         return heartIcon
     }()
     
     private lazy var watchIcon: UIImageView = {
-        let watchIcon = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: itemSize, height: itemSize)))
+        let watchIcon = UIImageView()
         watchIcon.image = UIImage(systemName: "eye.fill")
         watchIcon.tintColor = UIColor(resource: .primary)
         return watchIcon
     }()
     
     private lazy var likeIcon: UIImageView = {
-        let likeIcon = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: itemSize, height: itemSize)))
+        let likeIcon = UIImageView()
         likeIcon.image = UIImage(systemName: "hand.thumbsup.fill")
         likeIcon.tintColor = UIColor(resource: .primary)
         return likeIcon
