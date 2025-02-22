@@ -136,6 +136,7 @@ class Detail: BaseViewController {
             data.watchTime += 1
             if let error = DataProvider.shared.saveItemDataInfo(data).result.error {
                 let vc = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
+                present(vc, animated: true)
             }
         }
     }
@@ -155,11 +156,14 @@ class Detail: BaseViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        updateWatchTime()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         configureLayout()
         configureData()
-        updateWatchTime()
     }
     
     init(of item: Item) {

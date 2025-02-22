@@ -9,6 +9,8 @@ import Stevia
 
 class ItemDataInfoView: UIView {
     
+    private let fontSize: CGFloat
+    
     struct Data {
         let saved: Bool
         let watchTime: Int
@@ -22,6 +24,7 @@ class ItemDataInfoView: UIView {
     private lazy var heartIcon: UIImageView = {
         let heartIcon = UIImageView()
         heartIcon.tintColor = UIColor.systemRed
+        heartIcon.contentMode = .scaleAspectFit
         return heartIcon
     }()
     
@@ -43,12 +46,13 @@ class ItemDataInfoView: UIView {
         let watchIcon = UIImageView()
         watchIcon.image = UIImage(systemName: "eye.fill")
         watchIcon.tintColor = UIColor(resource: .primary)
+        watchIcon.contentMode = .scaleAspectFit
         return watchIcon
     }()
     
     private lazy var watchIconLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 9, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
         label.textColor = UIColor(resource: .primary)
         label.textAlignment = .center
         return label
@@ -72,12 +76,13 @@ class ItemDataInfoView: UIView {
         let likeIcon = UIImageView()
         likeIcon.image = UIImage(systemName: "hand.thumbsup.fill")
         likeIcon.tintColor = UIColor(resource: .primary)
+        likeIcon.contentMode = .scaleAspectFit
         return likeIcon
     }()
     
     private lazy var likeIconLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 9, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
         label.textColor = UIColor(resource: .primary)
         label.textAlignment = .center
         return label
@@ -92,15 +97,18 @@ class ItemDataInfoView: UIView {
     
     private func configureLayout() {
         subviews(heartIcon, watchIconView, likeIconView)
+        
         layout {
             0
-            |-0--heartIcon--(>=10)--watchIconView--10--likeIconView--0-|
+            watchIconView--10--likeIconView--0-|
             0
         }
+        heartIcon.centerVertically()
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(fontSize: CGFloat = 12) {
+        self.fontSize = fontSize
+        super.init(frame: .zero)
         configureLayout()
     }
     

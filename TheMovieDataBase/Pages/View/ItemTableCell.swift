@@ -51,7 +51,7 @@ class ItemTableCell: UITableViewCell {
     }()
     
     private lazy var itemDataInfoView: ItemDataInfoView = {
-        let view = ItemDataInfoView()
+        let view = ItemDataInfoView(fontSize: 14)
         view.isHidden = true
         return view
     }()
@@ -84,7 +84,6 @@ class ItemTableCell: UITableViewCell {
         descriptionContainer.Leading == posterView.Trailing + 10
         descriptionContainer.Trailing == contentView.Trailing - 10
         
-        itemDataInfoView.Top >= descriptionContainer.Bottom + 10
         itemDataInfoView.Leading == posterView.Trailing + 10
         itemDataInfoView.Bottom == posterView.Bottom - 10
         itemDataInfoView.Trailing == contentView.Trailing - 20
