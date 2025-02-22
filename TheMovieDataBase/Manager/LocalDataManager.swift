@@ -71,7 +71,14 @@ extension LocalDataManager {
         }
         if let data = savedMoviesResult.data {
             guard !data.contains(where: { $0.id == movie.id }) else {
-                return .failure(LocalDataManagerError.genericError(str: "Movie already exist!"))
+                let unsaveMovieResult = unSaveMovie(movie).result
+                if let error = unsaveMovieResult.error {
+                    return .failure(error)
+                }
+                if let data = unsaveMovieResult.data {
+                    return .success(data)
+                }
+                return .failure(LocalDataManagerError.genericError(str: "Movie already exist"))
             }
             var newData = data
             newData.append(movie)
@@ -139,6 +146,13 @@ extension LocalDataManager {
         }
         if let data = savedTvShowsResult.data {
             guard !data.contains(where: { $0.id == tvShow.id }) else {
+                let unSaveTvShowResult = unSaveTvShow(tvShow).result
+                if let error = unSaveTvShowResult.error {
+                    return .failure(error)
+                }
+                if let data = unSaveTvShowResult.data {
+                    return .success(data)
+                }
                 return .failure(LocalDataManagerError.genericError(str: "TV Show already exist!"))
             }
             var newData = data

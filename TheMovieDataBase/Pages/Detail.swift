@@ -122,11 +122,13 @@ class Detail: BaseViewController {
     }
     
     @objc private func tapOnSave() {
-        if var itemDataInfo = DataProvider.shared.getItemDataInfo(from: item).result.data {
-            itemDataInfo.saved = !itemDataInfo.saved
-            if let _ = DataProvider.shared.saveItemDataInfo(itemDataInfo).result.data {
-                configureData()
-            }
+        let saveMovieResult = DataProvider.shared.saveMovie(item).result
+        if let error = saveMovieResult.error {
+            let vc = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
+            present(vc, animated: true)
+        }
+        if let _ = saveMovieResult.data {
+            configureData()
         }
     }
     
