@@ -118,14 +118,12 @@ class Detail: BaseViewController {
         }
         
         if let itemDataInfo = DataProvider.shared.getItemDataInfo(from: item.id, where: item.type).result.data {
-            if let saved = itemDataInfo?.saved {
-                let saveButtonAttributedString = NSAttributedString(string: saved ? "DELETE" : "SAVE", attributes: [
-                    .font: UIFont.systemFont(ofSize: 17, weight: .bold),
-                    .foregroundColor: UIColor(resource: .tertiary)
-                ])
-                saveButton.isHidden = false
-                saveButton.setAttributedTitle(saveButtonAttributedString, for: .normal)
-            }
+            let saveButtonAttributedString = NSAttributedString(string: itemDataInfo.saved ? "DELETE" : "SAVE", attributes: [
+                .font: UIFont.systemFont(ofSize: 17, weight: .bold),
+                .foregroundColor: UIColor(resource: .tertiary)
+            ])
+            saveButton.isHidden = false
+            saveButton.setAttributedTitle(saveButtonAttributedString, for: .normal)
         }
     }
     
