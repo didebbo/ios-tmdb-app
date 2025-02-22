@@ -226,7 +226,27 @@ extension DataProvider {
 extension DataProvider {
     
     func getItemDataInfo(from item: Item) -> UnWrappedResult<ItemDataInfo> {
-        localDataManager.getItemDataInfo(from: item)
+        guard let itemId = item.id else { return .failure(DataProviderError.genericError(str: "On getItemDataInfo item id is null"))}
+        let getItemDataInfoResult = localDataManager.getItemDataInfo(from: itemId, where: item.type).result
+        if let error = getItemDataInfoResult.error {
+            return .failure(error)
+        }
+        if let data: ItemDataInfo = getItemDataInfoResult.data ?? nil {
+            return .success(data)
+        }
+        var saved: UnWrappedResult<Bool> {
+            switch item.type {
+            case .movie: hasSavedMovie(itemId)
+            case .tvShow: hasSavedTvShow(itemId)
+            }
+        }
+        if let error = saved.result.error {
+            return .failure(error)
+        }
+        if let saved = saved.result.data {
+            return .success(ItemDataInfo(id: itemId, type: item.type, saved: saved))
+        }
+        return .failure(DataProviderError.genericError(str: "Unhandled error on getItemDataInfo"))
     }
     
     func saveItemDataInfo(_ itemDataInfo: ItemDataInfo) -> UnWrappedResult<ItemDataInfo> {

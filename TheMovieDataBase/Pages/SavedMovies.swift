@@ -60,7 +60,6 @@ class SavedMovies: BaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
         let vc = Detail(of: item)
-        vc.delegate = self
         vc.title = "Movie"
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -83,11 +82,5 @@ class SavedMovies: BaseTableViewController {
                 fetchData()
             }
         }
-    }
-}
-
-extension SavedMovies: DetailDelegate {
-    func didTapSave(itemDetail: Item) {
-        saveMovie(item: itemDetail)
     }
 }

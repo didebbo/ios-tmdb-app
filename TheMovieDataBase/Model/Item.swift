@@ -19,7 +19,7 @@ struct Item: Codable {
 struct ItemDataInfo: Codable {
     let id: Int
     let type: Tpe
-    var saved: Bool = false
+    var saved: Bool
     var watchTime: Int = 0
     var like: Int = 0
     

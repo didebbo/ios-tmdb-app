@@ -57,7 +57,6 @@ class SavedTvShows: BaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
         let vc = Detail(of: item)
-        vc.delegate = self
         vc.title = "TV Show"
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -80,11 +79,5 @@ class SavedTvShows: BaseTableViewController {
                 fetchData()
             }
         }
-    }
-}
-
-extension SavedTvShows: DetailDelegate {
-    func didTapSave(itemDetail: Item) {
-        saveTvShow(item: itemDetail)
     }
 }

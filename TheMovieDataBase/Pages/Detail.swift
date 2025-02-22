@@ -8,13 +8,7 @@
 import Stevia
 import SnapKit
 
-protocol DetailDelegate: AnyObject {
-    func didTapSave(itemDetail: Item)
-}
-
 class Detail: BaseViewController {
-    
-    weak var delegate: DetailDelegate?
     
     private var item: Item
     
@@ -128,8 +122,12 @@ class Detail: BaseViewController {
     }
     
     @objc private func tapOnSave() {
-        configureData()
-        delegate?.didTapSave(itemDetail: item)
+        if var itemDataInfo = DataProvider.shared.getItemDataInfo(from: item).result.data {
+            itemDataInfo.saved = !itemDataInfo.saved
+            if let _ = DataProvider.shared.saveItemDataInfo(itemDataInfo).result.data {
+                configureData()
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
