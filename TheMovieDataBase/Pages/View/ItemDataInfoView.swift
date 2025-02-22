@@ -54,6 +54,20 @@ class ItemDataInfoView: UIView {
         return label
     }()
     
+    private lazy var likeIconView: UIView = {
+        let view = UIView()
+        view.subviews(likeIcon, likeIconLabel)
+        view.layout {
+            0
+            |-(>=0)--likeIcon--(>=0)-|
+            0
+            |-0--likeIconLabel--0-|
+            0
+        }
+        likeIcon.centerHorizontally()
+        return view
+    }()
+    
     private lazy var likeIcon: UIImageView = {
         let likeIcon = UIImageView()
         likeIcon.image = UIImage(systemName: "hand.thumbsup.fill")
@@ -61,17 +75,26 @@ class ItemDataInfoView: UIView {
         return likeIcon
     }()
     
+    private lazy var likeIconLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 9, weight: .bold)
+        label.textColor = UIColor(resource: .primary)
+        label.textAlignment = .center
+        return label
+    }()
+    
     func configureData(with data: Data) {
         self.data = data
         heartIcon.image = UIImage(systemName: data.heartImageString)
         watchIconLabel.text = String(data.watchTime)
+        likeIconLabel.text = String(data.like)
     }
     
     private func configureLayout() {
-        subviews(heartIcon, watchIconView, likeIcon)
+        subviews(heartIcon, watchIconView, likeIconView)
         layout {
             0
-            |-0--heartIcon--(>=10)--watchIconView--10--likeIcon--0-|
+            |-0--heartIcon--(>=10)--watchIconView--10--likeIconView--0-|
             0
         }
     }
