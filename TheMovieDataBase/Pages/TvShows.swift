@@ -55,7 +55,6 @@ class TvShows: BaseTableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ItemTableCell.self), for: indexPath) as? ItemTableCell
         let item = items[indexPath.row]
         cell?.configure(with: item)
-        cell?.delegate = self
         return cell!
     }
     
@@ -85,12 +84,6 @@ class TvShows: BaseTableViewController {
                 fethData()
             }
         }
-    }
-}
-
-extension TvShows: ItemTableCellDelegate {
-    func didTapSave(item: Item) {
-       saveTvShow(item: item)
     }
 }
 

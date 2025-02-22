@@ -7,13 +7,7 @@
 
 import Stevia
 
-protocol ItemTableCellDelegate: AnyObject {
-    func didTapSave(item: Item)
-}
-
 class ItemTableCell: UITableViewCell {
-    
-    weak var delegate: ItemTableCellDelegate?
     
     static let heightForRowAt: CGFloat = 160
     
@@ -56,13 +50,11 @@ class ItemTableCell: UITableViewCell {
         return view
     }()
     
-    private lazy var saveButton: UIButton = {
-        let button = UIButton(configuration: UIButton.Configuration.plain())
-        button.backgroundColor = UIColor(resource: .primary)
-        button.addTarget(self, action: #selector(tapOnSave), for: .touchUpInside)
-        button.layer.cornerRadius = 2.5
-        button.isHidden = true
-        return button
+    private lazy var saveIcon: UIImageView = {
+        let imageView = UIImageView(frame: CGRect(origin: .zero, size: CGSizeMake(10, 10)))
+        imageView.tintColor = UIColor.systemRed
+        imageView.isHidden = true
+        return imageView
     }()
     
     func configure(with item: Item) {
@@ -71,28 +63,18 @@ class ItemTableCell: UITableViewCell {
         descriptionLabel.text = item.description
         
         if let saved = item.saved  {
-            let saveButtonAttributedString = NSAttributedString(string: saved ? "DELETE" : "SAVE", attributes: [
-                .font: UIFont.systemFont(ofSize: 17, weight: .bold),
-                .foregroundColor: UIColor(resource: .tertiary)
-            ])
-            saveButton.isHidden = false
-            saveButton.setAttributedTitle(saveButtonAttributedString, for: .normal)
+            saveIcon.image = UIImage(systemName: saved ? "heart.fill" : "heart")
+            saveIcon.isHidden = false
         }
         
         guard let posterImageData = item.posterImageData else { return }
         posterView.image = UIImage(data: posterImageData)
     }
     
-    @objc private func tapOnSave() {
-        guard var item, let saved = item.saved else { return }
-        item.saved = !saved
-        delegate?.didTapSave(item: item)
-    }
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.subviews(posterView, descriptionContainer, saveButton)
+        contentView.subviews(posterView, descriptionContainer, saveIcon)
         
         posterView.Width == 100
         posterView.Height == contentView.Height - 20
@@ -103,10 +85,10 @@ class ItemTableCell: UITableViewCell {
         descriptionContainer.Leading == posterView.Trailing + 10
         descriptionContainer.Trailing == contentView.Trailing - 10
         
-        saveButton.Top >= descriptionContainer.Bottom + 10
-        saveButton.Leading == posterView.Trailing + 10
-        saveButton.Trailing <= contentView.Trailing - 10
-        saveButton.Bottom == contentView.Bottom - 10
+        saveIcon.Top >= descriptionContainer.Bottom + 10
+        saveIcon.Leading == posterView.Trailing + 10
+        saveIcon.Bottom == posterView.Bottom - 10
+        saveIcon.Trailing <= contentView.Trailing - 10
     }
     
     override func prepareForReuse() {
@@ -115,7 +97,7 @@ class ItemTableCell: UITableViewCell {
         posterView.image = nil
         titleLabel.text = nil
         descriptionLabel.text = nil
-        saveButton.isHidden = true
+        saveIcon.isHidden = true
     }
     
     required init?(coder: NSCoder) {
