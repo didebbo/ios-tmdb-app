@@ -64,7 +64,7 @@ extension LocalDataManager {
         }
     }
     
-    func saveMovie(_ movie: Item) -> UnWrappedData<Item> {
+    func saveMovie(_ movie: Item) -> UnWrappedData<Bool> {
         let savedMoviesResult = getSavedMovies().result
         if let error = savedMoviesResult.error {
             return .failure(error)
@@ -76,7 +76,7 @@ extension LocalDataManager {
                     return .failure(error)
                 }
                 if let data = unsaveMovieResult.data {
-                    return .success(data)
+                    return .success(false)
                 }
                 return .failure(LocalDataManagerError.genericError(str: "Movie already exist"))
             }
@@ -87,7 +87,7 @@ extension LocalDataManager {
                 return .failure(error)
             }
             if let _ = saveMoviesResult.data {
-                return .success(movie)
+                return .success(true)
             }
         }
         return .failure(LocalDataManagerError.genericError(str: "Unhandled error on saveMovie"))
@@ -139,7 +139,7 @@ extension LocalDataManager {
         }
     }
     
-    func saveTvShow(_ tvShow: Item) -> UnWrappedData<Item> {
+    func saveTvShow(_ tvShow: Item) -> UnWrappedData<Bool> {
         let savedTvShowsResult = getSavedTvShows().result
         if let error = savedTvShowsResult.error {
             return .failure(error)
@@ -151,7 +151,7 @@ extension LocalDataManager {
                     return .failure(error)
                 }
                 if let data = unSaveTvShowResult.data {
-                    return .success(data)
+                    return .success(false)
                 }
                 return .failure(LocalDataManagerError.genericError(str: "TV Show already exist!"))
             }
@@ -162,7 +162,7 @@ extension LocalDataManager {
                 return .failure(error)
             }
             if let _ = saveTvShowsResult.data {
-                return .success(tvShow)
+                return .success(true)
             }
         }
         return .failure(LocalDataManagerError.genericError(str: "Unhandled error on saveTvShow"))

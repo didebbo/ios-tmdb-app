@@ -68,20 +68,4 @@ class Movies: BaseTableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         ItemTableCell.heightForRowAt
     }
-    
-    private func saveMovie(item: Item) {
-        let hasSavedMovieResult = DataProvider.shared.hasSavedMovie(item.id).result
-        if let error = hasSavedMovieResult.error {
-            present(CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert), animated: true)
-        }
-        if let hasSavedMovie = hasSavedMovieResult.data {
-            let operationResult = hasSavedMovie ? DataProvider.shared.unSaveMovie(item).result : DataProvider.shared.saveMovie(item).result
-            if let error = operationResult.error {
-                present(CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert), animated: true)
-            }
-            if let _ = operationResult.data {
-                fetchData()
-            }
-        }
-    }
 }

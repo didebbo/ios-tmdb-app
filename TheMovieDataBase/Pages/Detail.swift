@@ -130,13 +130,27 @@ class Detail: BaseViewController {
         }
     }
     
+    private func updateWatchTime() {
+        let itemDataInfoResult = DataProvider.shared.getItemDataInfo(from: item).result
+        if var data = itemDataInfoResult.data {
+            data.watchTime += 1
+            if let error = DataProvider.shared.saveItemDataInfo(data).result.error {
+                let vc = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
+            }
+        }
+    }
+    
     @objc private func tapOnSave() {
         let saveMovieResult = DataProvider.shared.saveMovie(item).result
         if let error = saveMovieResult.error {
             let vc = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
             present(vc, animated: true)
         }
-        if let _ = saveMovieResult.data {
+        if let saved = saveMovieResult.data {
+            if var itemDataInfo = DataProvider.shared.getItemDataInfo(from: item).result.data {
+                itemDataInfo.saved = saved
+                let _ = DataProvider.shared.saveItemDataInfo(itemDataInfo)
+            }
             configureData()
         }
     }
@@ -145,6 +159,7 @@ class Detail: BaseViewController {
         super.viewDidAppear(animated)
         configureLayout()
         configureData()
+        updateWatchTime()
     }
     
     init(of item: Item) {

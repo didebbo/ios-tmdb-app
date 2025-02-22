@@ -109,7 +109,7 @@ extension DataProvider {
         localDataManager.getSavedMovies()
     }
     
-    func saveMovie(_ movie: Item) -> UnWrappedData<Item>  {
+    func saveMovie(_ movie: Item) -> UnWrappedData<Bool>  {
         guard let _ = movie.id else { return .failure(DataProviderError.genericError(str: "On saveMovie, movie id is null")) }
         return localDataManager.saveMovie(movie)
     }
@@ -200,7 +200,7 @@ extension DataProvider {
         localDataManager.getSavedTvShows()
     }
     
-    func saveTvShow(_ tvShow: Item) -> UnWrappedData<Item>  {
+    func saveTvShow(_ tvShow: Item) -> UnWrappedData<Bool>  {
         guard let _ = tvShow.id else { return .failure(DataProviderError.genericError(str: "On saveTvShow, tvShow id is null")) }
         return localDataManager.saveTvShow(tvShow)
     }

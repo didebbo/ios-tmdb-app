@@ -68,20 +68,4 @@ class TvShows: BaseTableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         ItemTableCell.heightForRowAt
     }
-    
-    private func saveTvShow(item: Item) {
-        let hasSavedTvShowResult = DataProvider.shared.hasSavedTvShow(item.id).result
-        if let error = hasSavedTvShowResult.error {
-            present(CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert), animated: true)
-        }
-        if let hasSavedTvShow = hasSavedTvShowResult.data {
-            let operationResult = hasSavedTvShow ? DataProvider.shared.unSaveTvShow(item).result : DataProvider.shared.saveTvShow(item).result
-            if let error = operationResult.error {
-                present(CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert), animated: true)
-            }
-            if let _ = operationResult.data {
-                fethData()
-            }
-        }
-    }
 }
