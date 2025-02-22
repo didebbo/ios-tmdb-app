@@ -92,7 +92,7 @@ extension DataProvider {
                             }
                             
                             localGroup.notify(queue: .main) {
-                                    items.append(Item(id: item.id, title: item.title, description: item.overview, posterImageData: posterImageData, coverImageData: coverImageData, saved: hasSavedMovie(item.id).result.data))
+                                items.append(Item(id: item.id, title: item.title, description: item.overview, posterImageData: posterImageData, coverImageData: coverImageData, saved: hasSavedMovie(item.id).result.data))
                                 globalGroup.leave()
                             }
                         }
@@ -172,7 +172,7 @@ extension DataProvider {
                                     localGroup.leave()
                                 }
                             }
-
+                            
                             if let backdrop_path = item.backdrop_path {
                                 localGroup.enter()
                                 getImageDataFrom(imagePath: backdrop_path) { itemResponse in
@@ -186,7 +186,7 @@ extension DataProvider {
                                 globalGroup.leave()
                             }
                         }
-
+                        
                         globalGroup.notify(queue: .main) {
                             completion(.success(items))
                         }

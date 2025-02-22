@@ -8,7 +8,7 @@
 import Stevia
 
 protocol ItemTableCellDelegate: AnyObject {
-    func didTapSaveIcon(item: Item)
+    func didTapSave(item: Item)
 }
 
 class ItemTableCell: UITableViewCell {
@@ -59,7 +59,7 @@ class ItemTableCell: UITableViewCell {
     private lazy var saveButton: UIButton = {
         let button = UIButton(configuration: UIButton.Configuration.plain())
         button.backgroundColor = UIColor(resource: .primary)
-        button.addTarget(self, action: #selector(tapOnSaveIcon), for: .touchUpInside)
+        button.addTarget(self, action: #selector(tapOnSave), for: .touchUpInside)
         button.layer.cornerRadius = 2.5
         button.isHidden = true
         return button
@@ -83,10 +83,10 @@ class ItemTableCell: UITableViewCell {
         posterView.image = UIImage(data: posterImageData)
     }
     
-    @objc private func tapOnSaveIcon() {
+    @objc private func tapOnSave() {
         guard var item, let saved = item.saved else { return }
         item.saved = !saved
-        delegate?.didTapSaveIcon(item: item)
+        delegate?.didTapSave(item: item)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

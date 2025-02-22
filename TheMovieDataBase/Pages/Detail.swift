@@ -8,9 +8,15 @@
 import Stevia
 import SnapKit
 
+protocol DetailDelegate: AnyObject {
+    func didTapSave(itemDetail: Item)
+}
+
 class Detail: BaseViewController {
     
-    private let item: Item
+    weak var delegate: DetailDelegate?
+    
+    private var item: Item
     
     private lazy var safeViewContainer: UIView = {
         let view = UIView()
@@ -47,6 +53,15 @@ class Detail: BaseViewController {
         return view
     }()
     
+    private lazy var saveButton: UIButton = {
+        let button = UIButton(configuration: UIButton.Configuration.plain())
+        button.backgroundColor = UIColor(resource: .primary)
+        button.addTarget(self, action: #selector(tapOnSave), for: .touchUpInside)
+        button.layer.cornerRadius = 2.5
+        button.isHidden = true
+        return button
+    }()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -66,14 +81,17 @@ class Detail: BaseViewController {
         view.isScrollEnabled = true
         view.showsHorizontalScrollIndicator = false
         view.showsVerticalScrollIndicator = false
-        view.subviews(titleLabel, descriptionLabel)
+        view.subviews(saveButton, titleLabel, descriptionLabel)
         view.layout {
-            10
+            20
+            |-10--saveButton--(>=10)-|
+            20
             titleLabel
             10
             descriptionLabel
             0
         }
+        
         titleLabel.Width == view.Width - 20
         titleLabel.centerHorizontally()
         
@@ -98,6 +116,22 @@ class Detail: BaseViewController {
         UIView.animate(withDuration: 0.5) { [weak self] in guard let self else { return }
             coverImageView.alpha = 1
         }
+        
+        if let saved = item.saved  {
+            let saveButtonAttributedString = NSAttributedString(string: saved ? "DELETE" : "SAVE", attributes: [
+                .font: UIFont.systemFont(ofSize: 17, weight: .bold),
+                .foregroundColor: UIColor(resource: .tertiary)
+            ])
+            saveButton.isHidden = false
+            saveButton.setAttributedTitle(saveButtonAttributedString, for: .normal)
+        }
+    }
+    
+    @objc private func tapOnSave() {
+        guard let saved = item.saved else { return }
+        item.saved = !saved
+        configureData()
+        delegate?.didTapSave(itemDetail: item)
     }
     
     override func viewDidAppear(_ animated: Bool) {

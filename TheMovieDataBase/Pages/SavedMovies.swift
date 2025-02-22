@@ -61,6 +61,7 @@ class SavedMovies: BaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
         let vc = Detail(of: item)
+        vc.delegate = self
         vc.title = "Movie"
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -68,11 +69,8 @@ class SavedMovies: BaseTableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         ItemTableCell.heightForRowAt
     }
-}
-
-extension SavedMovies: ItemTableCellDelegate {
     
-    func didTapSaveIcon(item: Item) {
+    private func saveMovie(item: Item) {
         let hasSavedMovieResult = DataProvider.shared.hasSavedMovie(item.id).result
         if let error = hasSavedMovieResult.error {
             present(CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert), animated: true)
@@ -86,5 +84,18 @@ extension SavedMovies: ItemTableCellDelegate {
                 fetchData()
             }
         }
+    }
+}
+
+extension SavedMovies: ItemTableCellDelegate {
+    
+    func didTapSave(item: Item) {
+        saveMovie(item: item)
+    }
+}
+
+extension SavedMovies: DetailDelegate {
+    func didTapSave(itemDetail: Item) {
+        saveMovie(item: itemDetail)
     }
 }

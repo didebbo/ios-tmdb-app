@@ -62,6 +62,7 @@ class TvShows: BaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
         let vc = Detail(of: item)
+        vc.delegate = self
         vc.title = "TV Show"
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -69,10 +70,8 @@ class TvShows: BaseTableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         ItemTableCell.heightForRowAt
     }
-}
-
-extension TvShows: ItemTableCellDelegate {
-    func didTapSaveIcon(item: Item) {
+    
+    private func saveTvShow(item: Item) {
         let hasSavedTvShowResult = DataProvider.shared.hasSavedTvShow(item.id).result
         if let error = hasSavedTvShowResult.error {
             present(CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert), animated: true)
@@ -86,5 +85,17 @@ extension TvShows: ItemTableCellDelegate {
                 fethData()
             }
         }
+    }
+}
+
+extension TvShows: ItemTableCellDelegate {
+    func didTapSave(item: Item) {
+       saveTvShow(item: item)
+    }
+}
+
+extension TvShows: DetailDelegate {
+    func didTapSave(itemDetail: Item) {
+        saveTvShow(item: itemDetail)
     }
 }
