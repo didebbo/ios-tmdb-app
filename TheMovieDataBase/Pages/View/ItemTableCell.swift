@@ -62,7 +62,7 @@ class ItemTableCell: UITableViewCell {
         titleLabel.text = item.title
         descriptionLabel.text = item.description
         
-        if let saved = item.saved  {
+        if let saved = item.dataInfo.saved  {
             saveIcon.image = UIImage(systemName: saved ? "heart.fill" : "heart")
             saveIcon.isHidden = false
         }

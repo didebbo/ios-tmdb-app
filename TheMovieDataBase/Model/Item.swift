@@ -13,5 +13,11 @@ struct Item: Codable {
     let description: String?
     let posterImageData: Data?
     let coverImageData: Data?
-    var saved: Bool?
+    var dataInfo: DataInfo
+    
+    struct DataInfo: Codable {
+        var saved: Bool?
+        var watchTime: Int = 0
+        var like: Int = 0
+    }
 }

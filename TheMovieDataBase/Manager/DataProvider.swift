@@ -92,7 +92,7 @@ extension DataProvider {
                             }
                             
                             localGroup.notify(queue: .main) {
-                                items.append(Item(id: item.id, title: item.title, description: item.overview, posterImageData: posterImageData, coverImageData: coverImageData, saved: hasSavedMovie(item.id).result.data))
+                                items.append(Item(id: item.id, title: item.title, description: item.overview, posterImageData: posterImageData, coverImageData: coverImageData, dataInfo: Item.DataInfo(saved: hasSavedMovie(item.id).result.data)))
                                 globalGroup.leave()
                             }
                         }
@@ -182,7 +182,7 @@ extension DataProvider {
                             }
                             
                             localGroup.notify(queue: .main) {
-                                items.append(Item(id: item.id, title: item.name, description: item.overview, posterImageData: posterImageData, coverImageData: coverImageData, saved: hasSavedTvShow(item.id).result.data))
+                                items.append(Item(id: item.id, title: item.name, description: item.overview, posterImageData: posterImageData, coverImageData: coverImageData, dataInfo: Item.DataInfo(saved: hasSavedTvShow(item.id).result.data)))
                                 globalGroup.leave()
                             }
                         }

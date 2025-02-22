@@ -117,7 +117,7 @@ class Detail: BaseViewController {
             coverImageView.alpha = 1
         }
         
-        if let saved = item.saved  {
+        if let saved = item.dataInfo.saved  {
             let saveButtonAttributedString = NSAttributedString(string: saved ? "DELETE" : "SAVE", attributes: [
                 .font: UIFont.systemFont(ofSize: 17, weight: .bold),
                 .foregroundColor: UIColor(resource: .tertiary)
@@ -128,8 +128,8 @@ class Detail: BaseViewController {
     }
     
     @objc private func tapOnSave() {
-        guard let saved = item.saved else { return }
-        item.saved = !saved
+        guard let saved = item.dataInfo.saved else { return }
+        item.dataInfo.saved = !saved
         configureData()
         delegate?.didTapSave(itemDetail: item)
     }
