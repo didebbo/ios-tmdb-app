@@ -11,9 +11,18 @@ class ItemDataInfoView: UIView {
     
     private let itemSize = 10
     
+    struct Data {
+        let saved: Bool
+        let watchTime: Int
+        let like: Int
+        
+        var heartImageString: String { saved ? "heart.fill" : "heart" }
+    }
+    
+    private var data: Data?
+    
     private lazy var heartIcon: UIImageView = {
         let heartIcon = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: itemSize, height: itemSize)))
-        heartIcon.image = UIImage(systemName: "heart.fill")
         heartIcon.tintColor = UIColor.systemRed
         return heartIcon
     }()
@@ -31,6 +40,11 @@ class ItemDataInfoView: UIView {
         likeIcon.tintColor = UIColor(resource: .primary)
         return likeIcon
     }()
+    
+    func configureData(with data: Data) {
+        self.data = data
+        heartIcon.image = UIImage(systemName: data.heartImageString)
+    }
     
     private func configureLayout() {
         subviews(heartIcon, watchIcon, likeIcon)

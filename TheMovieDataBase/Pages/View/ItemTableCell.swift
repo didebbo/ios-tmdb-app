@@ -62,6 +62,7 @@ class ItemTableCell: UITableViewCell {
         descriptionLabel.text = item.description
         
         if let itemDataInfo = DataProvider.shared.getItemDataInfo(from: item).result.data {
+            itemDataInfoView.configureData(with: ItemDataInfoView.Data(saved: itemDataInfo.saved, watchTime: itemDataInfo.watchTime, like: itemDataInfo.like))
             itemDataInfoView.isHidden = false
         }
         
