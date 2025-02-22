@@ -50,11 +50,10 @@ class ItemTableCell: UITableViewCell {
         return view
     }()
     
-    private lazy var saveIcon: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(origin: .zero, size: CGSizeMake(10, 10)))
-        imageView.tintColor = UIColor.systemRed
-        imageView.isHidden = true
-        return imageView
+    private lazy var itemDataInfoView: ItemDataInfoView = {
+        let view = ItemDataInfoView()
+        view.isHidden = true
+        return view
     }()
     
     func configure(with item: Item) {
@@ -63,8 +62,7 @@ class ItemTableCell: UITableViewCell {
         descriptionLabel.text = item.description
         
         if let itemDataInfo = DataProvider.shared.getItemDataInfo(from: item).result.data {
-            saveIcon.image = UIImage(systemName: itemDataInfo.saved ? "heart.fill" : "heart")
-            saveIcon.isHidden = false
+            itemDataInfoView.isHidden = false
         }
         
         guard let posterImageData = item.posterImageData else { return }
@@ -74,7 +72,7 @@ class ItemTableCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.subviews(posterView, descriptionContainer, saveIcon)
+        contentView.subviews(posterView, descriptionContainer, itemDataInfoView)
         
         posterView.Width == 100
         posterView.Height == contentView.Height - 20
@@ -85,10 +83,10 @@ class ItemTableCell: UITableViewCell {
         descriptionContainer.Leading == posterView.Trailing + 10
         descriptionContainer.Trailing == contentView.Trailing - 10
         
-        saveIcon.Top >= descriptionContainer.Bottom + 10
-        saveIcon.Leading == posterView.Trailing + 10
-        saveIcon.Bottom == posterView.Bottom - 10
-        saveIcon.Trailing <= contentView.Trailing - 10
+        itemDataInfoView.Top >= descriptionContainer.Bottom + 10
+        itemDataInfoView.Leading == posterView.Trailing + 10
+        itemDataInfoView.Bottom == posterView.Bottom - 10
+        itemDataInfoView.Trailing <= contentView.Trailing - 10
     }
     
     override func prepareForReuse() {
@@ -97,7 +95,7 @@ class ItemTableCell: UITableViewCell {
         posterView.image = nil
         titleLabel.text = nil
         descriptionLabel.text = nil
-        saveIcon.isHidden = true
+        itemDataInfoView.isHidden = true
     }
     
     required init?(coder: NSCoder) {
