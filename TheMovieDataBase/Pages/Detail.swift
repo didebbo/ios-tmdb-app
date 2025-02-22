@@ -47,8 +47,16 @@ class Detail: BaseViewController {
         return view
     }()
     
+    private lazy var likeButton: UIButton = {
+        let button = UIButton(configuration: .plain())
+        button.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+        button.tintColor = UIColor(resource: .primary)
+        button.addTarget(self, action: #selector(updateLike), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var saveButton: UIButton = {
-        let button = UIButton(configuration: UIButton.Configuration.plain())
+        let button = UIButton(configuration: .plain())
         button.backgroundColor = UIColor(resource: .primary)
         button.addTarget(self, action: #selector(tapOnSave), for: .touchUpInside)
         button.layer.cornerRadius = 2.5
@@ -75,7 +83,7 @@ class Detail: BaseViewController {
         view.isScrollEnabled = true
         view.showsHorizontalScrollIndicator = false
         view.showsVerticalScrollIndicator = false
-        view.subviews(saveButton, titleLabel, descriptionLabel)
+        view.subviews(saveButton, likeButton, titleLabel, descriptionLabel)
         view.layout {
             20
             |-10--saveButton--(>=10)-|
@@ -88,6 +96,10 @@ class Detail: BaseViewController {
         
         titleLabel.Width == view.Width - 20
         titleLabel.centerHorizontally()
+        
+        likeButton.CenterY == saveButton.CenterY
+        likeButton.Trailing == descriptionLabel.Trailing
+        likeButton.heightEqualsWidth()
         
         descriptionLabel.Width == view.Width - 20
         descriptionLabel.centerHorizontally()
@@ -140,6 +152,22 @@ class Detail: BaseViewController {
             }
         }
     }
+    
+    @objc private func updateLike() {
+        let itemDataInfoResult = DataProvider.shared.getItemDataInfo(from: item).result
+        if var data = itemDataInfoResult.data {
+            data.like += 1
+            let saveItemDataInfoResult = DataProvider.shared.saveItemDataInfo(data).result
+            if let error = saveItemDataInfoResult.error {
+                let vc = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
+                present(vc, animated: true)
+            }
+            if let _ = saveItemDataInfoResult.data {
+                likeButton.isEnabled = false
+            }
+        }
+    }
+    
     
     @objc private func tapOnSave() {
         let saveMovieResult = DataProvider.shared.saveMovie(item).result
