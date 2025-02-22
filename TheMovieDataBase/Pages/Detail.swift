@@ -93,18 +93,10 @@ class Detail: BaseViewController {
     private func configureData() {
         titleLabel.text = item.title
         descriptionLabel.text = item.description
-        guard let coverPath = item.coverPath else { return }
-        DataProvider.shared.getImageDataFrom(imagePath: coverPath) { [weak self] item in guard let self else { return }
-            let itemResult = item.result
-            if let data = itemResult.data {
-                DispatchQueue.main.async { [weak self] in guard let self else { return }
-                    coverImageView.image = UIImage(data: data)
-                    
-                    UIView.animate(withDuration: 0.5) { [weak self] in guard let self else { return }
-                        coverImageView.alpha = 1
-                    }
-                }
-            }
+        guard let coverImageData = item.coverImageData else { return }
+        coverImageView.image = UIImage(data: coverImageData)
+        UIView.animate(withDuration: 0.5) { [weak self] in guard let self else { return }
+            coverImageView.alpha = 1
         }
     }
     

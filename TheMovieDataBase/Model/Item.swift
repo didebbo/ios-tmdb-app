@@ -11,7 +11,7 @@ struct Item: Codable {
     let id: Int?
     let title: String?
     let description: String?
-    var posterPath: String?
-    var coverPath: String?
+    var posterImageData: Data?
+    var coverImageData: Data?
     var saved: Bool?
 }

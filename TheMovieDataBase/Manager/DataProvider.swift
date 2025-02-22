@@ -66,10 +66,39 @@ extension DataProvider {
                         completion(.failure(error))
                     }
                     if let data = decodedJsonResult.data {
-                        let items: [Item] = data.results.map { item in
-                            return Item(id: item.id, title: item.title, description: item.overview, posterPath: item.poster_path, coverPath: item.backdrop_path, saved: hasSavedMovie(item.id).result.data)
+                        var items: [Item] = []
+                        let globalGroup = DispatchGroup()
+                        data.results.forEach { item in
+                            globalGroup.enter()
+                            
+                            let localGroup = DispatchGroup()
+                            
+                            var posterImageData: Data?
+                            var coverImageData: Data?
+                            
+                            if let poster_path = item.poster_path {
+                                localGroup.enter()
+                                getImageDataFrom(imagePath: poster_path) { item in
+                                    posterImageData = item.result.data
+                                    localGroup.leave()
+                                }
+                            }
+                            if let backdrop_path = item.backdrop_path {
+                                localGroup.enter()
+                                getImageDataFrom(imagePath: backdrop_path) { item in
+                                    coverImageData = item.result.data
+                                    localGroup.leave()
+                                }
+                            }
+                            
+                            localGroup.notify(queue: .main) {
+                                    items.append(Item(id: item.id, title: item.title, description: item.overview, posterImageData: posterImageData, coverImageData: coverImageData, saved: hasSavedMovie(item.id).result.data))
+                                globalGroup.leave()
+                            }
                         }
-                        completion(.success(items))
+                        globalGroup.notify(queue: .main) {
+                            completion(.success(items))
+                        }
                     }
                 }
             }
@@ -105,7 +134,7 @@ extension DataProvider {
 // MARK TV SHOWS
 extension DataProvider {
     
-    func getTvShows(completion: @escaping (_ movies: UnWrappedResult<[Item]>) -> Void) {
+    func getTvShows(completion: @escaping (_ shows: UnWrappedResult<[Item]>) -> Void) {
         
         let urlString = tmdbManager.getUrlString(from: .discoverTv)
         let urlResult = remoteDataProvider.getUrl(from: urlString).result
@@ -125,10 +154,42 @@ extension DataProvider {
                         completion(.failure(error))
                     }
                     if let data = decodedJsonResult.data {
-                        let items: [Item] = data.results.map { item in
-                            return Item(id: item.id, title: item.name, description: item.overview, posterPath: item.poster_path, coverPath: item.backdrop_path, saved: hasSavedTvShow(item.id).result.data)
+                        var items: [Item] = []
+                        let globalGroup = DispatchGroup()
+                        
+                        data.results.forEach { item in
+                            globalGroup.enter()
+                            
+                            let localGroup = DispatchGroup()
+                            
+                            var posterImageData: Data?
+                            var coverImageData: Data?
+                            
+                            if let poster_path = item.poster_path {
+                                localGroup.enter()
+                                getImageDataFrom(imagePath: poster_path) { itemResponse in
+                                    posterImageData = itemResponse.result.data
+                                    localGroup.leave()
+                                }
+                            }
+
+                            if let backdrop_path = item.backdrop_path {
+                                localGroup.enter()
+                                getImageDataFrom(imagePath: backdrop_path) { itemResponse in
+                                    coverImageData = itemResponse.result.data
+                                    localGroup.leave()
+                                }
+                            }
+                            
+                            localGroup.notify(queue: .main) {
+                                items.append(Item(id: item.id, title: item.name, description: item.overview, posterImageData: posterImageData, coverImageData: coverImageData, saved: hasSavedTvShow(item.id).result.data))
+                                globalGroup.leave()
+                            }
                         }
-                        completion(.success(items))
+
+                        globalGroup.notify(queue: .main) {
+                            completion(.success(items))
+                        }
                     }
                 }
             }
