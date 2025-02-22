@@ -44,7 +44,7 @@ struct LocalDataManager {
 // MARK: MOVIES
 extension LocalDataManager {
     
-    func saveMovies(_ movies: [Item]) -> UnWrappedResult<[Item]> {
+    func saveMovies(_ movies: [Item]) -> UnWrappedData<[Item]> {
         do {
             let encodedData = try JSONEncoder().encode(movies)
             userDefaults.setValue(encodedData, forKey: Key.movies.rawValue)
@@ -54,7 +54,7 @@ extension LocalDataManager {
         }
     }
     
-    func getSavedMovies() -> UnWrappedResult<[Item]> {
+    func getSavedMovies() -> UnWrappedData<[Item]> {
         guard let encodedData = userDefaults.data(forKey: Key.movies.rawValue) else { return .success([]) }
         do {
             let decodedData = try JSONDecoder().decode([Item].self, from: encodedData)
@@ -64,7 +64,7 @@ extension LocalDataManager {
         }
     }
     
-    func saveMovie(_ movie: Item) -> UnWrappedResult<Item> {
+    func saveMovie(_ movie: Item) -> UnWrappedData<Item> {
         let savedMoviesResult = getSavedMovies().result
         if let error = savedMoviesResult.error {
             return .failure(error)
@@ -93,7 +93,7 @@ extension LocalDataManager {
         return .failure(LocalDataManagerError.genericError(str: "Unhandled error on saveMovie"))
     }
     
-    func unSaveMovie(_ movie: Item) -> UnWrappedResult<Item> {
+    func unSaveMovie(_ movie: Item) -> UnWrappedData<Item> {
         let savedMoviesResult = getSavedMovies().result
         if let error = savedMoviesResult.error {
             return .failure(error)
@@ -119,7 +119,7 @@ extension LocalDataManager {
 // MARK: TVSHOWS
 extension LocalDataManager {
     
-    func saveTvShows(_ tvShows: [Item]) -> UnWrappedResult<[Item]> {
+    func saveTvShows(_ tvShows: [Item]) -> UnWrappedData<[Item]> {
         do {
             let encodedData = try JSONEncoder().encode(tvShows)
             userDefaults.setValue(encodedData, forKey: Key.tvShows.rawValue)
@@ -129,7 +129,7 @@ extension LocalDataManager {
         }
     }
     
-    func getSavedTvShows() -> UnWrappedResult<[Item]> {
+    func getSavedTvShows() -> UnWrappedData<[Item]> {
         guard let encodedData = userDefaults.data(forKey: Key.tvShows.rawValue) else { return .success([]) }
         do {
             let decodedData = try JSONDecoder().decode([Item].self, from: encodedData)
@@ -139,7 +139,7 @@ extension LocalDataManager {
         }
     }
     
-    func saveTvShow(_ tvShow: Item) -> UnWrappedResult<Item> {
+    func saveTvShow(_ tvShow: Item) -> UnWrappedData<Item> {
         let savedTvShowsResult = getSavedTvShows().result
         if let error = savedTvShowsResult.error {
             return .failure(error)
@@ -168,7 +168,7 @@ extension LocalDataManager {
         return .failure(LocalDataManagerError.genericError(str: "Unhandled error on saveTvShow"))
     }
     
-    func unSaveTvShow(_ tvShow: Item) -> UnWrappedResult<Item> {
+    func unSaveTvShow(_ tvShow: Item) -> UnWrappedData<Item> {
         let savedTvShowsResult = getSavedTvShows().result
         if let error = savedTvShowsResult.error {
             return .failure(error)
@@ -194,7 +194,7 @@ extension LocalDataManager {
 // MARK: ITEM DATA INFO
 extension LocalDataManager {
     
-    func saveItemsDataInfo(_ itemsDataInfo: [ItemDataInfo]) -> UnWrappedResult<[ItemDataInfo]> {
+    func saveItemsDataInfo(_ itemsDataInfo: [ItemDataInfo]) -> UnWrappedData<[ItemDataInfo]> {
         do {
             let encodedData = try JSONEncoder().encode(itemsDataInfo)
             userDefaults.setValue(encodedData, forKey: Key.itemDataInfo.rawValue)
@@ -204,7 +204,7 @@ extension LocalDataManager {
         }
     }
     
-    func getItemsDataInfo() -> UnWrappedResult<[ItemDataInfo]> {
+    func getItemsDataInfo() -> UnWrappedData<[ItemDataInfo]> {
         guard let encodedData = userDefaults.data(forKey: Key.itemDataInfo.rawValue) else { return .success([]) }
         do {
             let decodedData = try JSONDecoder().decode([ItemDataInfo].self, from: encodedData)
@@ -214,7 +214,7 @@ extension LocalDataManager {
         }
     }
     
-    func getItemDataInfo(from itemId: Int, where type: ItemDataInfo.Tpe) -> UnWrappedResult<ItemDataInfo?> {
+    func getItemDataInfo(from itemId: Int, where type: ItemDataInfo.Tpe) -> UnWrappedData<ItemDataInfo?> {
         let itemsDataInfoResult = getItemsDataInfo().result
         if let error = itemsDataInfoResult.error {
             return .failure(error)
@@ -227,7 +227,7 @@ extension LocalDataManager {
         return .failure(LocalDataManagerError.genericError(str: "Unhandled error on getItemDataInfo"))
     }
     
-    func saveItemDataInfo(_ itemDataInfo: ItemDataInfo) -> UnWrappedResult<ItemDataInfo> {
+    func saveItemDataInfo(_ itemDataInfo: ItemDataInfo) -> UnWrappedData<ItemDataInfo> {
         let deleteItemDataInfoResult = deleteItemDataInfo(itemDataInfo).result
         if let error = deleteItemDataInfoResult.error {
             return .failure(error)
@@ -245,7 +245,7 @@ extension LocalDataManager {
         return .failure(LocalDataManagerError.genericError(str: "Unhandled error on saveItemDataInfo"))
     }
     
-    func deleteItemDataInfo(_ itemDataInfo: ItemDataInfo) -> UnWrappedResult<[ItemDataInfo]> {
+    func deleteItemDataInfo(_ itemDataInfo: ItemDataInfo) -> UnWrappedData<[ItemDataInfo]> {
         let itemsDataInfoResult = getItemsDataInfo().result
         if let error = itemsDataInfoResult.error {
             return .failure(error)

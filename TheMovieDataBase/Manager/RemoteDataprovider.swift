@@ -37,7 +37,7 @@ struct RemoteDataProvider {
         }
     }
     
-    func getUrl(from urlString: String) -> UnWrappedResult<URL> {
+    func getUrl(from urlString: String) -> UnWrappedData<URL> {
         guard let url = URL(string: urlString) else {
             return .failure(RemoteDataProviderError.invalidUrl(url: urlString))
         }
@@ -52,7 +52,7 @@ struct RemoteDataProvider {
         return request
     }
     
-    func fetchData(from request: URLRequest, completion: @escaping (_ response: UnWrappedResult<Data>) -> Void) {
+    func fetchData(from request: URLRequest, completion: @escaping (_ response: UnWrappedData<Data>) -> Void) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             let urlString = response?.url?.absoluteString ?? "Undefined"
             var dataString = "Undefined"
@@ -75,7 +75,7 @@ struct RemoteDataProvider {
         }.resume()
     }
     
-    func getDecodedJson<M: Codable>(from data: Data, to model: M.Type) -> UnWrappedResult<M> {
+    func getDecodedJson<M: Codable>(from data: Data, to model: M.Type) -> UnWrappedData<M> {
         do {
             let decodedJson = try JSONDecoder().decode(model, from: data)
             return .success(decodedJson)

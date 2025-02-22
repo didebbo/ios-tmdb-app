@@ -29,7 +29,7 @@ struct DataProvider {
         }
     }
     
-    func getImageDataFrom(imagePath: String, completion: @escaping (_ item: UnWrappedResult<Data>) -> Void) {
+    func getImageDataFrom(imagePath: String, completion: @escaping (_ item: UnWrappedData<Data>) -> Void) {
         let imageUrlString = tmdbManager.getImageUrlStringFrom(imagePath: imagePath)
         let urlResult = remoteDataProvider.getUrl(from: imageUrlString).result
         if let data = urlResult.data {
@@ -46,7 +46,7 @@ struct DataProvider {
 // MARK: MOVIES
 extension DataProvider {
     
-    func getMovies(completion: @escaping (_ movies: UnWrappedResult<[Item]>) -> Void) {
+    func getMovies(completion: @escaping (_ movies: UnWrappedData<[Item]>) -> Void) {
         
         let urlString = tmdbManager.getUrlString(from: .discoverMovie)
         let urlResult = remoteDataProvider.getUrl(from: urlString).result
@@ -105,20 +105,20 @@ extension DataProvider {
         }
     }
     
-    func getSavedMovies() -> UnWrappedResult<[Item]> {
+    func getSavedMovies() -> UnWrappedData<[Item]> {
         localDataManager.getSavedMovies()
     }
     
-    func saveMovie(_ movie: Item) -> UnWrappedResult<Item>  {
+    func saveMovie(_ movie: Item) -> UnWrappedData<Item>  {
         guard let _ = movie.id else { return .failure(DataProviderError.genericError(str: "On saveMovie, movie id is null")) }
         return localDataManager.saveMovie(movie)
     }
     
-    func unSaveMovie(_ movie: Item) -> UnWrappedResult<Item> {
+    func unSaveMovie(_ movie: Item) -> UnWrappedData<Item> {
         localDataManager.unSaveMovie(movie)
     }
     
-    func hasSavedMovie(_ id: Int?) -> UnWrappedResult<Bool> {
+    func hasSavedMovie(_ id: Int?) -> UnWrappedData<Bool> {
         guard let id else { return .failure(DataProviderError.genericError(str: "On hasSavedMovie, movie id is null")) }
         let savedMovieResult = getSavedMovies().result
         if let error = savedMovieResult.error {
@@ -134,7 +134,7 @@ extension DataProvider {
 // MARK: TV SHOWS
 extension DataProvider {
     
-    func getTvShows(completion: @escaping (_ shows: UnWrappedResult<[Item]>) -> Void) {
+    func getTvShows(completion: @escaping (_ shows: UnWrappedData<[Item]>) -> Void) {
         
         let urlString = tmdbManager.getUrlString(from: .discoverTv)
         let urlResult = remoteDataProvider.getUrl(from: urlString).result
@@ -196,20 +196,20 @@ extension DataProvider {
         }
     }
     
-    func getSavedTvShows() -> UnWrappedResult<[Item]> {
+    func getSavedTvShows() -> UnWrappedData<[Item]> {
         localDataManager.getSavedTvShows()
     }
     
-    func saveTvShow(_ tvShow: Item) -> UnWrappedResult<Item>  {
+    func saveTvShow(_ tvShow: Item) -> UnWrappedData<Item>  {
         guard let _ = tvShow.id else { return .failure(DataProviderError.genericError(str: "On saveTvShow, tvShow id is null")) }
         return localDataManager.saveTvShow(tvShow)
     }
     
-    func unSaveTvShow(_ tvShow: Item) -> UnWrappedResult<Item> {
+    func unSaveTvShow(_ tvShow: Item) -> UnWrappedData<Item> {
         localDataManager.unSaveTvShow(tvShow)
     }
     
-    func hasSavedTvShow(_ id: Int?) -> UnWrappedResult<Bool> {
+    func hasSavedTvShow(_ id: Int?) -> UnWrappedData<Bool> {
         guard let id else { return .failure(DataProviderError.genericError(str: "On hasSavedTvShow, tvShow id is null")) }
         let savedTvShowsResult = getSavedTvShows().result
         if let error = savedTvShowsResult.error {
@@ -225,7 +225,7 @@ extension DataProvider {
 // MARK: ITEM DATA INFO
 extension DataProvider {
     
-    func getItemDataInfo(from item: Item) -> UnWrappedResult<ItemDataInfo> {
+    func getItemDataInfo(from item: Item) -> UnWrappedData<ItemDataInfo> {
         guard let itemId = item.id else { return .failure(DataProviderError.genericError(str: "On getItemDataInfo item id is null"))}
         let getItemDataInfoResult = localDataManager.getItemDataInfo(from: itemId, where: item.type).result
         if let error = getItemDataInfoResult.error {
@@ -234,7 +234,7 @@ extension DataProvider {
         if let data: ItemDataInfo = getItemDataInfoResult.data ?? nil {
             return .success(data)
         }
-        var saved: UnWrappedResult<Bool> {
+        var saved: UnWrappedData<Bool> {
             switch item.type {
             case .movie: hasSavedMovie(itemId)
             case .tvShow: hasSavedTvShow(itemId)
@@ -249,7 +249,7 @@ extension DataProvider {
         return .failure(DataProviderError.genericError(str: "Unhandled error on getItemDataInfo"))
     }
     
-    func saveItemDataInfo(_ itemDataInfo: ItemDataInfo) -> UnWrappedResult<ItemDataInfo> {
+    func saveItemDataInfo(_ itemDataInfo: ItemDataInfo) -> UnWrappedData<ItemDataInfo> {
         localDataManager.saveItemDataInfo(itemDataInfo)
     }
 }

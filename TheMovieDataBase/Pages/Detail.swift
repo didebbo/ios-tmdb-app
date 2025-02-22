@@ -111,8 +111,17 @@ class Detail: BaseViewController {
             coverImageView.alpha = 1
         }
         
-        if let itemDataInfo = DataProvider.shared.getItemDataInfo(from: item).result.data {
-            let saveButtonAttributedString = NSAttributedString(string: itemDataInfo.saved ? "DELETE" : "SAVE", attributes: [
+        var savedResult: UnWrappedResult<Bool> {
+            switch item.type {
+            case .movie:
+                DataProvider.shared.hasSavedMovie(item.id).result
+            case .tvShow:
+                DataProvider.shared.hasSavedTvShow(item.id).result
+            }
+        }
+        
+        if let saved = savedResult.data {
+            let saveButtonAttributedString = NSAttributedString(string: saved ? "DELETE" : "SAVE", attributes: [
                 .font: UIFont.systemFont(ofSize: 17, weight: .bold),
                 .foregroundColor: UIColor(resource: .tertiary)
             ])

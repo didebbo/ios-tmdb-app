@@ -7,7 +7,9 @@
 
 import Foundation
 
-enum UnWrappedResult<Data> {
+typealias UnWrappedResult<D> = (data: D?, error: ApplicationError?)
+
+enum UnWrappedData<Data> {
     case success(Data)
     case failure(ApplicationError)
     
