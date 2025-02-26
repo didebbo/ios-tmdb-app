@@ -20,8 +20,8 @@ struct ItemDataInfo: Codable {
     let id: Int
     let type: Tpe
     var saved: Bool
-    var watchTime: Int = 0
-    var like: Int = 0
+    lazy var watchTime: Int = Range(0...1_000).randomElement() ?? 0
+    lazy var like: Int = Range(0...watchTime).randomElement() ?? 0
     
     enum Tpe: Codable {
         case movie
