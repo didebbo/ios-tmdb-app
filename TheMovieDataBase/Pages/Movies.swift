@@ -40,6 +40,7 @@ class Movies: BaseTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        handleSettingsIcon()
         fetchData()
     }
     

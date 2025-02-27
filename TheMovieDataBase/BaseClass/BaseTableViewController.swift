@@ -16,11 +16,6 @@ class BaseTableViewController: CoreTableViewController {
         tableView.showsHorizontalScrollIndicator = false
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        handleSettingsIcon()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         handleBottomNavigator()
@@ -37,10 +32,9 @@ class BaseTableViewController: CoreTableViewController {
             make.height.equalTo(safeHeight)
             make.width.equalTo(vs.width)
         }
-        
     }
     
-    private func handleSettingsIcon() {
+    func handleSettingsIcon() {
         guard isRootViewController else { return }
         let settingsBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: #selector(presentSettings))
         navigationItem.rightBarButtonItem = settingsBarButtonItem
@@ -48,8 +42,9 @@ class BaseTableViewController: CoreTableViewController {
     
     @objc private func presentSettings() {
         let vc = Settings()
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        let nc = BaseNavigationController(rootViewController: vc)
+        nc.modalPresentationStyle = .fullScreen
+        present(nc, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
