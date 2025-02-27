@@ -170,12 +170,22 @@ class Detail: BaseViewController {
     
     
     @objc private func tapOnSave() {
-        let saveMovieResult = DataProvider.shared.saveMovie(item).result
-        if let error = saveMovieResult.error {
+        
+        let saveOperationResult: UnWrappedResult<Bool> = {
+            switch item.type {
+            case .movie:
+             DataProvider.shared.saveMovie(item).result
+            case .tvShow:
+                DataProvider.shared.saveTvShow(item).result
+            }
+        }()
+        
+        if let error = saveOperationResult.error {
             let vc = CoreAlertController(title: "Attenzione", message: error.description, preferredStyle: .alert)
             present(vc, animated: true)
         }
-        if let saved = saveMovieResult.data {
+        
+        if let saved = saveOperationResult.data {
             if var itemDataInfo = DataProvider.shared.getItemDataInfo(from: item).result.data {
                 itemDataInfo.saved = saved
                 let _ = DataProvider.shared.saveItemDataInfo(itemDataInfo)
