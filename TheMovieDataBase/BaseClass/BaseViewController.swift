@@ -9,8 +9,8 @@ import SnapKit
 
 class BaseViewController: CoreViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         handleSettingsIcon()
     }
     

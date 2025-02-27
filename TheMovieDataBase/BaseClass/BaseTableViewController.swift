@@ -12,10 +12,13 @@ class BaseTableViewController: CoreTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        handleSettingsIcon()
-        
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        handleSettingsIcon()
     }
     
     override func viewDidAppear(_ animated: Bool) {
