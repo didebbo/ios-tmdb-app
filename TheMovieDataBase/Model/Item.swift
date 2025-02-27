@@ -20,11 +20,19 @@ struct ItemDataInfo: Codable {
     let id: Int
     let type: Tpe
     var saved: Bool
-    lazy var watchTime: Int = Range(0...1_000).randomElement() ?? 0
-    lazy var like: Int = Range(0...watchTime).randomElement() ?? 0
+    var watchTime: Int
+    var like: Int
     
     enum Tpe: Codable {
         case movie
         case tvShow
+    }
+    
+    init(id: Int, type: Tpe, saved: Bool, watchTime: Int? = nil, like: Int? = nil) {
+        self.id = id
+        self.type = type
+        self.saved = saved
+        self.watchTime = watchTime ?? Range(0...1_000).randomElement() ?? 0
+        self.like = like ?? Range(0...self.watchTime).randomElement() ?? 0
     }
 }
