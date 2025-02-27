@@ -19,6 +19,8 @@
 		996A899E2D64BC5700D0D260 /* ResultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A899D2D64BC5700D0D260 /* ResultManager.swift */; };
 		996A89A02D64BC7E00D0D260 /* ApplicationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A899F2D64BC7E00D0D260 /* ApplicationError.swift */; };
 		997D03552D66678300AFAED8 /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997D03542D66678300AFAED8 /* LocalDataManager.swift */; };
+		9985B6CB2D70DB3100ACF11D /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985B6CA2D70DB3100ACF11D /* UIViewController+Ext.swift */; };
+		9985B6CD2D70DBF000ACF11D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985B6CC2D70DBF000ACF11D /* Settings.swift */; };
 		99A2B1252D610A6C008BBA96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1242D610A6C008BBA96 /* AppDelegate.swift */; };
 		99A2B1272D610A6C008BBA96 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A2B1262D610A6C008BBA96 /* SceneDelegate.swift */; };
 		99A2B12C2D610A6C008BBA96 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 99A2B12B2D610A6C008BBA96 /* Base */; };
@@ -58,6 +60,8 @@
 		996A899D2D64BC5700D0D260 /* ResultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultManager.swift; sourceTree = "<group>"; };
 		996A899F2D64BC7E00D0D260 /* ApplicationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationError.swift; sourceTree = "<group>"; };
 		997D03542D66678300AFAED8 /* LocalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
+		9985B6CA2D70DB3100ACF11D /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
+		9985B6CC2D70DBF000ACF11D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		99A2B1212D610A6C008BBA96 /* TheMovieDataBase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMovieDataBase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99A2B1242D610A6C008BBA96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99A2B1262D610A6C008BBA96 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -130,6 +134,14 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		9985B6C92D70DB1D00ACF11D /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				9985B6CA2D70DB3100ACF11D /* UIViewController+Ext.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		99A2B1182D610A6C008BBA96 = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +163,7 @@
 		99A2B1232D610A6C008BBA96 /* TheMovieDataBase */ = {
 			isa = PBXGroup;
 			children = (
+				9985B6C92D70DB1D00ACF11D /* Extension */,
 				996A899C2D64BC3B00D0D260 /* Manager */,
 				99B745DE2D62635F00CA9441 /* Model */,
 				99A2B1412D611569008BBA96 /* Application */,
@@ -228,6 +241,7 @@
 				996A89982D647A9300D0D260 /* Detail.swift */,
 				99A701402D65FC43001BFE89 /* SavedMovies.swift */,
 				99A701422D65FC71001BFE89 /* SavedTvShows.swift */,
+				9985B6CC2D70DBF000ACF11D /* Settings.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -387,11 +401,13 @@
 				99B745D92D6237CD00CA9441 /* TvShows.swift in Sources */,
 				99A2B1402D6114CB008BBA96 /* CoreTableViewController.swift in Sources */,
 				997D03552D66678300AFAED8 /* LocalDataManager.swift in Sources */,
+				9985B6CB2D70DB3100ACF11D /* UIViewController+Ext.swift in Sources */,
 				9910D93D2D634BF800FF4D14 /* DataProvider.swift in Sources */,
 				99B745D32D61F1B200CA9441 /* BottomNavigationBar.swift in Sources */,
 				9910D9422D63507E00FF4D14 /* TMDBManager.swift in Sources */,
 				99A701412D65FC43001BFE89 /* SavedMovies.swift in Sources */,
 				99B745DD2D625B2100CA9441 /* TopNavigationBar.swift in Sources */,
+				9985B6CD2D70DBF000ACF11D /* Settings.swift in Sources */,
 				99B745D62D621DF800CA9441 /* Navigator.swift in Sources */,
 				99B745E22D62667C00CA9441 /* Application+Ext.swift in Sources */,
 				99A2B1482D612CCC008BBA96 /* BaseNavigationController.swift in Sources */,

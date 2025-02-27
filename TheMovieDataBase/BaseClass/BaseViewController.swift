@@ -9,6 +9,11 @@ import SnapKit
 
 class BaseViewController: CoreViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        handleSettingsIcon()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         handleBottomNavigator()
@@ -26,5 +31,17 @@ class BaseViewController: CoreViewController {
             make.height.equalTo(safeHeight)
             make.width.equalTo(vs.width)
         }
+    }
+    
+    private func handleSettingsIcon() {
+        guard isRootViewController else { return }
+        let settingsBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: #selector(presentSettings))
+        navigationItem.rightBarButtonItem = settingsBarButtonItem
+    }
+    
+    @objc private func presentSettings() {
+        let vc = Settings()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
 }

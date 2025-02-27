@@ -12,6 +12,8 @@ class BaseTableViewController: CoreTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        handleSettingsIcon()
+        
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
     }
@@ -33,6 +35,18 @@ class BaseTableViewController: CoreTableViewController {
             make.width.equalTo(vs.width)
         }
         
+    }
+    
+    private func handleSettingsIcon() {
+        guard isRootViewController else { return }
+        let settingsBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: #selector(presentSettings))
+        navigationItem.rightBarButtonItem = settingsBarButtonItem
+    }
+    
+    @objc private func presentSettings() {
+        let vc = Settings()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
