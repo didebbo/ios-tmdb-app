@@ -17,7 +17,7 @@ class TvShows: BaseTableViewController {
         }
     }
     
-    private func fethData() {
+    private func fetchData() {
         DataProvider.shared.getTvShows { [weak self] item in guard let self else { return }
             let itemResult = item.result
             if let error = itemResult.error {
@@ -37,10 +37,9 @@ class TvShows: BaseTableViewController {
         tableView.register(ItemTableCell.self, forCellReuseIdentifier: String(describing: ItemTableCell.self))
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        fethData()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchData()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

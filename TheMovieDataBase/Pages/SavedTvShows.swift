@@ -33,9 +33,8 @@ class SavedTvShows: BaseTableViewController {
         tableView.register(ItemTableCell.self, forCellReuseIdentifier: String(describing: ItemTableCell.self))
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchData()
     }
     
