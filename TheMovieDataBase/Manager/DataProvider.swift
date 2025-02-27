@@ -244,12 +244,12 @@ extension DataProvider {
         if let data: ItemDataInfo = getItemDataInfoResult.data ?? nil {
             return .success(data)
         }
-        var saved: UnWrappedData<Bool> {
+        let saved: UnWrappedData<Bool> = {
             switch item.type {
             case .movie: hasSavedMovie(itemId)
             case .tvShow: hasSavedTvShow(itemId)
             }
-        }
+        }()
         if let error = saved.result.error {
             return .failure(error)
         }

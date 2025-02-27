@@ -123,14 +123,14 @@ class Detail: BaseViewController {
             coverImageView.alpha = 1
         }
         
-        var savedResult: UnWrappedResult<Bool> {
+        let savedResult: UnWrappedResult<Bool> = {
             switch item.type {
             case .movie:
                 DataProvider.shared.hasSavedMovie(item.id).result
             case .tvShow:
                 DataProvider.shared.hasSavedTvShow(item.id).result
             }
-        }
+        }()
         
         if let saved = savedResult.data {
             let saveButtonAttributedString = NSAttributedString(string: saved ? "DELETE" : "SAVE", attributes: [
