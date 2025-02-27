@@ -97,6 +97,11 @@ extension DataProvider {
                             }
                         }
                         globalGroup.notify(queue: .main) {
+                            items.sort(by: {
+                                let resultA = hasSavedMovie($0.id).result.data ?? false
+                                let resultB = hasSavedMovie($1.id).result.data ?? false
+                                return resultA && !resultB
+                            })
                             completion(.success(items))
                         }
                     }
@@ -188,6 +193,11 @@ extension DataProvider {
                         }
                         
                         globalGroup.notify(queue: .main) {
+                            items.sort(by: {
+                                let resultA = hasSavedTvShow($0.id).result.data ?? false
+                                let resultB = hasSavedTvShow($1.id).result.data ?? false
+                                return resultA && !resultB
+                            })
                             completion(.success(items))
                         }
                     }
