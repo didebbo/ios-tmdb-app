@@ -18,7 +18,7 @@ class Settings: BaseViewController {
         view.layout {
             0
             |-0--avatarImageView--10--ownerView--0-|
-            10
+            20
             externalLinkView--0-|
             (>=0)
         }
@@ -77,12 +77,13 @@ class Settings: BaseViewController {
         
         let title = UILabel()
         title.text = "Links"
-        title.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        title.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         
         view.subviews(title, linkedinView)
         view.layout {
             0
             |-0--title--0-|
+            10
             |-0--linkedinView--0-|
             0
         }
@@ -100,14 +101,18 @@ class Settings: BaseViewController {
         attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: attributedString.length))
         attributedString.addAttribute(.font, value: UIFont.italicSystemFont(ofSize: 12), range: NSRange(location: 0, length: attributedString.length))
         
-        let label = UILabel()
-        label.attributedText = attributedString
-        label.textColor = UIColor(resource: .secondary)
+        let textLabel = UILabel()
+        textLabel.text = "LinkedIn:"
+        textLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
-        view.subviews(icon, label)
+        let linkLabel = UILabel()
+        linkLabel.attributedText = attributedString
+        linkLabel.textColor = UIColor(resource: .secondary)
+        
+        view.subviews(icon, textLabel, linkLabel)
         view.layout {
             0
-            |-5--icon--5--label--0-|
+            |-0--icon--5--textLabel--5--linkLabel--(>=0)-|
             0
         }
         icon.Width == 16
