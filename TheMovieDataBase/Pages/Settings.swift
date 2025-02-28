@@ -79,7 +79,7 @@ class Settings: BaseViewController {
         title.text = "Links"
         title.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         
-        view.subviews(title, linkedinView, gitHubView)
+        view.subviews(title, linkedinView, gitHubView, mailToView)
         view.layout {
             0
             |-0--title--0-|
@@ -87,6 +87,8 @@ class Settings: BaseViewController {
             |-0--linkedinView--0-|
             10
             |-0--gitHubView--0-|
+            10
+            |-0--mailToView--0-|
             0
         }
         
@@ -99,9 +101,9 @@ class Settings: BaseViewController {
         let icon = UIImageView()
         icon.image = UIImage(resource: .linkedinIcon)
         
-        let attributedString = NSMutableAttributedString(string: "gianlucanapoletano")
+        let attributedString = NSMutableAttributedString(string: "linkedin.com/in/gianlucanapoletano/")
         attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: attributedString.length))
-        attributedString.addAttribute(.font, value: UIFont.italicSystemFont(ofSize: 12), range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 12, weight: .medium), range: NSRange(location: 0, length: attributedString.length))
         
         let textLabel = UILabel()
         textLabel.text = "LinkedIn:"
@@ -133,9 +135,9 @@ class Settings: BaseViewController {
         let icon = UIImageView()
         icon.image = UIImage(resource: .gitHubIcon)
         
-        let attributedString = NSMutableAttributedString(string: "didebbo")
+        let attributedString = NSMutableAttributedString(string: "github.com/didebbo")
         attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: attributedString.length))
-        attributedString.addAttribute(.font, value: UIFont.italicSystemFont(ofSize: 12), range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 12, weight: .medium), range: NSRange(location: 0, length: attributedString.length))
         
         let textLabel = UILabel()
         textLabel.text = "GitHub:"
@@ -156,6 +158,41 @@ class Settings: BaseViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openURL))
         tapGesture.accessibilityValue = "https://github.com/didebbo"
+        
+        view.addGestureRecognizer(tapGesture)
+        return view
+    }()
+    
+    private lazy var mailToView: UIView = {
+        let view = UIView()
+        
+        let icon = UIImageView()
+        icon.image = UIImage(systemName: "envelope.fill")
+        icon.tintColor = UIColor(resource: .primary)
+        
+        let attributedString = NSMutableAttributedString(string: "gianluca.napoletano.93@gmail.com")
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 12, weight: .medium), range: NSRange(location: 0, length: attributedString.length))
+        
+        let textLabel = UILabel()
+        textLabel.text = "Email:"
+        textLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        
+        let linkLabel = UILabel()
+        linkLabel.attributedText = attributedString
+        linkLabel.textColor = UIColor(resource: .secondary)
+        
+        view.subviews(icon, textLabel, linkLabel)
+        view.layout {
+            0
+            |-0--icon--5--textLabel--5--linkLabel--(>=0)-|
+            0
+        }
+        icon.Width == 18
+        icon.heightEqualsWidth()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openURL))
+        tapGesture.accessibilityValue = "mailto:gianluca.napoletano.93@gmail.com"
         
         view.addGestureRecognizer(tapGesture)
         return view
