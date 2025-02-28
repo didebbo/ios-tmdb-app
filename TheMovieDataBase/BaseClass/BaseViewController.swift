@@ -29,15 +29,13 @@ class BaseViewController: CoreViewController {
     }
     
     func handleSettingsIcon() {
-        guard isRootViewController else { return }
         let settingsBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: #selector(presentSettings))
         navigationItem.rightBarButtonItem = settingsBarButtonItem
     }
     
-    func handleBackIcon() {
-        guard isRootViewController else { return }
-        let dismissBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .done, target: self, action: #selector(dismissBackButton))
-        navigationItem.leftBarButtonItem = dismissBarButtonItem
+    func handleCloseIcon() {
+        let closeBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle.fill"), style: .done, target: self, action: #selector(dismissCloseButton))
+        navigationItem.leftBarButtonItem = closeBarButtonItem
     }
     
     @objc private func presentSettings() {
@@ -47,7 +45,7 @@ class BaseViewController: CoreViewController {
         present(nc, animated: true)
     }
     
-    @objc private func dismissBackButton() {
+    @objc private func dismissCloseButton() {
         dismiss(animated: true)
     }
 }

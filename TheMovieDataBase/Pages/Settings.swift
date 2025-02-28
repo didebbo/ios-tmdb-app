@@ -11,7 +11,6 @@ class Settings: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        handleBackIcon()
+        handleCloseIcon()
     }
 }

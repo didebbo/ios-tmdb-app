@@ -35,7 +35,6 @@ class BaseTableViewController: CoreTableViewController {
     }
     
     func handleSettingsIcon() {
-        guard isRootViewController else { return }
         let settingsBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: #selector(presentSettings))
         navigationItem.rightBarButtonItem = settingsBarButtonItem
     }
