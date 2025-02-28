@@ -79,12 +79,14 @@ class Settings: BaseViewController {
         title.text = "Links"
         title.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         
-        view.subviews(title, linkedinView)
+        view.subviews(title, linkedinView, gitHubView)
         view.layout {
             0
             |-0--title--0-|
             10
             |-0--linkedinView--0-|
+            10
+            |-0--gitHubView--0-|
             0
         }
         
@@ -115,11 +117,45 @@ class Settings: BaseViewController {
             |-0--icon--5--textLabel--5--linkLabel--(>=0)-|
             0
         }
-        icon.Width == 16
+        icon.Width == 18
         icon.heightEqualsWidth()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openURL))
         tapGesture.accessibilityValue = "https://www.linkedin.com/in/gianlucanapoletano/"
+        
+        view.addGestureRecognizer(tapGesture)
+        return view
+    }()
+    
+    private lazy var gitHubView: UIView = {
+        let view = UIView()
+        
+        let icon = UIImageView()
+        icon.image = UIImage(resource: .gitHubIcon)
+        
+        let attributedString = NSMutableAttributedString(string: "didebbo")
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(.font, value: UIFont.italicSystemFont(ofSize: 12), range: NSRange(location: 0, length: attributedString.length))
+        
+        let textLabel = UILabel()
+        textLabel.text = "GitHub:"
+        textLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        
+        let linkLabel = UILabel()
+        linkLabel.attributedText = attributedString
+        linkLabel.textColor = UIColor(resource: .secondary)
+        
+        view.subviews(icon, textLabel, linkLabel)
+        view.layout {
+            0
+            |-0--icon--5--textLabel--5--linkLabel--(>=0)-|
+            0
+        }
+        icon.Width == 18
+        icon.heightEqualsWidth()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openURL))
+        tapGesture.accessibilityValue = "https://github.com/didebbo"
         
         view.addGestureRecognizer(tapGesture)
         return view
