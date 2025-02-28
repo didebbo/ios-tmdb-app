@@ -14,19 +14,23 @@ class Settings: BaseViewController {
     
     private lazy var containerView: UIView = {
         let view = UIView()
-        view.subviews(avatarImageView, ownerView, externalLinkView)
+        view.subviews(avatarImageView, ownerView, externalLinkView, clearDataButton)
         view.layout {
             0
             |-0--avatarImageView--10--ownerView--0-|
             20
             externalLinkView--0-|
-            (>=0)
+            (>=10)
+            |-(>=0)--clearDataButton--(>=0)-|
+            0
         }
         
         externalLinkView.Leading == avatarImageView.CenterX / 2
         
         avatarImageView.Width == avatarImageSize
         avatarImageView.heightEqualsWidth()
+        
+        clearDataButton.centerHorizontally()
         
         return view
     }()
@@ -198,6 +202,22 @@ class Settings: BaseViewController {
         return view
     }()
     
+    private lazy var clearDataButton: UIButton = {
+        
+        var configuration = UIButton.Configuration.filled()
+        configuration.baseBackgroundColor = UIColor(resource: .primary)
+        configuration.attributedTitle = AttributedString("CLEAR ALL DATA", attributes: AttributeContainer([
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .bold)
+        ]))
+        configuration.contentInsets = .init(top: 10, leading: 20, bottom: 10, trailing: 20)
+        
+        let button = UIButton(configuration: configuration)
+        button.addTarget(self, action: #selector(clearAllData), for: .touchUpInside)
+        
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         handleCloseIcon()
@@ -216,5 +236,9 @@ class Settings: BaseViewController {
         if let url = URL(string: accessibilityValue) {
             UIApplication.shared.open(url)
         }
+    }
+    
+    @objc private func clearAllData() {
+        
     }
 }
