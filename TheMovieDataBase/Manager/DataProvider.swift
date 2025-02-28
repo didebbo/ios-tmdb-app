@@ -262,4 +262,8 @@ extension DataProvider {
     func saveItemDataInfo(_ itemDataInfo: ItemDataInfo) -> UnWrappedData<ItemDataInfo> {
         localDataManager.saveItemDataInfo(itemDataInfo)
     }
+    
+    func clearAllData() {
+        localDataManager.clearAllData()
+    }
 }

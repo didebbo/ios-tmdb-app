@@ -12,7 +12,7 @@ struct LocalDataManager {
     
     private let userDefaults: UserDefaults = UserDefaults.standard
     
-    enum Key: String {
+    enum Key: String, CaseIterable  {
         case movies = "savedMovies"
         case tvShows = "savedTvShows"
         case itemDataInfo = "itemDataInfo"
@@ -75,7 +75,7 @@ extension LocalDataManager {
                 if let error = unsaveMovieResult.error {
                     return .failure(error)
                 }
-                if let data = unsaveMovieResult.data {
+                if let _ = unsaveMovieResult.data {
                     return .success(false)
                 }
                 return .failure(LocalDataManagerError.genericError(str: "Movie already exist"))
@@ -150,7 +150,7 @@ extension LocalDataManager {
                 if let error = unSaveTvShowResult.error {
                     return .failure(error)
                 }
-                if let data = unSaveTvShowResult.data {
+                if let _ = unSaveTvShowResult.data {
                     return .success(false)
                 }
                 return .failure(LocalDataManagerError.genericError(str: "TV Show already exist!"))
@@ -238,7 +238,7 @@ extension LocalDataManager {
             if let error = saveItemsDataInfoResult.error {
                 return .failure(error)
             }
-            if let data = saveItemsDataInfoResult.data {
+            if let _ = saveItemsDataInfoResult.data {
                 return .success(itemDataInfo)
             }
         }
@@ -261,5 +261,15 @@ extension LocalDataManager {
             }
         }
         return .failure(LocalDataManagerError.genericError(str: "Unhandled error on deleteItemDataInfo"))
+    }
+}
+
+// MARK: CLEAR DATA
+extension LocalDataManager {
+    
+    func clearAllData() {
+        Key.allCases.forEach { key in
+            userDefaults.removeObject(forKey: key.rawValue)
+        }
     }
 }

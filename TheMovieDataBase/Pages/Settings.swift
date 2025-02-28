@@ -207,13 +207,16 @@ class Settings: BaseViewController {
         var configuration = UIButton.Configuration.filled()
         configuration.baseBackgroundColor = UIColor(resource: .primary)
         configuration.attributedTitle = AttributedString("CLEAR ALL DATA", attributes: AttributeContainer([
-            NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .bold)
         ]))
         configuration.contentInsets = .init(top: 10, leading: 20, bottom: 10, trailing: 20)
         
         let button = UIButton(configuration: configuration)
         button.addTarget(self, action: #selector(clearAllData), for: .touchUpInside)
+        
+        button.configurationUpdateHandler = { btn in
+            btn.configuration?.baseForegroundColor = btn.isEnabled ? .white : .gray
+        }
         
         return button
     }()
@@ -239,6 +242,7 @@ class Settings: BaseViewController {
     }
     
     @objc private func clearAllData() {
-        
+        DataProvider.shared.clearAllData()
+        clearDataButton.isEnabled = false
     }
 }
