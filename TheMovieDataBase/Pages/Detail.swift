@@ -195,6 +195,7 @@ class Detail: BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        handleSettingsIcon()
         updateWatchTime()
     }
     
