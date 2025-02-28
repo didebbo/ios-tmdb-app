@@ -62,12 +62,17 @@ class ItemTableCell: UITableViewCell {
         descriptionLabel.text = item.description
         
         if var itemDataInfo = DataProvider.shared.getItemDataInfo(from: item).result.data {
+            saveItemDataInfoResult(itemDataInfo)
             itemDataInfoView.configureData(with: ItemDataInfoView.Data(saved: itemDataInfo.saved, watchTime: itemDataInfo.watchTime, like: itemDataInfo.like))
             itemDataInfoView.isHidden = false
         }
         
         guard let posterImageData = item.posterImageData else { return }
         posterView.image = UIImage(data: posterImageData)
+    }
+    
+    private func saveItemDataInfoResult(_ data: ItemDataInfo) {
+        let _ = DataProvider.shared.saveItemDataInfo(data)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
