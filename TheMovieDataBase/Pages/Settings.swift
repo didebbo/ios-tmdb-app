@@ -120,7 +120,7 @@ class Settings: BaseViewController {
         view.subviews(icon, textLabel, linkLabel)
         view.layout {
             0
-            |-0--icon--5--textLabel--5--linkLabel--(>=0)-|
+            |-0--icon--5--textLabel--5--linkLabel--0-|
             0
         }
         icon.Width == 18
@@ -129,7 +129,8 @@ class Settings: BaseViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openURL))
         tapGesture.accessibilityValue = "https://www.linkedin.com/in/gianlucanapoletano/"
         
-        view.addGestureRecognizer(tapGesture)
+        linkLabel.addGestureRecognizer(tapGesture)
+        linkLabel.isUserInteractionEnabled = true
         return view
     }()
     
@@ -137,7 +138,8 @@ class Settings: BaseViewController {
         let view = UIView()
         
         let icon = UIImageView()
-        icon.image = UIImage(resource: .gitHubIcon)
+        icon.image = UIImage(resource: .gitHubIcon).withRenderingMode(.alwaysTemplate)
+        icon.tintColor = .purple
         
         let attributedString = NSMutableAttributedString(string: "github.com/didebbo")
         attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: attributedString.length))
@@ -154,7 +156,7 @@ class Settings: BaseViewController {
         view.subviews(icon, textLabel, linkLabel)
         view.layout {
             0
-            |-0--icon--5--textLabel--5--linkLabel--(>=0)-|
+            |-0--icon--5--textLabel--5--linkLabel--0-|
             0
         }
         icon.Width == 18
@@ -163,7 +165,8 @@ class Settings: BaseViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openURL))
         tapGesture.accessibilityValue = "https://github.com/didebbo"
         
-        view.addGestureRecognizer(tapGesture)
+        linkLabel.addGestureRecognizer(tapGesture)
+        linkLabel.isUserInteractionEnabled = true
         return view
     }()
     
@@ -172,7 +175,7 @@ class Settings: BaseViewController {
         
         let icon = UIImageView()
         icon.image = UIImage(systemName: "envelope.fill")
-        icon.tintColor = UIColor(resource: .primary)
+        icon.tintColor = UIColor.systemMint
         
         let attributedString = NSMutableAttributedString(string: "gianluca.napoletano.93@gmail.com")
         attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: attributedString.length))
@@ -189,7 +192,7 @@ class Settings: BaseViewController {
         view.subviews(icon, textLabel, linkLabel)
         view.layout {
             0
-            |-0--icon--5--textLabel--5--linkLabel--(>=0)-|
+            |-0--icon--5--textLabel--5--linkLabel--0-|
             0
         }
         icon.Width == 18
@@ -198,7 +201,8 @@ class Settings: BaseViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openURL))
         tapGesture.accessibilityValue = "mailto:gianluca.napoletano.93@gmail.com"
         
-        view.addGestureRecognizer(tapGesture)
+        linkLabel.addGestureRecognizer(tapGesture)
+        linkLabel.isUserInteractionEnabled = true
         return view
     }()
     
